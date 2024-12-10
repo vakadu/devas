@@ -1,3 +1,4 @@
+export * from './lib/select';
 export * from './lib/dropdown-menu';
 export * from './lib/image';
 export * from './lib/carousel';

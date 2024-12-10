@@ -38,6 +38,10 @@ export default async function Categories() {
 	>;
 	const categories = data?.data || [];
 
+	if (!data) {
+		return null;
+	}
+
 	return (
 		<div className="container my-24">
 			<div className="mb-16">

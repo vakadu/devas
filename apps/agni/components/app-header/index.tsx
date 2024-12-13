@@ -1,10 +1,10 @@
 import dynamic from 'next/dynamic';
 
 import { ImagePlaceholder } from '@devas/ui';
+import Link from 'next/link';
 
 const HeaderRight = dynamic(() => import('./header-right'), {
 	loading: () => <span>Loading...</span>,
-	ssr: false,
 });
 
 export function Header() {
@@ -12,13 +12,13 @@ export function Header() {
 		<header className="shadow-base fixed z-50 w-full h-[80px] top-0 left-0 right-0 bottom-0 bg-white">
 			<div className="max-w-[1200px] min-w-[1200px] mx-auto h-[80px]">
 				<div className="flex justify-between items-center h-full">
-					<div>
+					<Link href="/">
 						<ImagePlaceholder
-							src="/images/logo.jpg"
+							src="/images/logo.svg"
 							containerClasses="w-[120px] h-[80px]"
 							imageClasses="rounded-full object-contain"
 						/>
-					</div>
+					</Link>
 					<HeaderRight />
 				</div>
 			</div>

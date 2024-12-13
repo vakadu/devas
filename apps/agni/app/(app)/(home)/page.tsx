@@ -1,6 +1,6 @@
 import Categories from './ui/categories';
 
-export default function Index() {
+export default function Page() {
 	return (
 		<div>
 			<Categories />

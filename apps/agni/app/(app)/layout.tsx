@@ -1,20 +1,18 @@
-'use client';
+import { redirect } from 'next/navigation';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
-import { Routes } from '../../helpers';
 import { Header } from '../../components';
+import { prismaClient, Routes } from '../../helpers';
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
-	// const data = value?.data();
-	// const router = useRouter();
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
+	const featureFlag = await prismaClient.feature_flags.findFirst({
+		where: {
+			id: 1,
+		},
+	});
 
-	// useEffect(() => {
-	// 	if (data?.comingSoon) {
-	// 		router.push(Routes.ComingSoon);
-	// 	}
-	// }, [data]);
+	if (featureFlag?.coming_soon) {
+		redirect(Routes.ComingSoon);
+	}
 
 	return (
 		<main className="pt-[80px] flex flex-col">
@@ -22,6 +20,4 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 			{children}
 		</main>
 	);
-};
-
-export default AppLayout;
+}

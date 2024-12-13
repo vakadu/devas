@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import { ImagePlaceholder } from '@devas/ui';
 import Subscribe from './components/form';
@@ -24,12 +25,14 @@ export default function Page() {
 					<section className="px-4">
 						<div>
 							<div>
-								{/* <h1 id="logo" className="text-4xl font-bold animate-fade-in">
-									<a href="/" className="text-white hover:text-gray-300">
-										<span>Bersua</span>
-									</a>
-								</h1> */}
-								<h2 className="text-[70px] font-light mt-4 anim-go-right animate-goRight leading-[120px] text-shadow-1">
+								<Link className="flex items-center justify-center" href="/">
+									<ImagePlaceholder
+										src="/images/logo.svg"
+										containerClasses="w-[240px] h-[80px]"
+										imageClasses="rounded-full object-contain"
+									/>
+								</Link>
+								<h2 className="text-[70px] font-light anim-go-right animate-goRight leading-[120px] text-shadow-1">
 									We&apos;re Coming Soon In
 								</h2>
 								<h5 className="mt-4 font-light text-[23px] leading-[70px] text-shadow-1">

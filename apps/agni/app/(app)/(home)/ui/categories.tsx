@@ -33,9 +33,15 @@ export default async function Categories() {
 			'Content-Type': 'application/json',
 		},
 	});
-	const data = (await response.json()) as ICommonTypes.IApiResponse<
-		ICategoryTypes.ICategoryItem[]
-	>;
+
+	if (!response.ok) {
+		return null;
+	}
+
+	const data =
+		((await response.json()) as ICommonTypes.IApiResponse<ICategoryTypes.ICategoryItem[]>) ||
+		{};
+
 	const categories = data?.data || [];
 
 	if (!data) {

@@ -2,6 +2,7 @@ export { Button } from './lib/button';
 export { Label } from './lib/label';
 export { FloatingInput } from './lib/input/floating-input';
 export { Input } from './lib/input/input';
+export { AspectRatio } from './lib/aspect-ratio';
 export { ImagePlaceholder } from './lib/image';
 export { Carousel } from './lib/carousel';
 export { CarouselContent } from './lib/carousel';

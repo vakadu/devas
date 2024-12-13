@@ -1,15 +1,6 @@
 'use client';
 
-import {
-	Button,
-	FloatingInput,
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@devas/ui';
-import { ChevronDown } from 'lucide-react';
+import { Button, FloatingInput } from '@devas/ui';
 import { useState } from 'react';
 
 export default function Index() {
@@ -44,7 +35,6 @@ export default function Index() {
 				<Button
 					type="submit"
 					onClick={handleSubmit}
-					disabled={value === ''}
 					size="lg"
 					className="h-[48px] w-[250px]"
 				>

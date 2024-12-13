@@ -6,6 +6,7 @@ export interface ImagePlaceholderProps extends React.HTMLAttributes<HTMLElement>
 	containerClasses?: string;
 	imageClasses?: string;
 	sizes?: string;
+	priority?: boolean;
 }
 
 export const shimmer = () => `
@@ -23,6 +24,7 @@ function ImagePlaceholder(props: ImagePlaceholderProps) {
 		containerClasses = '',
 		imageClasses,
 		sizes = '100vw',
+		priority = false,
 		...rest
 	} = props;
 
@@ -36,6 +38,7 @@ function ImagePlaceholder(props: ImagePlaceholderProps) {
 				className={imageClasses}
 				placeholder="blur"
 				blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer())}`}
+				priority={priority}
 			/>
 		</figure>
 	);

@@ -1,129 +1,59 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { getFirestore, doc, updateDoc, arrayUnion, Timestamp } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 
-import { Button, ImagePlaceholder } from '@devas/ui';
-import { firebaseApp, Routes } from '../../helpers/index';
+import { ImagePlaceholder } from '@devas/ui';
+import Subscribe from './components/form';
 
 export default function Page() {
-	const db = getFirestore(firebaseApp);
+	const [currentSlide, setCurrentSlide] = useState(0);
+	const slides = ['landscape.jpg', 'sunrise.jpg', 'forest.jpg'];
 
-	const [email, setEmail] = useState('');
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [success, setSuccess] = useState(false);
-	const [error, setError] = useState('');
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCurrentSlide((prev) => (prev + 1) % slides.length);
+		}, 7000);
 
-	const handleSubmit = async () => {
-		if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-			setError('Please enter a valid email address');
-			return;
-		}
-
-		setIsSubmitting(true);
-		setError('');
-		setSuccess(false);
-
-		try {
-			const emailsDocRef = doc(db, 'coming-soon', 'emails');
-			const emailData = {
-				email,
-				timestamp: Timestamp.now(),
-			};
-			await updateDoc(emailsDocRef, {
-				emails: arrayUnion(emailData),
-			});
-
-			setSuccess(true);
-			setEmail('');
-		} catch (err) {
-			console.error(err);
-			setError('Failed to save email. Please try again.');
-		} finally {
-			setIsSubmitting(false);
-		}
-	};
+		return () => clearInterval(interval);
+	}, [slides.length]);
 
 	return (
-		<div className="min-h-screen">
-			<div className="xl:absolute left-0 top-0 w-full">
-				<div className="flex flex-wrap justify-between items-center py-6 container">
-					<div>
-						<Link href="/">
-							<ImagePlaceholder
-								src="/images/logo.jpg"
-								containerClasses="w-[120px] h-[80px]"
-								imageClasses="rounded-full object-contain"
-							/>
-						</Link>
-					</div>
-				</div>
-			</div>
-			<div className="container">
-				<div className="flex justify-between flex-wrap items-center min-h-screen">
-					<div className="max-w-[500px] space-y-24">
-						<div className="relative flex space-x-12 items-center text-2xl text-slate-900 dark:text-white">
-							<span className="inline-block w-[25px] bg-black-1 h-[1px]"></span>
-							<span>Coming soon</span>
-						</div>
-						<div className="xl:text-[70px] xl:leading-[70px] text-4xl font-semibold text-slate-900 dark:text-white">
-							Get notified when we launch
-						</div>
+		<div className="h-screen bg-gray-900 text-white">
+			<div className="flex flex-col justify-center items-center h-full">
+				<div className="z-10">
+					<section className="px-4">
 						<div>
-							<div className="bg-grey-1 flex items-center px-12 rounded">
-								<input
-									type="email"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-									placeholder="Enter your email"
-									className="flex-1 bg-transparent h-full block w-full py-16 placeholder:text-secondary-500 text-base focus:outline-none focus:ring-0"
-								/>
-								<div className="flex-none">
-									<Button
-										type="button"
-										size="sm"
-										className="px-12"
-										onClick={handleSubmit}
-										disabled={isSubmitting}
-									>
-										<span className="text-12 text-white">
-											{isSubmitting ? 'Submitting...' : 'Notify me'}
-										</span>
-									</Button>
-								</div>
+							<div>
+								{/* <h1 id="logo" className="text-4xl font-bold animate-fade-in">
+									<a href="/" className="text-white hover:text-gray-300">
+										<span>Bersua</span>
+									</a>
+								</h1> */}
+								<h2 className="text-[70px] font-light mt-4 anim-go-right animate-goRight leading-[120px] text-shadow-1">
+									We&apos;re Coming Soon In
+								</h2>
+								<h5 className="mt-4 font-light text-[23px] leading-[70px] text-shadow-1">
+									Subscribe to our mailing list or follow us on social media to
+									stay up to date.
+								</h5>
+								<Subscribe />
 							</div>
-							{success && (
-								<p className="text-green-500 mt-4 text-12">
-									Email saved successfully!
-								</p>
-							)}
-							{error && <p className="text-red-500 mt-4 text-12">{error}</p>}
 						</div>
-					</div>
-					<div>
-						<img src="/images/coming-soon.svg" alt="" />
-					</div>
+					</section>
 				</div>
 			</div>
-			<div className="xl:fixed bottom-0 w-full">
-				<div className="container">
-					<div className="md:flex justify-between items-center flex-wrap space-y-4 py-6">
-						<div></div>
-						<div>
-							<ul className="flex md:justify-start justify-center space-x-12">
-								<li>
-									<Link
-										href={Routes.Privacy}
-										className="text-slate-500 dark:text-slate-400 text-sm transition duration-150 hover:text-slate-900"
-									>
-										Privacy policy
-									</Link>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+			<div className="absolute inset-0">
+				{slides.map((image, index) => (
+					<ImagePlaceholder
+						key={index}
+						src={`/images/${image}`}
+						alt={`Slide ${index}`}
+						className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+							currentSlide === index ? 'opacity-100' : 'opacity-0'
+						}`}
+						priority={true}
+					/>
+				))}
 			</div>
 		</div>
 	);

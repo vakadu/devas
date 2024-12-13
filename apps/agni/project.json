@@ -53,6 +53,30 @@
 		},
 		"lint": {
 			"executor": "@nx/eslint:lint"
+		},
+		"prisma-generate": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma generate --schema=apps/agni/db/prisma/schema.prisma"
+			}
+		},
+		"prisma-migrate-dev": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma migrate dev --schema=apps/agni/db/prisma/schema.prisma"
+			}
+		},
+		"prisma-migrate-deploy": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma migrate deploy --schema=apps/agni/db/prisma/schema.prisma"
+			}
+		},
+		"prisma-studio": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma studio --schema=apps/agni/db/prisma/schema.prisma"
+			}
 		}
 	}
 }

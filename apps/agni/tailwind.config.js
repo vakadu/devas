@@ -92,6 +92,33 @@ module.exports = {
 				15: '15px',
 				16: '16px',
 			},
+			keyframes: {
+				goLeft: {
+					'0%': { opacity: '0', transform: 'translateX(0)' },
+					'100%': { opacity: '1', transform: 'translateX(0px)' },
+				},
+				goRight: {
+					'0%': { opacity: '0', transform: 'translateX(0)' },
+					'100%': { opacity: '1', transform: 'translateX(0px)' },
+				},
+				goTop: {
+					'0%': { opacity: '0', transform: 'translateY(0)' },
+					'100%': { opacity: '1', transform: 'translateY(0px)' },
+				},
+				goBottom: {
+					'0%': { opacity: '0', transform: 'translateY(0)' },
+					'100%': { opacity: '1', transform: 'translateY(0px)' },
+				},
+			},
+			animation: {
+				goLeft: 'goLeft 1s ease-in-out',
+				goRight: 'goRight 1s ease-in-out',
+				goTop: 'goTop 1s ease-in-out',
+				goBottom: 'goBottom 1s ease-in-out',
+			},
+			textShadow: {
+				1: '0 2px 2px rgba(0, 0, 0, 0.8)',
+			},
 		},
 	},
 	plugins: [require('tailwindcss-animate')],

@@ -1,9 +1,9 @@
 import { launch, Browser, Page } from 'puppeteer';
 import { NextRequest, NextResponse } from 'next/server';
+import * as XLSX from 'xlsx';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import * as os from 'os';
-import * as XLSX from 'xlsx';
 
 function wait(ms: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
 				const nextBtn = (await page.$$('._9QVEpD')).pop();
 				isNextBtnPresent = nextBtn
-					? (await nextBtn.evaluate((node: any) => node.textContent)) === 'Next'
+					? (await nextBtn.evaluate((node) => node.textContent)) === 'Next'
 					: false;
 
 				if (nextBtn && isNextBtnPresent) {

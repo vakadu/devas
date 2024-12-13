@@ -2,7 +2,9 @@
 	"name": "@devas/source",
 	"version": "0.0.0",
 	"license": "MIT",
-	"scripts": {},
+	"scripts": {
+		"postinstall": "npx prisma generate --schema=apps/agni/db/prisma/schema.prisma"
+	},
 	"private": true,
 	"dependencies": {
 		"@hookform/resolvers": "^3.9.1",

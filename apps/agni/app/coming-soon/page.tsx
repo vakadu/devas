@@ -22,7 +22,7 @@ export default function Page() {
 		<div className="h-screen bg-gray-900 text-white">
 			<div className="flex flex-col justify-center items-center h-full">
 				<div className="z-10">
-					<section className="px-4">
+					<section className="px-16">
 						<div>
 							<div>
 								<Link className="flex items-center justify-center" href="/">
@@ -32,10 +32,10 @@ export default function Page() {
 										imageClasses="rounded-full object-contain"
 									/>
 								</Link>
-								<h2 className="text-[70px] font-light anim-go-right animate-goRight leading-[120px] text-shadow-1">
+								<h2 className="text-[54px] my-24 text-center leading-[54px] lg:text-[70px] font-light anim-go-right animate-goRight lg:leading-[92px] text-shadow-1">
 									We&apos;re Coming Soon In
 								</h2>
-								<h5 className="mt-4 font-light text-[23px] leading-[70px] text-shadow-1">
+								<h5 className="text-18 leading-24 text-center font-light lg:text-[23px] lg:leading-[70px] text-shadow-1">
 									Subscribe to our mailing list or follow us on social media to
 									stay up to date.
 								</h5>

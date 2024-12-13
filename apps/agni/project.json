@@ -66,7 +66,6 @@
 				"command": "npx prisma db pull --schema=apps/agni/db/prisma/schema.prisma"
 			}
 		},
-
 		"prisma-migrate-dev": {
 			"executor": "nx:run-commands",
 			"options": {

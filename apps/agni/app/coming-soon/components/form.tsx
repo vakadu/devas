@@ -54,13 +54,13 @@ export default function Subscribe() {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="flex justify-center items-center gap-24"
+				className="flex justify-center items-center gap-12 lg:gap-24 mt-32 lg:mt-0"
 			>
 				<FormField
 					control={form.control}
 					name="email"
 					render={({ field }) => (
-						<FormItem className="w-[350px] flex flex-col items-start relative">
+						<FormItem className="flex-1 lg:w-[350px] flex flex-col items-start relative">
 							<FormControl>
 								<Input
 									type="email"
@@ -78,7 +78,7 @@ export default function Subscribe() {
 					loading={isExecuting}
 					loadingText="Submitting..."
 					variant="ghost"
-					className="h-[48px] border-2 px-24"
+					className="h-[48px] border-2 px-16 lg:px-24"
 				>
 					Subscribe
 				</Button>

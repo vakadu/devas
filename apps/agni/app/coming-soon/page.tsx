@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import { ImagePlaceholder } from '@devas/ui';
 
@@ -21,7 +22,7 @@ export default function Page() {
 	}, [slides.length]);
 
 	return (
-		<div className="h-screen bg-gray-900 text-white">
+		<div className="h-screen bg-gray-900 overflow-hidden text-white">
 			<div className="flex flex-col justify-center items-center h-full">
 				<div className="z-10">
 					<section className="px-16">
@@ -43,7 +44,7 @@ export default function Page() {
 					</section>
 				</div>
 			</div>
-			<div className="absolute inset-0">
+			<div className="absolute inset-0 w-full h-screen">
 				{slides.map((image, index) => (
 					<ImagePlaceholder
 						key={index}

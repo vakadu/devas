@@ -1,9 +1,11 @@
 import localFont from 'next/font/local';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import dynamic from 'next/dynamic';
 
 import '../assets/css/global.css';
-import Providers from '../store/providers';
+
+const Providers = dynamic(() => import('../store/providers'));
 
 export const metadata = {
 	title: 'Biggr',
@@ -61,6 +63,8 @@ const sathoshi = localFont({
 		},
 	],
 	variable: '--font-sathoshi',
+	display: 'swap',
+	preload: true,
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

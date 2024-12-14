@@ -9,7 +9,7 @@ export default function Privacy() {
 				<div>
 					<Link href="/">
 						<ImagePlaceholder
-							src="/images/logo.jpg"
+							src="/images/logo.svg"
 							containerClasses="w-[120px] h-[80px]"
 							imageClasses="rounded-full object-contain"
 						/>

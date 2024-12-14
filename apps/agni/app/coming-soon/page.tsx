@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
 
 import { ImagePlaceholder } from '@devas/ui';
+import { Routes } from '../../helpers';
 
 const Subscribe = dynamic(() => import('./components/form'));
 
@@ -22,7 +22,7 @@ export default function Page() {
 	}, [slides.length]);
 
 	return (
-		<div className="h-screen bg-gray-900 overflow-hidden text-white">
+		<div className="h-screen bg-gray-900 overflow-hidden text-white relative">
 			<Link className="flex items-center justify-center absolute z-10 p-16" href="/">
 				<ImagePlaceholder
 					src="/images/logo.svg"
@@ -55,6 +55,11 @@ export default function Page() {
 						priority={true}
 					/>
 				))}
+			</div>
+			<div className="absolute bottom-12 px-16 right-12">
+				<Link href={Routes.Privacy}>
+					<span className="text-14 font-semibold">Privacy</span>
+				</Link>
 			</div>
 		</div>
 	);

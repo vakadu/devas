@@ -66,3 +66,4 @@ export { FormControl } from './lib/form';
 export { FormDescription } from './lib/form';
 export { FormMessage } from './lib/form';
 export { FormField } from './lib/form';
+export { Spinner } from './lib/spinner';

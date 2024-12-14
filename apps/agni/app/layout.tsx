@@ -1,4 +1,5 @@
 import localFont from 'next/font/local';
+import { Analytics } from '@vercel/analytics/react';
 
 import '../assets/css/global.css';
 import Providers from '../store/providers';
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en" className={`${sathoshi.variable} font-sathoshi scroll-smooth`}>
 			<body>
 				<Providers>{children}</Providers>
+				<Analytics />
 			</body>
 		</html>
 	);

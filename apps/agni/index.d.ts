@@ -5,12 +5,3 @@ declare module '*.svg' {
 	export const ReactComponent: any;
 	export default content;
 }
-
-declare global {
-	// Extend the NodeJS.Global interface to include `prisma`
-	namespace NodeJS {
-		interface Global {
-			prisma: PrismaClient | undefined;
-		}
-	}
-}

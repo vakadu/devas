@@ -54,7 +54,7 @@ export default function Subscribe() {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="flex justify-center items-center gap-12 lg:gap-24 mt-32 lg:mt-0"
+				className="flex justify-center items-center gap-12 lg:gap-24 mt-32 lg:mt-0 animate-fadeIn"
 			>
 				<FormField
 					control={form.control}

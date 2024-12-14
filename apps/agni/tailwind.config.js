@@ -17,7 +17,8 @@ module.exports = {
 				sathoshi: ['var(--font-sathoshi)'],
 			},
 			colors: {
-				brand: '#3a9545',
+				brand: '#069444',
+				orange: '#F47120',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

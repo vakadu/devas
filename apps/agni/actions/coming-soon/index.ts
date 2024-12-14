@@ -3,7 +3,7 @@
 import { z } from 'zod';
 
 import { actionClient } from '../utils';
-import { prismaClient } from '../../helpers';
+import { prisma } from '../../helpers';
 
 const schema = z.object({
 	email: z.string().email('Please enter a valid email address'),
@@ -13,7 +13,7 @@ const comingSoon = actionClient.schema(schema).action(async ({ parsedInput }) =>
 	const { email } = parsedInput;
 
 	try {
-		await prismaClient.coming_soon.create({
+		await prisma.coming_soon.create({
 			data: {
 				email,
 			},

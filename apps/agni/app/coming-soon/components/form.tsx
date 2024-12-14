@@ -76,9 +76,9 @@ export default function Subscribe() {
 				<Button
 					disabled={isExecuting}
 					loading={isExecuting}
-					loadingText="Submitting..."
+					loadingText=""
 					variant="ghost"
-					className="h-[48px] border-2 px-16 lg:px-24"
+					className="h-[48px] border-2 px-16 lg:px-24 min-w-[120px] lg:min-w-[180px] max-w-[120px] lg:max-w-[180px]"
 				>
 					Subscribe
 				</Button>

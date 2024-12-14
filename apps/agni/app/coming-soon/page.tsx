@@ -2,9 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 import { ImagePlaceholder } from '@devas/ui';
-import Subscribe from './components/form';
+
+const Subscribe = dynamic(() => import('./components/form'), {
+	loading: () => <span>Loading...</span>,
+});
 
 export default function Page() {
 	const [currentSlide, setCurrentSlide] = useState(0);

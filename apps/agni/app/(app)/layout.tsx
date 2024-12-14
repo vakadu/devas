@@ -1,10 +1,10 @@
 import { redirect } from 'next/navigation';
 
 import { Header } from '../../components';
-import { prismaClient, Routes } from '../../helpers';
+import { prisma, Routes } from '../../helpers';
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-	const featureFlag = await prismaClient.feature_flags.findFirst({
+	const featureFlag = await prisma.feature_flags.findFirst({
 		where: {
 			id: 1,
 		},

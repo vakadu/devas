@@ -11,9 +11,9 @@ const AuthDropdown = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
-				<div className="flex gap-6">
+				<div className="flex items-center justify-center gap-6">
 					<span className="text-14 font-medium">My Account</span>
-					<ChevronDown />
+					<ChevronDown width={20} height={20} />
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>

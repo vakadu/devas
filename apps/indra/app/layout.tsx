@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 
 import '../assets/css/global.css';
 
-const Providers = dynamic(() => import('../store/providers'));
+const Providers = dynamic(() => import('../core/services/providers'));
 
 export const metadata = {
 	title: 'Biggr',

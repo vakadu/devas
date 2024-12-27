@@ -30,7 +30,10 @@ export const FloatingInput = ({
 			<Input
 				id={id}
 				type={type}
-				className={`${isError && 'border-destructive/80 text-destructive'} ${className}`}
+				className={`${
+					isError &&
+					'border-destructive/80 text-destructive focus-visible:border-destructive'
+				} ${className}`}
 				placeholder=""
 				{...props}
 			/>

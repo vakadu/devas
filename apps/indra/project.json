@@ -1,0 +1,93 @@
+{
+	"name": "indra",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/indra",
+	"projectType": "application",
+	"tags": [],
+	"// targets": "to see all targets run: nx show project indra --web",
+	"targets": {
+		"build": {
+			"executor": "@nx/next:build",
+			"outputs": [
+				"{options.outputPath}"
+			],
+			"defaultConfiguration": "production",
+			"options": {
+				"outputPath": "dist/apps/indra"
+			},
+			"configurations": {
+				"development": {
+					"outputPath": "apps/indra"
+				},
+				"production": {}
+			}
+		},
+		"serve": {
+			"executor": "@nx/next:server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "indra:build",
+				"dev": true,
+				"port": 2003
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "indra:build:development",
+					"dev": true
+				},
+				"production": {
+					"buildTarget": "indra:build:production",
+					"dev": false
+				}
+			}
+		},
+		"export": {
+			"executor": "@nx/next:export",
+			"options": {
+				"buildTarget": "indra:build:production"
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": [
+				"{workspaceRoot}/coverage/{projectRoot}"
+			],
+			"options": {
+				"jestConfig": "apps/indra/jest.config.ts"
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint"
+		},
+		"prisma-db-pull": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma db pull --schema=apps/indra/db/prisma/schema.prisma"
+			}
+		},
+		"prisma-generate": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma generate --schema=apps/indra/db/prisma/schema.prisma"
+			}
+		},
+		"prisma-migrate-dev": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma migrate dev --schema=apps/indra/db/prisma/schema.prisma"
+			}
+		},
+		"prisma-migrate-deploy": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma migrate deploy --schema=apps/indra/db/prisma/schema.prisma"
+			}
+		},
+		"prisma-studio": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma studio --schema=apps/indra/db/prisma/schema.prisma"
+			}
+		}
+	}
+}

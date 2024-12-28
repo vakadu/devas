@@ -10,7 +10,6 @@ import { useResize } from '@devas/hooks';
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const { isDesktop } = useResize();
-	console.log(isDesktop);
 
 	return (
 		<Provider store={store}>

@@ -4,15 +4,16 @@ import { ArrowLeft } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 import useOtpHook from './use-otp-hook';
 import { Routes } from '../../../../core/primitives/routes';
 import { closeModal, openModal } from '../../../../core/store/layout-reducer';
+import { authenticateUser } from '../../../../core/store/auth';
+import { useAppDispatch } from '../../../../core/store';
 
 export default function Page() {
 	const params = useParams();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const router = useRouter();
 	const {
 		otp,
@@ -41,11 +42,17 @@ export default function Page() {
 		}
 
 		if (result.data.status === 'SUCCESS') {
-			// router.push(Routes.Home);
+			dispatch(
+				authenticateUser({
+					accessToken: result.data.data?.accessToken as string,
+					refreshToken: result.data.data?.refreshToken as string,
+				})
+			);
+			router.push(Routes.Home);
 		} else {
 			toast.error(result.data.msg);
 		}
-	}, [result, result.data, router]);
+	}, [dispatch, result, result.data, router]);
 
 	return (
 		<div>

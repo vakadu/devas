@@ -1,9 +1,23 @@
-import { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { ImagePlaceholder } from '@devas/ui';
+import { useAppSelector } from '../../core/store';
+import { Routes } from '../../core/primitives';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
+	const { loggedIn } = useAppSelector((state) => state.auth);
+	const router = useRouter();
+
+	useEffect(() => {
+		if (loggedIn) {
+			router.push(Routes.Home);
+		}
+	}, [loggedIn, router]);
+
 	return (
 		<section className="min-h-screen w-full overflow-hidden">
 			<div className="grid grid-cols-3 overflow-hidden min-h-screen">
@@ -27,11 +41,11 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 						{children}
 					</div>
 					<p className="text-12 py-24 px-16 text-center">
-						By clicking you agree to our{' '}
+						By clicking you agree to our
 						<Link href="/" className="font-semibold text-primary-1" target="_blank">
 							privacy policy
-						</Link>{' '}
-						and{' '}
+						</Link>
+						and
 						<Link href="/" className="font-semibold text-primary-1" target="_blank">
 							terms of use
 						</Link>

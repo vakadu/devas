@@ -1,9 +1,8 @@
 'use server';
 
 import { z } from 'zod';
-import { cookies } from 'next/headers';
 
-import { ApiEndpoints, AppConstansts } from '../../../../core/primitives';
+import { ApiEndpoints } from '../../../../core/primitives';
 import { safeActionClient } from '../../../../core/services';
 import { otpValidator, phoneValidator } from '@devas/utils';
 
@@ -22,7 +21,6 @@ const schema = z.object({
 
 const signinAction = safeActionClient.schema(schema).action(async ({ parsedInput }) => {
 	const { mobileNumber, otp } = parsedInput;
-	const cookieStore = await cookies();
 
 	try {
 		const response = await fetch(
@@ -46,24 +44,12 @@ const signinAction = safeActionClient.schema(schema).action(async ({ parsedInput
 		const otpData =
 			(await response.json()) as ICommonTypes.IApiResponse<IAuthTypes.ILoginInterface>;
 		if (otpData.status === 'SUCCESS') {
-			cookieStore.set({
-				name: AppConstansts.AccessToken,
-				value: otpData?.data?.accessToken,
-				httpOnly: true,
-				secure: true,
-			});
-			cookieStore.set({
-				name: AppConstansts.RefreshToken,
-				value: otpData?.data?.refreshToken,
-				httpOnly: true,
-				secure: true,
-			});
 			return {
 				status: 'SUCCESS',
 				msg: '',
-				data: null,
+				data: otpData?.data,
 				statusCode: response.status,
-			} as ICommonTypes.IApiResponse<null>;
+			} as ICommonTypes.IApiResponse<IAuthTypes.ILoginInterface>;
 		} else {
 			return {
 				status: 'ERROR',

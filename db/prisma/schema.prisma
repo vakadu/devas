@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model coming_soon {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  timestamp DateTime @default(now())
+}
+
+model feature_flags {
+  id          Int       @id @default(autoincrement())
+  coming_soon Boolean   @default(false)
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @default(now()) @db.Timestamp(6)
+  maintenance Boolean   @default(false)
+}
+
+model analytics {
+  id        Int      @id @default(autoincrement())
+  userId    String   @default("")
+  mobile    String   @default("")
+  role      String   @default("")
+  eventName String   @default("")
+  metadata  Json?    @default("{}")
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
+}
+
+model dashboard_navigation {
+  id                         Int                    @id @default(autoincrement())
+  type                       String
+  path                       String
+  title                      String
+  parentId                   Int?
+  createdAt                  DateTime               @default(now()) @db.Timestamp(6)
+  updatedAt                  DateTime               @db.Timestamp(6)
+  dashboard_navigation       dashboard_navigation?  @relation("dashboard_navigationTodashboard_navigation", fields: [parentId], references: [id])
+  other_dashboard_navigation dashboard_navigation[] @relation("dashboard_navigationTodashboard_navigation")
+}

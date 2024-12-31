@@ -23,7 +23,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 			<AppSidebar />
 			<SidebarInset>
 				<Header />
-				<main className="min-h-[calc(100vh-72px)] bg-sidebar">{children}</main>
+				<main className="min-h-[calc(100vh-72px)] bg-greyBg">{children}</main>
 				{/* <div className="flex flex-1 flex-col gap-4 p-4">
 					<div className="grid auto-rows-min gap-4 md:grid-cols-3">
 						<div className="aspect-video rounded-xl bg-muted/50" />

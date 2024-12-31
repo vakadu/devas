@@ -27,7 +27,6 @@ function ImagePlaceholder(props: ImagePlaceholderProps) {
 		priority = false,
 		...rest
 	} = props;
-	console.log(containerClasses);
 
 	return (
 		<figure className={`relative ${containerClasses}`} {...rest}>

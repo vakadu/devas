@@ -57,31 +57,31 @@
 		"prisma-db-pull": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma db pull --schema=apps/agni/db/prisma/schema.prisma"
+				"command": "npx prisma db pull --schema=db/prisma/schema.prisma"
 			}
 		},
 		"prisma-generate": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma generate --schema=apps/agni/db/prisma/schema.prisma"
+				"command": "npx prisma generate --schema=db/prisma/schema.prisma"
 			}
 		},
 		"prisma-migrate-dev": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma migrate dev --schema=apps/agni/db/prisma/schema.prisma"
+				"command": "npx prisma migrate dev --schema=db/prisma/schema.prisma"
 			}
 		},
 		"prisma-migrate-deploy": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma migrate deploy --schema=apps/agni/db/prisma/schema.prisma"
+				"command": "npx prisma migrate deploy --schema=db/prisma/schema.prisma"
 			}
 		},
 		"prisma-studio": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma studio --schema=apps/agni/db/prisma/schema.prisma"
+				"command": "npx prisma studio --schema=db/prisma/schema.prisma"
 			}
 		}
 	}

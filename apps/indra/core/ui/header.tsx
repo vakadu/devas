@@ -7,7 +7,7 @@ export const Header = () => {
 	const { name, mobile } = useAppSelector((state) => state.auth);
 
 	return (
-		<header className="flex h-[72px] justify-between shrink-0 items-center gap-12 border-b px-16">
+		<header className="flex h-[72px] justify-between shrink-0 items-center gap-12 border-b px-16 bg-white">
 			<div className="flex items-center">
 				{/* <SidebarTrigger /> */}
 				<ImagePlaceholder

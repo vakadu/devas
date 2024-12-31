@@ -8,9 +8,7 @@
 	"targets": {
 		"build": {
 			"executor": "@nx/next:build",
-			"outputs": [
-				"{options.outputPath}"
-			],
+			"outputs": ["{options.outputPath}"],
 			"defaultConfiguration": "production",
 			"options": {
 				"outputPath": "dist/apps/indra"
@@ -49,9 +47,7 @@
 		},
 		"test": {
 			"executor": "@nx/jest:jest",
-			"outputs": [
-				"{workspaceRoot}/coverage/{projectRoot}"
-			],
+			"outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
 			"options": {
 				"jestConfig": "apps/indra/jest.config.ts"
 			}
@@ -62,31 +58,37 @@
 		"prisma-db-pull": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma db pull --schema=apps/indra/db/prisma/schema.prisma"
+				"command": "npx prisma db pull --schema=db/prisma/schema.prisma"
+			}
+		},
+		"prisma-db-push": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "npx prisma db push --schema=db/prisma/schema.prisma"
 			}
 		},
 		"prisma-generate": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma generate --schema=apps/indra/db/prisma/schema.prisma"
+				"command": "npx prisma generate --schema=db/prisma/schema.prisma"
 			}
 		},
 		"prisma-migrate-dev": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma migrate dev --schema=apps/indra/db/prisma/schema.prisma"
+				"command": "npx prisma migrate dev --schema=db/prisma/schema.prisma"
 			}
 		},
 		"prisma-migrate-deploy": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma migrate deploy --schema=apps/indra/db/prisma/schema.prisma"
+				"command": "npx prisma migrate deploy --schema=db/prisma/schema.prisma"
 			}
 		},
 		"prisma-studio": {
 			"executor": "nx:run-commands",
 			"options": {
-				"command": "npx prisma studio --schema=apps/indra/db/prisma/schema.prisma"
+				"command": "npx prisma studio --schema=db/prisma/schema.prisma"
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Toaster } from '@devas/ui';
 import { persistor, store } from '../../core/store';
@@ -10,13 +11,16 @@ import { useResize } from '@devas/hooks';
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const { isDesktop } = useResize();
+	const queryClient = new QueryClient();
 
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				{isDesktop ? children : <AppMobile />}
-				<Toaster closeButton richColors position="bottom-left" />
-				<LoadingModal />
+				<QueryClientProvider client={queryClient}>
+					{isDesktop ? children : <AppMobile />}
+					<Toaster closeButton richColors position="bottom-left" />
+					<LoadingModal />
+				</QueryClientProvider>
 			</PersistGate>
 		</Provider>
 	);

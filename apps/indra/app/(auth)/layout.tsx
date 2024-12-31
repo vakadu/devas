@@ -23,7 +23,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 			<div className="grid grid-cols-3 overflow-hidden min-h-screen">
 				<div className="col-span-2 bg-grey-4 flex items-center justify-center">
 					<ImagePlaceholder
-						src="/images/bg.jpg"
+						src="/images/bg1.jpg"
 						imageClasses="object-cover"
 						containerClasses="w-full h-full"
 					/>
@@ -41,11 +41,11 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 						{children}
 					</div>
 					<p className="text-12 py-24 px-16 text-center">
-						By clicking you agree to our
+						By clicking you agree to our{' '}
 						<Link href="/" className="font-semibold text-primary-1" target="_blank">
 							privacy policy
-						</Link>
-						and
+						</Link>{' '}
+						and{' '}
 						<Link href="/" className="font-semibold text-primary-1" target="_blank">
 							terms of use
 						</Link>

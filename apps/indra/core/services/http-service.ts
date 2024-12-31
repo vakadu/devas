@@ -2,6 +2,7 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 
 import { store } from '../store';
 import { ResetTokenAndReattemptRequest } from './reattempt-token';
+import { logout } from '../helpers';
 
 // Interface for the error response data
 interface AxiosErrorResponseData {
@@ -50,7 +51,7 @@ HttpService.interceptors.response.use(
 			) {
 				return ResetTokenAndReattemptRequest(error.response);
 			} else if (error.response.data?.msg === 'Inactive user!') {
-				// pemilyyLogout();
+				logout();
 			}
 		} else if (error.request) {
 			// Handle errors that occur during the request but no response was received

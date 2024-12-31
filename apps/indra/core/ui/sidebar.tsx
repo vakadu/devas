@@ -26,6 +26,7 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 	SidebarRail,
+	Spinner,
 } from '@devas/ui';
 import { useAppSelector } from '../store';
 import { useGetNavigation } from '../api';
@@ -124,7 +125,7 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 	const Icon = item.icon ? IconMap[item.icon] : null;
 
 	return (
-		<SidebarMenuItem>
+		<SidebarMenuItem className="py-6">
 			<CollapsibleTrigger asChild>
 				<SidebarMenuButton>
 					<Icon className="!size-16" />
@@ -133,7 +134,7 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 				</SidebarMenuButton>
 			</CollapsibleTrigger>
 			<CollapsibleContent>
-				<SidebarMenuSub className="mx-24">
+				<SidebarMenuSub className="mx-24 gap-12 mt-8">
 					{item?.items?.map((ite) => {
 						return (
 							<SidebarMenuSubItem key={ite.id}>

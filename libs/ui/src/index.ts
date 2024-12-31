@@ -4,91 +4,116 @@ export { FloatingInput } from './lib/input/floating-input';
 export { Input } from './lib/input/input';
 export { AspectRatio } from './lib/aspect-ratio';
 export { ImagePlaceholder } from './lib/image';
-export { Carousel } from './lib/carousel';
-export { CarouselContent } from './lib/carousel';
-export { CarouselItem } from './lib/carousel';
-export { CarouselPrevious } from './lib/carousel';
-export { CarouselNext } from './lib/carousel';
-export type { CarouselApi } from './lib/carousel';
-export { DropdownMenu } from './lib/dropdown-menu';
-export { DropdownMenuTrigger } from './lib/dropdown-menu';
-export { DropdownMenuContent } from './lib/dropdown-menu';
-export { DropdownMenuItem } from './lib/dropdown-menu';
-export { DropdownMenuCheckboxItem } from './lib/dropdown-menu';
-export { DropdownMenuRadioItem } from './lib/dropdown-menu';
-export { DropdownMenuLabel } from './lib/dropdown-menu';
-export { DropdownMenuSeparator } from './lib/dropdown-menu';
-export { DropdownMenuShortcut } from './lib/dropdown-menu';
-export { DropdownMenuGroup } from './lib/dropdown-menu';
-export { DropdownMenuPortal } from './lib/dropdown-menu';
-export { DropdownMenuSub } from './lib/dropdown-menu';
-export { DropdownMenuSubContent } from './lib/dropdown-menu';
-export { DropdownMenuSubTrigger } from './lib/dropdown-menu';
-export { DropdownMenuRadioGroup } from './lib/dropdown-menu';
-export { AlertDialog } from './lib/alert';
-export { AlertDialogPortal } from './lib/alert';
-export { AlertDialogOverlay } from './lib/alert';
-export { AlertDialogTrigger } from './lib/alert';
-export { AlertDialogContent } from './lib/alert';
-export { AlertDialogHeader } from './lib/alert';
-export { AlertDialogFooter } from './lib/alert';
-export { AlertDialogTitle } from './lib/alert';
-export { AlertDialogDescription } from './lib/alert';
-export { AlertDialogAction } from './lib/alert';
-export { AlertDialogCancel } from './lib/alert';
-export { Dialog } from './lib/dialog';
-export { DialogPortal } from './lib/dialog';
-export { DialogOverlay } from './lib/dialog';
-export { DialogTrigger } from './lib/dialog';
-export { DialogClose } from './lib/dialog';
-export { DialogContent } from './lib/dialog';
-export { DialogHeader } from './lib/dialog';
-export { DialogFooter } from './lib/dialog';
-export { DialogTitle } from './lib/dialog';
-export { DialogDescription } from './lib/dialog';
+export {
+	type CarouselApi,
+	Carousel,
+	CarouselContent,
+	CarouselItem,
+	CarouselPrevious,
+	CarouselNext,
+} from './lib/carousel';
+export {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuCheckboxItem,
+	DropdownMenuRadioItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuShortcut,
+	DropdownMenuGroup,
+	DropdownMenuPortal,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
+	DropdownMenuRadioGroup,
+} from './lib/dropdown-menu';
+export {
+	AlertDialog,
+	AlertDialogPortal,
+	AlertDialogOverlay,
+	AlertDialogTrigger,
+	AlertDialogContent,
+	AlertDialogHeader,
+	AlertDialogFooter,
+	AlertDialogTitle,
+	AlertDialogDescription,
+	AlertDialogAction,
+	AlertDialogCancel,
+} from './lib/alert';
+export {
+	Dialog,
+	DialogPortal,
+	DialogOverlay,
+	DialogTrigger,
+	DialogClose,
+	DialogContent,
+	DialogHeader,
+	DialogFooter,
+	DialogTitle,
+	DialogDescription,
+} from './lib/dialog';
 export { Toaster } from './lib/toast';
 export * from './lib/skeleton';
-export { Sheet } from './lib/sheet';
-export { SheetPortal } from './lib/sheet';
-export { SheetOverlay } from './lib/sheet';
-export { SheetTrigger } from './lib/sheet';
-export { SheetClose } from './lib/sheet';
-export { SheetContent } from './lib/sheet';
-export { SheetHeader } from './lib/sheet';
-export { SheetFooter } from './lib/sheet';
-export { SheetTitle } from './lib/sheet';
-export { SheetDescription } from './lib/sheet';
-export { useFormField } from './lib/form';
-export { Form } from './lib/form';
-export { FormItem } from './lib/form';
-export { FormLabel } from './lib/form';
-export { FormControl } from './lib/form';
-export { FormDescription } from './lib/form';
-export { FormMessage } from './lib/form';
-export { FormField } from './lib/form';
+
+export {
+	Sheet,
+	SheetPortal,
+	SheetOverlay,
+	SheetTrigger,
+	SheetClose,
+	SheetContent,
+	SheetHeader,
+	SheetFooter,
+	SheetTitle,
+	SheetDescription,
+} from './lib/sheet';
+export {
+	useFormField,
+	Form,
+	FormItem,
+	FormLabel,
+	FormControl,
+	FormDescription,
+	FormMessage,
+	FormField,
+} from './lib/form';
 export { Spinner } from './lib/spinner';
 export { Separator } from './lib/separator';
-export { Sidebar } from './lib/sidebar';
-export { SidebarContent } from './lib/sidebar';
-export { SidebarFooter } from './lib/sidebar';
-export { SidebarGroup } from './lib/sidebar';
-export { SidebarGroupAction } from './lib/sidebar';
-export { SidebarGroupContent } from './lib/sidebar';
-export { SidebarGroupLabel } from './lib/sidebar';
-export { SidebarHeader } from './lib/sidebar';
-export { SidebarInset } from './lib/sidebar';
-export { SidebarMenu } from './lib/sidebar';
-export { SidebarMenuAction } from './lib/sidebar';
-export { SidebarMenuBadge } from './lib/sidebar';
-export { SidebarMenuButton } from './lib/sidebar';
-export { SidebarMenuItem } from './lib/sidebar';
-export { SidebarMenuSub } from './lib/sidebar';
-export { SidebarMenuSubButton } from './lib/sidebar';
-export { SidebarMenuSubItem } from './lib/sidebar';
-export { SidebarProvider } from './lib/sidebar';
-export { SidebarRail } from './lib/sidebar';
-export { SidebarSeparator } from './lib/sidebar';
-export { SidebarTrigger } from './lib/sidebar';
-export { useSidebar } from './lib/sidebar';
+export {
+	Sidebar,
+	SidebarContent,
+	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupAction,
+	SidebarGroupContent,
+	SidebarGroupLabel,
+	SidebarHeader,
+	SidebarInset,
+	SidebarMenu,
+	SidebarMenuAction,
+	SidebarMenuBadge,
+	SidebarMenuButton,
+	SidebarMenuItem,
+	SidebarMenuSub,
+	SidebarMenuSubButton,
+	SidebarMenuSubItem,
+	SidebarProvider,
+	SidebarRail,
+	SidebarSeparator,
+	SidebarTrigger,
+	useSidebar,
+} from './lib/sidebar';
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from './lib/collapsible';
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './lib/tabs';
+export {
+	Table,
+	TableHeader,
+	TableBody,
+	TableFooter,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableCaption,
+} from './lib/table';

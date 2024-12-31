@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { Routes } from '../../../core/primitives';
+
 const data: ICommonTypes.INavigationItem[] = [
 	{
 		id: 1,
@@ -18,8 +20,14 @@ const data: ICommonTypes.INavigationItem[] = [
 			{
 				id: 3,
 				type: 'link',
-				path: '/catalouge/add-product',
+				path: `${Routes.CatalougeAddProduct}?type=product`,
 				title: 'Add Product',
+			},
+			{
+				id: 4,
+				type: 'link',
+				path: `${Routes.CatalougeProductList}`,
+				title: 'Products List',
 			},
 		],
 	},

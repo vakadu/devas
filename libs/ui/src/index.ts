@@ -91,3 +91,4 @@ export { SidebarSeparator } from './lib/sidebar';
 export { SidebarTrigger } from './lib/sidebar';
 export { useSidebar } from './lib/sidebar';
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from './lib/collapsible';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './lib/tabs';

@@ -3,4 +3,6 @@ export const enum ApiEndpoints {
 	Signup = 'auth/signUp',
 	SignIn = 'auth/signIn',
 	Otp = 'auth/sendOtp',
+	RefreshToken = 'auth/token',
+	CreateProduct = 'product/create',
 }

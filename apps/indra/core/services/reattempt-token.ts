@@ -1,0 +1,62 @@
+import axios, { AxiosResponse } from 'axios';
+
+import { HttpService } from './http-service';
+import { ApiEndpoints } from '../primitives';
+import { store } from '../store';
+import { updateUser } from '../store/auth';
+
+let isAlreadyFetchingAccessToken = false;
+type AccessTokenSubscriber = (accessToken: string) => void;
+let subscribers: AccessTokenSubscriber[] = [];
+
+async function ResetTokenAndReattemptRequest(error: any): Promise<AxiosResponse> {
+	const retryOriginalRequest = new Promise<AxiosResponse>((resolve) => {
+		addSubscriber((accessToken: string) => {
+			error.config.headers.Authorization = `Bearer ${accessToken}`;
+			resolve(HttpService(error.config));
+		});
+	});
+
+	if (!isAlreadyFetchingAccessToken) {
+		isAlreadyFetchingAccessToken = true;
+
+		try {
+			const resp = await axios.post(
+				`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.RefreshToken}`,
+				{
+					refreshToken: store.getState().auth.refreshToken,
+				}
+			);
+
+			if (resp?.data?.status === 'SUCCESS') {
+				//TODO: Need to check on passing refreshToken
+				store.dispatch(
+					updateUser({
+						...store.getState().auth,
+						accessToken: resp?.data?.data?.accessToken,
+					})
+				);
+				onAccessTokenFetched(resp?.data?.data?.accessToken);
+			} else {
+				// pemilyyLogout();
+			}
+		} catch (err) {
+			// pemilyyLogout();
+			// Handle errors
+		} finally {
+			isAlreadyFetchingAccessToken = false;
+		}
+	}
+	return retryOriginalRequest;
+}
+
+function onAccessTokenFetched(accessToken: string) {
+	subscribers.forEach((callback) => callback(accessToken));
+	subscribers = [];
+}
+
+function addSubscriber(callback: AccessTokenSubscriber) {
+	subscribers.push(callback);
+}
+
+export { ResetTokenAndReattemptRequest };

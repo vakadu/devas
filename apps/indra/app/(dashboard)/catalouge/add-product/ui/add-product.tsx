@@ -3,7 +3,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, FloatingInput, Form, FormControl, FormField, FormItem, FormMessage } from '@devas/ui';
-import { useCreateProduct } from '../api';
+import { useCreateProduct, useGetProductById, useUpdateProduct } from '../api';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 const schema = z.object({
     title: z.string().min(3, { message: 'Title is required' }),
@@ -43,13 +45,45 @@ export default function AddProduct() {
         },
     });
     const { mutateAsync: createProduct, isPending } = useCreateProduct();
+    const params = useSearchParams();
+    const id = params.get('id') as string;
+    const { data, refetch } = useGetProductById(id);
+    const productData = data?.data?.product || {} as ICatalougeTypes.IProduct;
+    const { mutateAsync: updateProduct, isPending: isLoading } = useUpdateProduct(id as string)
+
+    useEffect(() => {
+        if (id) {
+            form.reset({
+                title: productData?.title || '',
+                description: productData?.description || '',
+                quantity: productData?.quantity || 0,
+                packQuantity: productData?.packQuantity || 0,
+                mrp: productData?.mrp || 0,
+                price: productData?.price || 0,
+                gstInPercent: productData?.gstInPercent || 0,
+                hsn: productData?.hsn || '',
+                brand: productData?.brand || '',
+                category: productData?.category || '',
+                subcategory: productData?.subcategory || '',
+                colour: productData?.colour || '',
+                size: productData?.size || '',
+            });
+        }
+    }, [form, id, productData?.brand, productData?.category, productData?.colour, productData?.description, productData?.gstInPercent, productData?.hsn, productData?.mrp, productData?.packQuantity, productData?.price, productData?.quantity, productData?.size, productData?.subcategory, productData?.title])
 
     const onSubmit = async (values: IFormData) => {
         const { ...rest } = values;
         const payload = { ...rest };
-        const response = await createProduct(payload);
-        if (response.status === 'SUCCESS') {
-            form.reset()
+        if (id) {
+            const response = await updateProduct(payload);
+            if (response.status === 'SUCCESS') {
+                refetch()
+            }
+        } else {
+            const response = await createProduct(payload);
+            if (response.status === 'SUCCESS') {
+                form.reset()
+            }
         }
     };
 
@@ -284,13 +318,13 @@ export default function AddProduct() {
                         )}
                     />
                     <Button
-                        disabled={isPending}
-                        loading={isPending}
-                        loadingText="Creating Product..."
+                        disabled={isPending || isLoading}
+                        loading={isPending || isLoading}
+                        loadingText={id ? 'Updating Product' : "Creating Product..."}
                         type="submit"
                         className="w-[240px] col-span-2"
                     >
-                        Add
+                        {id ? 'Update' : 'Add'}
                     </Button>
                 </form>
             </Form>

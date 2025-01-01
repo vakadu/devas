@@ -5,4 +5,5 @@ export const enum ApiEndpoints {
 	Otp = 'auth/sendOtp',
 	RefreshToken = 'auth/token',
 	CreateProduct = 'product/create',
+	UpdateProduct = 'product/update',
 }

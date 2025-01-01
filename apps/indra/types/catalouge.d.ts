@@ -1,6 +1,7 @@
 declare namespace ICatalougeTypes {
 	interface IProduct {
 		_id: string;
+		title: string;
 		productId: string;
 		description: string;
 		quantity: number;
@@ -27,6 +28,8 @@ declare namespace ICatalougeTypes {
 		whatIsInTheBox: string[];
 		createdAt: string;
 		updatedAt: string;
+		hsn: string;
+		packQuantity: number;
 	}
 
 	interface IProductImage {

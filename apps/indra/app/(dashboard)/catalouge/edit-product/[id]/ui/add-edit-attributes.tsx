@@ -1,21 +1,18 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@devas/ui";
+import { useParams } from "next/navigation";
+
+import { Accordion } from "@devas/ui";
+import { useGetProductById } from "../api";
+import Attributes from "./attribute";
 
 export default function AddEditAttributes() {
+    const params = useParams();
+    const { data } = useGetProductById(params?.id as string);
+    const productData = data?.data?.product || {} as ICatalougeTypes.IProduct;
+
     return (
         <div className='max-w-[720px]'>
             <Accordion type="single" collapsible>
-                <AccordionItem value="item-1">
-                    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-                    <AccordionContent>
-                        Yes. It adheres to the WAI-ARIA design pattern.
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                    <AccordionTrigger>Is it accessible?</AccordionTrigger>
-                    <AccordionContent>
-                        Yes. It adheres to the WAI-ARIA design pattern.
-                    </AccordionContent>
-                </AccordionItem>
+                <Attributes key={productData?.aboutThisItem} />
             </Accordion>
         </div>
     )

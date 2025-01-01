@@ -3,5 +3,6 @@ export enum Routes {
 	Otp = '/otp',
 	Home = '/home',
 	CatalougeAddProduct = '/catalouge/add-product',
+	CatalougeEditProduct = '/catalouge/edit-product',
 	CatalougeProductList = '/catalouge/product-list',
 }

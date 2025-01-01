@@ -3,8 +3,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, FloatingInput, Form, FormControl, FormField, FormItem, FormMessage } from '@devas/ui';
-import { useCreateProduct, useGetProductById, useUpdateProduct } from '../api';
-import { useSearchParams } from 'next/navigation';
+import { useCreateProduct } from '../../app/(dashboard)/catalouge/add-product/api';
+import { useGetProductById, useUpdateProduct } from '../../app/(dashboard)/catalouge/edit-product/[id]/api';
+import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 const schema = z.object({
@@ -25,7 +26,7 @@ const schema = z.object({
 
 type IFormData = z.infer<typeof schema>;
 
-export default function AddProduct() {
+export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
     const form = useForm<IFormData>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -45,14 +46,13 @@ export default function AddProduct() {
         },
     });
     const { mutateAsync: createProduct, isPending } = useCreateProduct();
-    const params = useSearchParams();
-    const id = params.get('id') as string;
-    const { data, refetch } = useGetProductById(id);
+    const params = useParams();
+    const { data, refetch } = useGetProductById(params?.id as string);
     const productData = data?.data?.product || {} as ICatalougeTypes.IProduct;
-    const { mutateAsync: updateProduct, isPending: isLoading } = useUpdateProduct(id as string)
+    const { mutateAsync: updateProduct, isPending: isLoading } = useUpdateProduct(params?.id as string);
 
     useEffect(() => {
-        if (id) {
+        if (type === "EDIT" && params?.id) {
             form.reset({
                 title: productData?.title || '',
                 description: productData?.description || '',
@@ -69,20 +69,20 @@ export default function AddProduct() {
                 size: productData?.size || '',
             });
         }
-    }, [form, id, productData?.brand, productData?.category, productData?.colour, productData?.description, productData?.gstInPercent, productData?.hsn, productData?.mrp, productData?.packQuantity, productData?.price, productData?.quantity, productData?.size, productData?.subcategory, productData?.title])
+    }, [form, params?.id, productData?.brand, productData?.category, productData?.colour, productData?.description, productData?.gstInPercent, productData?.hsn, productData?.mrp, productData?.packQuantity, productData?.price, productData?.quantity, productData?.size, productData?.subcategory, productData?.title, type]);
 
     const onSubmit = async (values: IFormData) => {
         const { ...rest } = values;
         const payload = { ...rest };
-        if (id) {
-            const response = await updateProduct(payload);
-            if (response.status === 'SUCCESS') {
-                refetch()
-            }
-        } else {
+        if (type === "ADD") {
             const response = await createProduct(payload);
             if (response.status === 'SUCCESS') {
                 form.reset()
+            }
+        } else {
+            const response = await updateProduct(payload);
+            if (response.status === 'SUCCESS') {
+                refetch()
             }
         }
     };
@@ -320,11 +320,11 @@ export default function AddProduct() {
                     <Button
                         disabled={isPending || isLoading}
                         loading={isPending || isLoading}
-                        loadingText={id ? 'Updating Product' : "Creating Product..."}
+                        loadingText={type === "EDIT" ? "Updating Product..." : "Creating Product..."}
                         type="submit"
                         className="w-[240px] col-span-2"
                     >
-                        {id ? 'Update' : 'Add'}
+                        {type === "EDIT" ? "Update" : "Add"}
                     </Button>
                 </form>
             </Form>

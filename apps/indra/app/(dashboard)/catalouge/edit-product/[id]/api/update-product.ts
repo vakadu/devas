@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { HttpService } from '../../../../../core/services';
-import { ApiEndpoints } from '../../../../../core/primitives';
+import { HttpService } from '../../../../../../core/services';
+import { ApiEndpoints } from '../../../../../../core/primitives';
 
 interface IPayload {
 	title: string;
@@ -20,20 +20,21 @@ interface IPayload {
 	size?: string;
 }
 
-const createProduct = async (payload: IPayload) => {
+const updateProduct = async (id: string, payload: IPayload) => {
 	try {
-		const { data } = await HttpService.post<
-			ICommonTypes.IApiResponse<{ product: ICatalougeTypes.IProduct }>
-		>(`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.CreateProduct}`, payload);
+		const { data } = await HttpService.patch<ICommonTypes.IApiResponse<{ product: object }>>(
+			`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.UpdateProduct}/${id}`,
+			payload
+		);
 		return data;
 	} catch (err) {
 		throw new Error('Network Error. Please try again.');
 	}
 };
 
-export function useCreateProduct() {
+export function useUpdateProduct(id: string) {
 	return useMutation({
-		mutationFn: createProduct,
+		mutationFn: (payload: IPayload) => updateProduct(id, payload),
 		onSuccess: (data) => {
 			if (data.status === 'SUCCESS') {
 				toast.success('Product created successfully.');
@@ -47,4 +48,4 @@ export function useCreateProduct() {
 	});
 }
 
-export default useCreateProduct;
+export default useUpdateProduct;

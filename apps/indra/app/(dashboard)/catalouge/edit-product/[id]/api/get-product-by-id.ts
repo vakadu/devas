@@ -1,6 +1,6 @@
 import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
 
-import { HttpService } from '../../../../../core/services';
+import { HttpService } from '../../../../../../core/services';
 
 const getProductById = async ({ queryKey }: QueryFunctionContext<[string, string]>) => {
 	const [_key, _params] = queryKey;

@@ -117,3 +117,4 @@ export {
 	TableCell,
 	TableCaption,
 } from './lib/table';
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './lib/accordian';

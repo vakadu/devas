@@ -26,7 +26,6 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 	SidebarRail,
-	Spinner,
 } from '@devas/ui';
 import { useAppSelector } from '../store';
 import { useGetNavigation } from '../api';

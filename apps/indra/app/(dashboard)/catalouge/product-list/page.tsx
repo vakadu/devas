@@ -109,7 +109,7 @@ export default function Page() {
 							<DropdownMenuItem
 								onClick={() =>
 									router.push(
-										`${Routes.CatalougeAddProduct}?type=product&id=${id}`
+										`${Routes.CatalougeEditProduct}/${id}?type=product`
 									)
 								}
 								className="cursor-pointer"
@@ -119,7 +119,7 @@ export default function Page() {
 							<DropdownMenuItem
 								onClick={() =>
 									router.push(
-										`${Routes.CatalougeAddProduct}?type=images&id=${id}`
+										`${Routes.CatalougeEditProduct}/${id}?type=images`
 									)
 								}
 								className="cursor-pointer"
@@ -129,7 +129,7 @@ export default function Page() {
 							<DropdownMenuItem
 								onClick={() =>
 									router.push(
-										`${Routes.CatalougeAddProduct}?type=attributes&id=${id}`
+										`${Routes.CatalougeEditProduct}/${id}?type=attributes`
 									)
 								}
 								className="cursor-pointer"
@@ -182,9 +182,9 @@ export default function Page() {
 										{header.isPlaceholder
 											? null
 											: flexRender(
-													header.column.columnDef.header,
-													header.getContext()
-											  )}
+												header.column.columnDef.header,
+												header.getContext()
+											)}
 									</TableHead>
 								))}
 							</TableRow>

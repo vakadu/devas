@@ -6,4 +6,5 @@ export const enum ApiEndpoints {
 	RefreshToken = 'auth/token',
 	CreateProduct = 'product/create',
 	UpdateProduct = 'product/update',
+	AddProductAttribute = 'product/addAttribute',
 }

@@ -1,26 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { HttpService } from '../../../../../core/services';
-import { ApiEndpoints } from '../../../../../core/primitives';
+import { HttpService } from '../../../../../../core/services';
+import { ApiEndpoints } from '../../../../../../core/primitives';
 
 interface IPayload {
-	title: string;
-	description: string;
-	quantity: number;
-	packQuantity: number;
-	mrp: number;
-	price: number;
-	gstInPercent: number;
-	hsn: string;
-	brand: string;
-	category: string;
-	subcategory: string;
-	colour?: string;
-	size?: string;
+	key: string;
+	value: string;
+	attributeKey: string;
 }
 
-const updateProduct = async (id: string, payload: IPayload) => {
+const updateProductAttribute = async (id: string, payload: IPayload) => {
 	try {
 		const { data } = await HttpService.patch<ICommonTypes.IApiResponse<{ product: object }>>(
 			`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.UpdateProduct}/${id}`,
@@ -32,9 +22,9 @@ const updateProduct = async (id: string, payload: IPayload) => {
 	}
 };
 
-export function useUpdateProduct(id: string) {
+export function useUpdateProductAttribute(id: string) {
 	return useMutation({
-		mutationFn: (payload: IPayload) => updateProduct(id, payload),
+		mutationFn: (payload: IPayload) => updateProductAttribute(id, payload),
 		onSuccess: (data) => {
 			if (data.status === 'SUCCESS') {
 				toast.success('Product created successfully.');
@@ -48,4 +38,4 @@ export function useUpdateProduct(id: string) {
 	});
 }
 
-export default useUpdateProduct;
+export default useUpdateProductAttribute;

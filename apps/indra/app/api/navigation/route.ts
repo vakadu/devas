@@ -20,7 +20,7 @@ const data: ICommonTypes.INavigationItem[] = [
 			{
 				id: 3,
 				type: 'link',
-				path: `${Routes.CatalougeAddProduct}?type=product`,
+				path: `${Routes.CatalougeAddProduct}`,
 				title: 'Add Product',
 			},
 			{

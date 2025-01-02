@@ -1,5 +1,6 @@
 import { ChevronRight, LogOutIcon, UserRoundCheck, House, ShoppingBasket } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import {
 	Button,
@@ -42,7 +43,7 @@ export const AppSidebar = () => {
 
 	return (
 		<Sidebar collapsible="icon">
-			<SidebarHeader>
+			<SidebarHeader className="px-8">
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton>
@@ -57,13 +58,13 @@ export const AppSidebar = () => {
 					<Menu navMenu={navMenu} />
 				</SidebarGroup>
 			</SidebarContent>
-			<SidebarFooter>
+			<SidebarFooter className="px-8">
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton className="p-0" asChild>
 							<div>
 								<Dialog>
-									<DialogTrigger className="w-full p-12 flex gap-12 items-center">
+									<DialogTrigger className="w-full py-12 flex gap-12 items-center">
 										<LogOutIcon width={16} height={16} />
 										<span>Logout</span>
 									</DialogTrigger>
@@ -97,21 +98,31 @@ export const AppSidebar = () => {
 };
 
 const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
+	const pathname = usePathname();
+
 	return (
-		<SidebarMenu className="gap-16">
+		<SidebarMenu className="gap-16 px-8">
 			{navMenu.map((item) => {
 				const Icon = item.icon ? IconMap[item.icon] : null;
+				const active = pathname === item.path;
+
 				if (item.type === 'menu') {
-					return (
-						<Collapsible key={item.id} className="group/collapsible">
-							<MenuItem item={item} />
-						</Collapsible>
-					);
+					return <MenuItem key={item.id} item={item} />;
 				} else {
 					return (
-						<SidebarMenuButton key={item.id}>
-							<Icon className="!size-18" />
-							<Link href={item.path}>{item.title}</Link>
+						<SidebarMenuButton
+							className={`${
+								active
+									? 'bg-primary text-primary-foreground py-12 font-medium hover:bg-primary hover:text-primary-foreground hover:opacity-80'
+									: 'px-0'
+							}`}
+							key={item.id}
+							asChild
+						>
+							<Link href={item.path}>
+								<Icon className="!size-18" />
+								<span>{item.title}</span>
+							</Link>
 						</SidebarMenuButton>
 					);
 				}
@@ -122,29 +133,43 @@ const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 
 const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 	const Icon = item.icon ? IconMap[item.icon] : null;
+	const pathname = usePathname();
+	const activeItem = pathname.split('/').filter(Boolean)[0];
+	const activeCollapse = `/${activeItem}` === item.path;
 
 	return (
-		<SidebarMenuItem className="py-6">
-			<CollapsibleTrigger asChild>
-				<SidebarMenuButton>
-					<Icon className="!size-18" />
-					<span>{item.title}</span>
-					<ChevronRight className="ml-auto !size-18 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-				</SidebarMenuButton>
-			</CollapsibleTrigger>
-			<CollapsibleContent>
-				<SidebarMenuSub className="mx-24 gap-12 mt-8">
-					{item?.items?.map((ite) => {
-						return (
-							<SidebarMenuSubItem key={ite.id}>
-								<SidebarMenuSubButton asChild>
-									<Link href={ite.path}>{ite.title}</Link>
-								</SidebarMenuSubButton>
-							</SidebarMenuSubItem>
-						);
-					})}
-				</SidebarMenuSub>
-			</CollapsibleContent>
-		</SidebarMenuItem>
+		<Collapsible defaultOpen={activeCollapse} key={item.id} className="group/collapsible">
+			<SidebarMenuItem className="py-6">
+				<CollapsibleTrigger asChild>
+					<SidebarMenuButton className="px-0">
+						<Icon className="!size-18" />
+						<span>{item.title}</span>
+						<ChevronRight className="ml-auto !size-18 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+					</SidebarMenuButton>
+				</CollapsibleTrigger>
+				<CollapsibleContent>
+					<SidebarMenuSub className="gap-12 mt-8 mx-0 px-0">
+						{item?.items?.map((ite) => {
+							const active = pathname === ite.path;
+
+							return (
+								<SidebarMenuSubItem key={ite.id}>
+									<SidebarMenuSubButton
+										className={`${
+											active
+												? 'bg-primary text-primary-foreground py-12 font-medium hover:bg-primary hover:text-primary-foreground hover:opacity-80 px-12'
+												: ''
+										}`}
+										asChild
+									>
+										<Link href={ite.path}>{ite.title}</Link>
+									</SidebarMenuSubButton>
+								</SidebarMenuSubItem>
+							);
+						})}
+					</SidebarMenuSub>
+				</CollapsibleContent>
+			</SidebarMenuItem>
+		</Collapsible>
 	);
 };

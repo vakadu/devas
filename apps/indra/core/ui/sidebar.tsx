@@ -122,7 +122,7 @@ const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 						<SidebarMenuButton
 							className={`${
 								active
-									? 'bg-primary text-primary-foreground py-12 font-medium hover:bg-primary hover:text-primary-foreground hover:opacity-80'
+									? 'bg-greyBg text-accent-foreground py-12 font-medium hover:bg-greyBg hover:text-accent-foreground hover:opacity-80'
 									: 'px-0'
 							}`}
 							key={item.id}
@@ -166,7 +166,7 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 									<SidebarMenuSubButton
 										className={`${
 											active
-												? 'bg-primary text-primary-foreground py-12 font-medium hover:bg-primary hover:text-primary-foreground hover:opacity-80 px-12'
+												? 'bg-greyBg text-accent-foreground py-12 font-medium hover:bg-greyBg hover:text-accent-foreground hover:opacity-80 px-12'
 												: ''
 										}`}
 										asChild

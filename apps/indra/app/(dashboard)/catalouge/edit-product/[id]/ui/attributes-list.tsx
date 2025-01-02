@@ -2,7 +2,7 @@ import { useParams } from 'next/navigation';
 
 import { Accordion, Spinner } from '@devas/ui';
 import { useGetProductById } from '../api';
-import Attributes from './attribute';
+import Attributes from './attributes';
 import AttributeForm from './add-edit-attribute';
 import { useEditProduct } from '../context';
 
@@ -32,7 +32,16 @@ export default function AttributesList() {
 		<div className="grid grid-cols-3 gap-54">
 			<Accordion className="col-span-2" type="single" collapsible>
 				{attributes.map(([name, title, data]) => {
-					return <Attributes key={name} name={name} title={title} data={data} />;
+					return (
+						<Attributes
+							id={params?.id as string}
+							key={name}
+							name={name}
+							title={title}
+							data={data}
+							refetch={refetch}
+						/>
+					);
 				})}
 			</Accordion>
 			{showForm && <AttributeForm id={params?.id as string} refetch={refetch} />}

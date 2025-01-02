@@ -1,6 +1,6 @@
 import { ChevronRight, LogOutIcon, UserRoundCheck, House, ShoppingBasket } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 
 import {
 	Button,
@@ -30,6 +30,7 @@ import {
 } from '@devas/ui';
 import { useAppSelector } from '../store';
 import { useGetNavigation } from '../api';
+import { logout } from '../helpers';
 
 const IconMap = {
 	House,
@@ -41,14 +42,18 @@ export const AppSidebar = () => {
 	const { data } = useGetNavigation();
 	const navMenu = data?.data || [];
 
+	const handleLogout = () => {
+		logout();
+	};
+
 	return (
 		<Sidebar collapsible="icon">
 			<SidebarHeader className="px-8">
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton>
-							<UserRoundCheck />
-							<span className="font-medium">{name ? name : mobile}</span>
+							<UserRoundCheck className="text-primary" />
+							<span className="text-14 font-medium">{name ? name : mobile}</span>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>
@@ -66,7 +71,7 @@ export const AppSidebar = () => {
 								<Dialog>
 									<DialogTrigger className="w-full py-12 flex gap-12 items-center">
 										<LogOutIcon width={16} height={16} />
-										<span>Logout</span>
+										<span className="text-14 font-medium">Logout</span>
 									</DialogTrigger>
 									<DialogContent className="gap-24">
 										<DialogHeader>
@@ -76,7 +81,11 @@ export const AppSidebar = () => {
 											</DialogDescription>
 										</DialogHeader>
 										<DialogFooter className="!pt-32">
-											<Button size="lg" className="px-24" variant="secondary">
+											<Button
+												onClick={handleLogout}
+												size="lg"
+												className="px-24"
+											>
 												Logout
 											</Button>
 											<DialogClose asChild>
@@ -121,7 +130,7 @@ const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 						>
 							<Link href={item.path}>
 								<Icon className="!size-18" />
-								<span>{item.title}</span>
+								<span className="text-14 font-medium">{item.title}</span>
 							</Link>
 						</SidebarMenuButton>
 					);
@@ -143,7 +152,7 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 				<CollapsibleTrigger asChild>
 					<SidebarMenuButton className="px-0">
 						<Icon className="!size-18" />
-						<span>{item.title}</span>
+						<span className="text-14 font-medium">{item.title}</span>
 						<ChevronRight className="ml-auto !size-18 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
 					</SidebarMenuButton>
 				</CollapsibleTrigger>
@@ -162,7 +171,9 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 										}`}
 										asChild
 									>
-										<Link href={ite.path}>{ite.title}</Link>
+										<Link href={ite.path}>
+											<span className="text-14 font-medium">{ite.title}</span>
+										</Link>
 									</SidebarMenuSubButton>
 								</SidebarMenuSubItem>
 							);

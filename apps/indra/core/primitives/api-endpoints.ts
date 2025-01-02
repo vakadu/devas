@@ -8,4 +8,5 @@ export const enum ApiEndpoints {
 	UpdateProduct = 'product/update',
 	AddProductAttribute = 'product/addAttribute',
 	UpdateProductAttribute = 'product/updateAttribute',
+	RemoveAttributeImage = 'product/removeAttribute',
 }

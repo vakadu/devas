@@ -13,19 +13,19 @@ declare namespace ICatalougeTypes {
 		subcategory: string;
 		colour: string;
 		size: string;
-		tags: string[];
+		tags: ISpecifications[];
 		updatedBy: string;
 		active: boolean;
 		mediumImages: ProductImage[];
 		smallImages: ProductImage[];
 		largeImages: ProductImage[];
-		productSpecification: ProductSpecification[];
-		productDescription: string[];
-		aboutThisItem: string[];
-		topHighlights: string[];
-		additionalInformation: string[];
-		technicalDetails: string[];
-		whatIsInTheBox: string[];
+		productSpecification: ISpecifications[];
+		productDescription: ISpecifications[];
+		aboutThisItem: ISpecifications[];
+		topHighlights: ISpecifications[];
+		additionalInformation: ISpecifications[];
+		technicalDetails: ISpecifications[];
+		whatIsInTheBox: ISpecifications[];
 		createdAt: string;
 		updatedAt: string;
 		hsn: string;
@@ -40,7 +40,7 @@ declare namespace ICatalougeTypes {
 		updatedAt: string;
 	}
 
-	interface IProductSpecification {
+	interface ISpecifications {
 		key: string;
 		value: string;
 		_id: string;

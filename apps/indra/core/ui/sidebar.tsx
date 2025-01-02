@@ -47,7 +47,7 @@ export const AppSidebar = () => {
 					<SidebarMenuItem>
 						<SidebarMenuButton>
 							<UserRoundCheck />
-							<span className="text-14 font-semibold">{name ? name : mobile}</span>
+							<span className="font-medium">{name ? name : mobile}</span>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>
@@ -110,7 +110,7 @@ const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 				} else {
 					return (
 						<SidebarMenuButton key={item.id}>
-							<Icon className="!size-16" />
+							<Icon className="!size-18" />
 							<Link href={item.path}>{item.title}</Link>
 						</SidebarMenuButton>
 					);
@@ -127,7 +127,7 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 		<SidebarMenuItem className="py-6">
 			<CollapsibleTrigger asChild>
 				<SidebarMenuButton>
-					<Icon className="!size-16" />
+					<Icon className="!size-18" />
 					<span>{item.title}</span>
 					<ChevronRight className="ml-auto !size-18 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
 				</SidebarMenuButton>

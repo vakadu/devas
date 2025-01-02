@@ -8,14 +8,15 @@ interface IPayload {
 	key: string;
 	value: string;
 	attributeKey: string;
+	id: string;
 }
 
-const createProductAttribute = async (id: string, payload: IPayload) => {
+const updateProductAttribute = async (id: string, payload: IPayload) => {
 	try {
 		const { data } = await HttpService.patch<
 			ICommonTypes.IApiResponse<{ product: ICatalougeTypes.IProduct }>
 		>(
-			`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.AddProductAttribute}/${id}`,
+			`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.UpdateProductAttribute}/${id}`,
 			payload
 		);
 		return data;
@@ -24,9 +25,9 @@ const createProductAttribute = async (id: string, payload: IPayload) => {
 	}
 };
 
-export function useCreateProductAttribute(id: string) {
+export function useUpdateProductAttribute(id: string) {
 	return useMutation({
-		mutationFn: (payload: IPayload) => createProductAttribute(id, payload),
+		mutationFn: (payload: IPayload) => updateProductAttribute(id, payload),
 		onSuccess: (data) => {
 			if (data.status === 'SUCCESS') {
 				toast.success('Attribute created successfully.');
@@ -40,4 +41,4 @@ export function useCreateProductAttribute(id: string) {
 	});
 }
 
-export default useCreateProductAttribute;
+export default useUpdateProductAttribute;

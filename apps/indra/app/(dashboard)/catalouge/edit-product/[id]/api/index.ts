@@ -1,3 +1,4 @@
 export { useGetProductById } from './get-product-by-id';
 export { useUpdateProduct } from './update-product';
-export { useUpdateProductAttribute } from './create-attributes';
+export { useCreateProductAttribute } from './create-attributes';
+export { useUpdateProductAttribute } from './update-attributes';

@@ -470,7 +470,7 @@ export const SidebarMenuItem = React.forwardRef<HTMLLIElement, React.ComponentPr
 SidebarMenuItem.displayName = 'SidebarMenuItem';
 
 export const sidebarMenuButtonVariants = cva(
-	'peer/menu-button flex w-full items-center gap-8 overflow-hidden rounded-12 text-left text-14 outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-[32px] group-data-[collapsible=icon]:!p-12 [&>span:last-child]:truncate [&>svg]:size-24 [&>svg]:shrink-0 px-12',
+	'peer/menu-button flex w-full items-center gap-8 overflow-hidden rounded-12 text-left outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-[32px] group-data-[collapsible=icon]:!p-12 [&>span:last-child]:truncate [&>svg]:size-24 [&>svg]:shrink-0 px-12',
 	{
 		variants: {
 			variant: {
@@ -479,7 +479,7 @@ export const sidebarMenuButtonVariants = cva(
 					'bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]',
 			},
 			size: {
-				default: 'text-14',
+				default: 'text-16',
 				sm: 'text-xs',
 				lg: 'text-sm group-data-[collapsible=icon]:!p-0',
 			},
@@ -619,7 +619,7 @@ export const SidebarMenuSubButton = React.forwardRef<
 				'flex min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-6 text-sidebar-foreground outline-none ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground',
 				'data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground',
 				size === 'sm' && 'text-xs',
-				size === 'md' && 'text-sm',
+				size === 'md' && 'text-16',
 				'group-data-[collapsible=icon]:hidden',
 				className
 			)}

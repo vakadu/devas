@@ -118,3 +118,4 @@ export {
 	TableCaption,
 } from './lib/table';
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './lib/accordian';
+export * from './lib/text-area';

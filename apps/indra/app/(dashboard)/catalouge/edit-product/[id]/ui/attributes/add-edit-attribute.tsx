@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,9 +13,8 @@ import {
 	FormItem,
 	FormMessage,
 } from '@devas/ui';
-import { useCreateProductAttribute, useUpdateProductAttribute } from '../api';
-import { useEditProduct } from '../context';
-import { useEffect } from 'react';
+import { useCreateProductAttribute, useUpdateProductAttribute } from '../../api';
+import { useEditProduct } from '../../context/edit-product';
 
 const schema = z.object({
 	key: z.string().min(3, { message: 'Title is required' }),

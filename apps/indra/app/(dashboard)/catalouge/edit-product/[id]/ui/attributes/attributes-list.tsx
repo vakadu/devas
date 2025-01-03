@@ -1,10 +1,10 @@
 import { useParams } from 'next/navigation';
 
 import { Accordion, Spinner } from '@devas/ui';
-import { useGetProductById } from '../api';
+import { useGetProductById } from '../../api';
 import Attributes from './attributes';
 import AttributeForm from './add-edit-attribute';
-import { useEditProduct } from '../context';
+import { useEditProduct } from '../../context/edit-product';
 
 type IAttributeItem = [name: string, value: string, data: ICatalougeTypes.ISpecifications[]];
 

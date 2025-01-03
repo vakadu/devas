@@ -12,9 +12,9 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@devas/ui';
-import { useEditProduct } from '../context';
+import { useEditProduct } from '../../context/edit-product';
 import { Edit, PlusIcon, Trash2 } from 'lucide-react';
-import { useRemoveAttributeImage } from '../../../../../../core/api';
+import { useRemoveAttributeImage } from '../../../../../../../core/api';
 
 export default function Attributes({
 	id,

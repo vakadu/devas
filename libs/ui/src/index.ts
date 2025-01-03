@@ -119,3 +119,15 @@ export {
 } from './lib/table';
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './lib/accordian';
 export * from './lib/text-area';
+export {
+	Select,
+	SelectGroup,
+	SelectValue,
+	SelectTrigger,
+	SelectContent,
+	SelectLabel,
+	SelectItem,
+	SelectSeparator,
+	SelectScrollUpButton,
+	SelectScrollDownButton,
+} from './lib/select';

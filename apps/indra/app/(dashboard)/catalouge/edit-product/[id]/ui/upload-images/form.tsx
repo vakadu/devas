@@ -10,17 +10,32 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@devas/ui';
+import { createFormDataForImage } from '../../../../../../../core/helpers';
+import { useUploadImages } from '../../context/upload-images';
+import useUploadProductImage from '../../api/upload-image';
 
-export default function UploadImageForm() {
+export default function UploadImageForm({ id, refetch }: { id: string; refetch: () => void }) {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [value, setValue] = useState<string | null>(null);
+	const { attributeKey, toggleForm } = useUploadImages();
+	const { mutateAsync: uploadImage, isPending } = useUploadProductImage(id as string);
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0] || null;
 		setSelectedFile(file);
 	};
 
-	const onSubmit = () => {};
+	const onSubmit = async () => {
+		const formData = createFormDataForImage(selectedFile as File, 'file', {
+			priority: value,
+			attributeKey,
+		});
+		const response = await uploadImage(formData);
+		if (response?.status === 'SUCCESS') {
+			refetch();
+			toggleForm(false);
+		}
+	};
 
 	return (
 		<div className="flex flex-col gap-12">
@@ -49,7 +64,14 @@ export default function UploadImageForm() {
 					/>
 				)}
 			</div>
-			<Button disabled={!selectedFile || !value}>Submit</Button>
+			<Button
+				onClick={onSubmit}
+				loading={isPending}
+				loadingText="Uploading..."
+				disabled={!selectedFile || !value || isPending}
+			>
+				Submit
+			</Button>
 		</div>
 	);
 }

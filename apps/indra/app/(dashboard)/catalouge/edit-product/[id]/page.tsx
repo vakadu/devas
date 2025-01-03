@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 
 import { Spinner, Tabs, TabsContent, TabsList, TabsTrigger } from '@devas/ui';
 import { EditProductProvider } from './context/edit-product';
+import { UploadImagesProvider } from './context/upload-images';
 
 const AddCatalougeProduct = dynamic(
 	() => import('../../../../../core/ui').then((mod) => mod.AddCatalougeProduct),
@@ -59,7 +60,9 @@ export default function Page() {
 					<AddCatalougeProduct type="EDIT" />
 				</TabsContent>
 				<TabsContent value="images">
-					<ImagesList />
+					<UploadImagesProvider>
+						<ImagesList />
+					</UploadImagesProvider>
 				</TabsContent>
 				<TabsContent value="attributes">
 					<EditProductProvider>

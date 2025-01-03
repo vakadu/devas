@@ -16,9 +16,9 @@ declare namespace ICatalougeTypes {
 		tags: ISpecifications[];
 		updatedBy: string;
 		active: boolean;
-		mediumImages: ProductImage[];
-		smallImages: ProductImage[];
-		largeImages: ProductImage[];
+		mediumImages: IProductImage[];
+		smallImages: IProductImage[];
+		largeImages: IProductImage[];
 		productSpecification: ISpecifications[];
 		productDescription: ISpecifications[];
 		aboutThisItem: ISpecifications[];

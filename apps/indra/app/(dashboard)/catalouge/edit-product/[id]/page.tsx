@@ -19,7 +19,7 @@ const AddEditAttributes = dynamic(() => import('./ui/attributes/attributes-list'
 	loading: () => <Spinner />,
 });
 
-const ImagesList = dynamic(() => import('./ui/upload-images/images-list'), {
+const ImagesContainer = dynamic(() => import('./ui/upload-images/container'), {
 	loading: () => <Spinner />,
 });
 
@@ -61,7 +61,7 @@ export default function Page() {
 				</TabsContent>
 				<TabsContent value="images">
 					<UploadImagesProvider>
-						<ImagesList />
+						<ImagesContainer />
 					</UploadImagesProvider>
 				</TabsContent>
 				<TabsContent value="attributes">

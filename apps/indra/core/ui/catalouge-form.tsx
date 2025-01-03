@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 
 import {
 	Button,
@@ -16,8 +18,7 @@ import {
 	useGetProductById,
 	useUpdateProduct,
 } from '../../app/(dashboard)/catalouge/edit-product/[id]/api';
-import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { Routes } from '../primitives';
 
 const schema = z.object({
 	title: z.string().min(3, { message: 'Title is required' }),
@@ -63,6 +64,7 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 	const { mutateAsync: updateProduct, isPending: isLoading } = useUpdateProduct(
 		params?.id as string
 	);
+	const router = useRouter();
 
 	useEffect(() => {
 		if (type === 'EDIT' && params?.id) {
@@ -120,7 +122,9 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 		if (type === 'ADD') {
 			const response = await createProduct(payload);
 			if (response.status === 'SUCCESS') {
+				const id = response?.data?.product?.productId;
 				form.reset();
+				router.push(`${Routes.CatalougeEditProduct}/${id}?type=images`);
 			}
 		} else {
 			const response = await updateProduct(payload);

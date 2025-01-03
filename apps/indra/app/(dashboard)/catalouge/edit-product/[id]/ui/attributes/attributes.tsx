@@ -31,7 +31,7 @@ export default function Attributes({
 }) {
 	const { setAttributeKey, setAttributeName, toggleForm, setType, setAttribute } =
 		useEditProduct();
-	const { mutateAsync: removeAttribute } = useRemoveAttributeImage(id);
+	const { mutateAsync: removeAttribute, isPending } = useRemoveAttributeImage(id);
 
 	const handleAccordian = () => {
 		setAttributeKey(name);
@@ -111,6 +111,9 @@ export default function Attributes({
 												size="lg"
 												className="px-24"
 												variant="destructive"
+												disabled={isPending}
+												loading={isPending}
+												loadingText="Removing..."
 											>
 												Remove
 											</Button>

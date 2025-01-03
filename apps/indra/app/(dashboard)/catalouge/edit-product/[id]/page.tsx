@@ -41,7 +41,7 @@ export default function Page() {
 						className="flex-1 data-[state=active]:bg-black-1 data-[state=active]:text-white py-12"
 						value="product"
 					>
-						Add Product
+						Update Product
 					</TabsTrigger>
 					<TabsTrigger
 						className="flex-1 data-[state=active]:bg-black-1 data-[state=active]:text-white py-12"

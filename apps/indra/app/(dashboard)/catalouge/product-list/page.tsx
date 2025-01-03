@@ -27,11 +27,15 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
 } from '@devas/ui';
 import { useGetProductsList } from './api';
 import { cn } from '@devas/utils';
-import { MoreVerticalIcon } from 'lucide-react';
+import { ImageIcon, ListIcon, MoreVerticalIcon, TableProperties } from 'lucide-react';
 import { Routes } from '../../../../core/primitives';
+import Link from 'next/link';
 
 export default function Page() {
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -45,7 +49,17 @@ export default function Page() {
 		{
 			accessorKey: 'productId',
 			header: 'Product Id',
-			cell: ({ row }) => <div>{row.getValue('productId')}</div>,
+			cell: ({ row }) => {
+				const id = parseInt(row.getValue('productId'));
+				return (
+					<Link
+						className="hover:underline hover:text-primary"
+						href={`${Routes.CatalougeEditProduct}/${id}?type=product`}
+					>
+						{id}
+					</Link>
+				);
+			},
 		},
 		// {
 		// 	accessorKey: 'name',
@@ -97,48 +111,81 @@ export default function Page() {
 		},
 		{
 			id: 'actions',
-			enableHiding: false,
+			header: 'Actions',
 			cell: ({ row }) => {
 				const id = row.getValue('productId');
 				return (
-					<DropdownMenu>
-						<DropdownMenuTrigger>
-							<MoreVerticalIcon className="size-16" />
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end">
-							<DropdownMenuItem
-								onClick={() =>
-									router.push(
-										`${Routes.CatalougeEditProduct}/${id}?type=product`
-									)
-								}
-								className="cursor-pointer"
-							>
-								Edit Details
-							</DropdownMenuItem>
-							<DropdownMenuItem
-								onClick={() =>
-									router.push(
-										`${Routes.CatalougeEditProduct}/${id}?type=images`
-									)
-								}
-								className="cursor-pointer"
-							>
-								Edit Images
-							</DropdownMenuItem>
-							<DropdownMenuItem
-								onClick={() =>
-									router.push(
-										`${Routes.CatalougeEditProduct}/${id}?type=attributes`
-									)
-								}
-								className="cursor-pointer"
-							>
-								Edit Attributes
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
+					<div className="flex gap-12">
+						<Tooltip>
+							<TooltipTrigger>
+								{' '}
+								<Link href={`${Routes.CatalougeEditProduct}/${id}?type=product`}>
+									<ListIcon className="size-18" />
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>Edit Product Details</p>
+							</TooltipContent>
+						</Tooltip>
+						<Tooltip>
+							<TooltipTrigger>
+								{' '}
+								<Link href={`${Routes.CatalougeEditProduct}/${id}?type=images`}>
+									<ImageIcon className="size-18" />
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>Edit Images</p>
+							</TooltipContent>
+						</Tooltip>
+						<Tooltip>
+							<TooltipTrigger>
+								{' '}
+								<Link href={`${Routes.CatalougeEditProduct}/${id}?type=attributes`}>
+									<TableProperties className="size-18" />
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>Edit Attributes</p>
+							</TooltipContent>
+						</Tooltip>
+					</div>
 				);
+				// return (
+				// 	<DropdownMenu>
+				// 		<DropdownMenuTrigger>
+				// 			<MoreVerticalIcon className="size-16" />
+				// 		</DropdownMenuTrigger>
+				// 		<DropdownMenuContent align="end">
+				// 			<DropdownMenuItem
+				// 				onClick={() =>
+				// 					router.push(`${Routes.CatalougeEditProduct}/${id}?type=product`)
+				// 				}
+				// 				className="cursor-pointer"
+				// 			>
+				// 				Edit Details
+				// 			</DropdownMenuItem>
+				// 			<DropdownMenuItem
+				// 				onClick={() =>
+				// 					router.push(`${Routes.CatalougeEditProduct}/${id}?type=images`)
+				// 				}
+				// 				className="cursor-pointer"
+				// 			>
+				// 				Edit Images
+				// 			</DropdownMenuItem>
+				// 			<DropdownMenuItem
+				// 				onClick={() =>
+				// 					router.push(
+				// 						`${Routes.CatalougeEditProduct}/${id}?type=attributes`
+				// 					)
+				// 				}
+				// 				className="cursor-pointer"
+				// 			>
+				// 				Edit Attributes
+				// 			</DropdownMenuItem>
+				// 		</DropdownMenuContent>
+				// 	</DropdownMenu>
+				// );
 			},
 		},
 	];
@@ -182,9 +229,9 @@ export default function Page() {
 										{header.isPlaceholder
 											? null
 											: flexRender(
-												header.column.columnDef.header,
-												header.getContext()
-											)}
+													header.column.columnDef.header,
+													header.getContext()
+											  )}
 									</TableHead>
 								))}
 							</TableRow>

@@ -131,3 +131,4 @@ export {
 	SelectScrollUpButton,
 	SelectScrollDownButton,
 } from './lib/select';
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './lib/tooltip';

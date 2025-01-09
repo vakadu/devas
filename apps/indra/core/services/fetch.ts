@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { AppConstansts, Routes } from '../primitives';
-import { logout } from './token';
+import { logout } from '../helpers/token';
 
 export const withAuthFetch = async (url: string, options: any = {}) => {
 	const cookieStore = await cookies();

@@ -55,6 +55,12 @@ export default function Page() {
 					>
 						Attributes
 					</TabsTrigger>
+					<TabsTrigger
+						className="flex-1 data-[state=active]:bg-black-1 data-[state=active]:text-white py-12"
+						value="variants"
+					>
+						Variants
+					</TabsTrigger>
 				</TabsList>
 				<TabsContent value="product">
 					<AddCatalougeProduct type="EDIT" />
@@ -65,6 +71,11 @@ export default function Page() {
 					</UploadImagesProvider>
 				</TabsContent>
 				<TabsContent value="attributes">
+					<EditProductProvider>
+						<AddEditAttributes />
+					</EditProductProvider>
+				</TabsContent>
+				<TabsContent value="variants">
 					<EditProductProvider>
 						<AddEditAttributes />
 					</EditProductProvider>

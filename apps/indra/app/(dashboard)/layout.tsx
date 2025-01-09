@@ -1,22 +1,29 @@
 'use client';
 
 import { ReactNode, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { useAppSelector } from '../../core/store';
 import { Routes } from '../../core/primitives';
 import { SidebarInset, SidebarProvider } from '@devas/ui';
 import { AppSidebar, Header } from '../../core/ui';
+import { useAnalytics } from '../../core/context';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	const { loggedIn } = useAppSelector((state) => state.auth);
 	const router = useRouter();
+	const pathname = usePathname();
+	const { trackEvent } = useAnalytics();
 
 	useEffect(() => {
 		if (!loggedIn) {
 			router.push(Routes.Login);
 		}
 	}, [loggedIn, router]);
+
+	useEffect(() => {
+		trackEvent('PAGE_VIEW', { page: pathname });
+	}, [pathname]);
 
 	return (
 		<SidebarProvider>

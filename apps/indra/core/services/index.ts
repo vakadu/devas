@@ -1,6 +1,6 @@
 export { Providers } from './providers';
 export { safeActionClient } from './next-safe-actions';
-export { authToken } from './token';
+export { authToken } from '../helpers/token';
 export { supabase } from './supabase';
 export { prisma } from './prisma';
 export { HttpService } from './http-service';

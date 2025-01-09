@@ -1,6 +1,6 @@
 import { ChevronRight, LogOutIcon, UserRoundCheck, House, ShoppingBasket } from 'lucide-react';
 import Link from 'next/link';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import {
 	Button,
@@ -31,6 +31,7 @@ import {
 import { useAppSelector } from '../store';
 import { useGetNavigation } from '../api';
 import { logout } from '../helpers';
+import { useAnalytics } from '../context';
 
 const IconMap = {
 	House,
@@ -108,6 +109,11 @@ export const AppSidebar = () => {
 
 const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 	const pathname = usePathname();
+	const { trackEvent } = useAnalytics();
+
+	const handleEvents = async (item: ICommonTypes.INavigationItem) => {
+		await trackEvent('SIDEBAR_CLICK', { path: item.path, title: item?.title });
+	};
 
 	return (
 		<SidebarMenu className="gap-16 px-8">
@@ -128,7 +134,7 @@ const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 							key={item.id}
 							asChild
 						>
-							<Link href={item.path}>
+							<Link onClick={() => handleEvents(item)} href={item.path}>
 								<Icon className="!size-18" />
 								<span className="text-14 font-medium">{item.title}</span>
 							</Link>
@@ -145,6 +151,11 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 	const pathname = usePathname();
 	const activeItem = pathname.split('/').filter(Boolean)[0];
 	const activeCollapse = `/${activeItem}` === item.path;
+	const { trackEvent } = useAnalytics();
+
+	const handleEvents = async (item: ICommonTypes.INavigationItem) => {
+		await trackEvent('SIDEBAR_CLICK', { path: item.path, title: item?.title });
+	};
 
 	return (
 		<Collapsible defaultOpen={activeCollapse} key={item.id} className="group/collapsible">
@@ -171,7 +182,7 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 										}`}
 										asChild
 									>
-										<Link href={ite.path}>
+										<Link onClick={() => handleEvents(ite)} href={ite.path}>
 											<span className="text-14 font-medium">{ite.title}</span>
 										</Link>
 									</SidebarMenuSubButton>

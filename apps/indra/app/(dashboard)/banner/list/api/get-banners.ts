@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { HttpService } from '../../../../../core/services';
 
-const getProductList = async ({
+const getBanners = async ({
 	pageParam = 0,
 	searchTerm,
 	limit = 5,
@@ -11,24 +11,24 @@ const getProductList = async ({
 	searchTerm: string;
 	limit: number;
 }) => {
-	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/product/list?page=${pageParam}&limit=${limit}`;
+	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/banner/list?page=${pageParam}&limit=${limit}`;
 	if (searchTerm && searchTerm.length > 2) {
 		url += `&searchTerm=${searchTerm}`;
 	}
 	const { data } = await HttpService.get<
-		ICommonTypes.IApiResponse<{ products: ICatalougeTypes.IProduct[] }>
+		ICommonTypes.IApiResponse<{ banners: ICatalougeTypes.IBanner[] }>
 	>(url);
 
 	return {
 		data,
-		nextPage: data?.data?.products?.length < limit ? null : pageParam + 1,
+		nextPage: data?.data?.banners?.length < limit ? null : pageParam + 1,
 	};
 };
 
-export function useGetProductsList(searchTerm: string, limit: number) {
+export function useGetBanners(searchTerm: string, limit: number) {
 	return useInfiniteQuery({
-		queryKey: ['product/list', searchTerm, limit],
-		queryFn: ({ pageParam }) => getProductList({ pageParam, searchTerm, limit }),
+		queryKey: ['banner/list', searchTerm, limit],
+		queryFn: ({ pageParam }) => getBanners({ pageParam, searchTerm, limit }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage) => lastPage.nextPage,
 	});

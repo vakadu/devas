@@ -121,7 +121,7 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 			if (response.status === 'SUCCESS') {
 				const id = response?.data?.product?.productId;
 				form.reset();
-				router.push(`${Routes.CatalougeEditProduct}/${id}?type=images`);
+				router.push(`${Routes.EditProduct}/${id}?type=images`);
 			}
 		} else {
 			const response = await updateProduct(payload);

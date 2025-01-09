@@ -138,7 +138,7 @@ export default function ListingTable({ data }: { data: ICatalougeTypes.IProduct[
 	});
 
 	return (
-		<Table className="bg-white">
+		<Table className="bg-white relative">
 			<TableHeader>
 				{table?.getHeaderGroups().map((headerGroup) => (
 					<TableRow key={headerGroup.id}>

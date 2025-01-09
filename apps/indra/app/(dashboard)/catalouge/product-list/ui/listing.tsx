@@ -14,14 +14,7 @@ export default function Listing() {
 	});
 	const [search, setSearchTerm] = useState('');
 
-	// React Query data and fetching states
-	const {
-		data: productData,
-		fetchNextPage,
-		isFetchingNextPage,
-		isPending,
-		isFetching,
-	} = useGetProductsList(search, 15);
+	const { data: productData, fetchNextPage, isFetchingNextPage } = useGetProductsList(search, 15);
 
 	useEffect(() => {
 		if (inView) {

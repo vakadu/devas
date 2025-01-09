@@ -13,21 +13,42 @@ const data: ICommonTypes.INavigationItem[] = [
 	{
 		id: 2,
 		type: 'menu',
-		path: '/catalouge',
-		title: 'Catalouge',
+		path: '/products',
+		title: 'Products',
 		icon: 'ShoppingBasket',
 		items: [
 			{
 				id: 3,
 				type: 'link',
-				path: `${Routes.CatalougeAddProduct}`,
+				path: `${Routes.AddProduct}`,
 				title: 'Add Product',
 			},
 			{
 				id: 4,
 				type: 'link',
-				path: `${Routes.CatalougeProductList}`,
+				path: `${Routes.ProductList}`,
 				title: 'Products List',
+			},
+		],
+	},
+	{
+		id: 5,
+		type: 'menu',
+		path: '/banner',
+		title: 'Banners',
+		icon: 'TicketSlash',
+		items: [
+			{
+				id: 3,
+				type: 'link',
+				path: `${Routes.AddBanner}`,
+				title: 'Add Banner',
+			},
+			{
+				id: 4,
+				type: 'link',
+				path: `${Routes.BannerList}`,
+				title: 'Banners List',
 			},
 		],
 	},

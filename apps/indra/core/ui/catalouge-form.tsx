@@ -13,11 +13,8 @@ import {
 	FormItem,
 	FormMessage,
 } from '@devas/ui';
-import { useCreateProduct } from '../../app/(dashboard)/catalouge/add-product/api';
-import {
-	useGetProductById,
-	useUpdateProduct,
-} from '../../app/(dashboard)/catalouge/edit-product/[id]/api';
+import { useCreateProduct } from '../../app/(dashboard)/products/add/api';
+import { useGetProductById, useUpdateProduct } from '../../app/(dashboard)/products/edit/[id]/api';
 import { Routes } from '../primitives';
 
 const schema = z.object({

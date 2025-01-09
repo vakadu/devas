@@ -50,7 +50,7 @@ export default function ListingTable({ data }: { data: ICatalougeTypes.IProduct[
 					return (
 						<Link
 							className="hover:underline hover:text-primary"
-							href={`${Routes.CatalougeEditProduct}/${id}?type=product`}
+							href={`${Routes.EditProduct}/${id}?type=product`}
 						>
 							{id}
 						</Link>
@@ -92,7 +92,7 @@ export default function ListingTable({ data }: { data: ICatalougeTypes.IProduct[
 
 					const handleEvents = async (item: { type: string; title: string }) => {
 						await trackEvent('EDIT_CATALOUGE_PRODUCT', {
-							path: `${Routes.CatalougeEditProduct}/${id}?type=${item.type}`,
+							path: `${Routes.EditProduct}/${id}?type=${item.type}`,
 							title: item.title,
 						});
 					};
@@ -106,7 +106,7 @@ export default function ListingTable({ data }: { data: ICatalougeTypes.IProduct[
 								{dropDownData.map((menu) => (
 									<DropdownMenuItem key={menu.type}>
 										<Link
-											href={`${Routes.CatalougeEditProduct}/${id}?type=${menu.type}`}
+											href={`${Routes.EditProduct}/${id}?type=${menu.type}`}
 											onClick={() => handleEvents(menu)}
 										>
 											{menu.title}

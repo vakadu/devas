@@ -1,4 +1,11 @@
-import { ChevronRight, LogOutIcon, UserRoundCheck, House, ShoppingBasket } from 'lucide-react';
+import {
+	ChevronRight,
+	LogOutIcon,
+	UserRoundCheck,
+	House,
+	ShoppingBasket,
+	TicketSlash,
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -36,6 +43,7 @@ import { useAnalytics } from '../context';
 const IconMap = {
 	House,
 	ShoppingBasket,
+	TicketSlash,
 } as any;
 
 export const AppSidebar = () => {
@@ -171,7 +179,6 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 					<SidebarMenuSub className="gap-12 mt-8 mx-0 px-0">
 						{item?.items?.map((ite) => {
 							const active = pathname === ite.path;
-
 							return (
 								<SidebarMenuSubItem key={ite.id}>
 									<SidebarMenuSubButton

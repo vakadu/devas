@@ -22,11 +22,14 @@ import {
 import useCreateBanner from '../../app/(dashboard)/banner/add/api/create-banner';
 import { useGetBannerById } from '../../app/(dashboard)/banner/edit/[id]/api/get-banner-by-id';
 import { useEffect } from 'react';
+import useUpdateBanner from '../../app/(dashboard)/banner/edit/[id]/api/update-banner';
+import { Routes } from '../primitives';
 
 const schema = z.object({
 	title: z.string().min(3, { message: 'Title is required' }),
 	description: z.string().min(6, { message: 'Description is required' }),
 	type: z.string().min(1, { message: 'Type is required' }),
+	active: z.string().min(1, { message: 'Active status is required' }),
 });
 
 type IFormData = z.infer<typeof schema>;
@@ -38,11 +41,16 @@ export default function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 			title: '',
 			description: '',
 			type: '',
+			active: 'true',
 		},
 	});
 	const params = useParams();
+	const router = useRouter();
 	const { mutateAsync: createBanner, isPending } = useCreateBanner();
-	const { data } = useGetBannerById(params?.id as string);
+	const { mutateAsync: updateBanner, isPending: isLoading } = useUpdateBanner(
+		params?.id as string
+	);
+	const { data, refetch } = useGetBannerById(params?.id as string);
 
 	useEffect(() => {
 		if (type === 'EDIT' && params?.id) {
@@ -50,9 +58,11 @@ export default function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 				title: data?.data?.banner?.title || '',
 				description: data?.data?.banner?.description || '',
 				type: data?.data?.banner?.type || '',
+				active: data?.data?.banner?.active.toString() || 'true',
 			});
 		}
 	}, [
+		data?.data?.banner?.active,
 		data?.data?.banner?.description,
 		data?.data?.banner?.title,
 		data?.data?.banner?.type,
@@ -63,9 +73,22 @@ export default function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 
 	const onSubmit = async (values: IFormData) => {
 		if (type === 'ADD') {
-			const response = await createBanner(values);
+			const { active, ...rest } = values;
+			const response = await createBanner(rest);
 			if (response.status === 'SUCCESS') {
 				form.reset();
+				router.push(`${Routes.EditBanner}/${response.data.banner._id}`);
+			}
+		} else {
+			const { active, ...rest } = values;
+			const updatedActive = active === 'true';
+			const payload = {
+				...rest,
+				active: updatedActive,
+			};
+			const response = await updateBanner(payload);
+			if (response.status === 'SUCCESS') {
+				refetch();
 			}
 		}
 	};
@@ -155,10 +178,41 @@ export default function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 					className="mt-24 grid grid-cols-2 gap-x-24 gap-y-24"
 				>
 					{fields.map(renderField)}
+					{type === 'EDIT' && (
+						<FormField
+							control={form.control}
+							name="active"
+							render={({ field: selectField, fieldState }) => {
+								return (
+									<FormItem>
+										<Select
+											onValueChange={selectField.onChange}
+											defaultValue={selectField.value}
+											value={selectField.value}
+										>
+											<FormControl>
+												<SelectTrigger
+													isError={!!fieldState.error}
+													className="!mt-6 bg-white"
+												>
+													<SelectValue placeholder="Select a type" />
+												</SelectTrigger>
+											</FormControl>
+											<SelectContent>
+												<SelectItem value="true">Active</SelectItem>
+												<SelectItem value="false">InActive</SelectItem>
+											</SelectContent>
+										</Select>
+										<FormMessage />
+									</FormItem>
+								);
+							}}
+						/>
+					)}
 					<div className="col-span-2">
 						<Button
-							// disabled={isPending || isLoading}
-							// loading={isPending || isLoading}
+							disabled={isPending || isLoading}
+							loading={isPending || isLoading}
 							loadingText={
 								type === 'EDIT' ? 'Updating Banner...' : 'Creating Banner...'
 							}

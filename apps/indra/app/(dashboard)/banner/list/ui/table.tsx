@@ -67,7 +67,7 @@ export default function ListingTable({
 				cell: ({ row }) => <div>{row.getValue('type')}</div>,
 			},
 		],
-		[]
+		[trackEvent]
 	);
 
 	const table = useReactTable({

@@ -11,10 +11,9 @@ interface IPayload {
 
 const createBanner = async (payload: IPayload) => {
 	try {
-		const { data } = await HttpService.post<ICommonTypes.IApiResponse<any>>(
-			`${process.env.NEXT_PUBLIC_BASE_PATH}/banner/create`,
-			payload
-		);
+		const { data } = await HttpService.post<
+			ICommonTypes.IApiResponse<{ banner: ICatalougeTypes.IBannerDetails }>
+		>(`${process.env.NEXT_PUBLIC_BASE_PATH}/banner/create`, payload);
 		return data;
 	} catch (err) {
 		throw new Error('Network Error. Please try again.');

@@ -53,4 +53,27 @@ declare namespace ICatalougeTypes {
 		description: string;
 		type: string;
 	}
+	interface IBannerDetails {
+		title: string;
+		description: string;
+		type: string;
+		active: boolean;
+		updatedBy: string;
+		images: IBannerImage[];
+		createdAt: string;
+		updatedAt: string;
+		_id: string;
+	}
+	interface IBannerImage {
+		title: string;
+		description: string;
+		url: string;
+		xPriority: number;
+		yPriority: number;
+		productIds: string[];
+		active: boolean;
+		_id: string;
+		createdAt: string;
+		updatedAt: string;
+	}
 }

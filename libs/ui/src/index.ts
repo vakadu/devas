@@ -132,3 +132,22 @@ export {
 	SelectScrollDownButton,
 } from './lib/select';
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './lib/tooltip';
+export { DropZone } from './lib/dropzone';
+export {
+	Menubar,
+	MenubarMenu,
+	MenubarTrigger,
+	MenubarContent,
+	MenubarItem,
+	MenubarSeparator,
+	MenubarLabel,
+	MenubarCheckboxItem,
+	MenubarRadioGroup,
+	MenubarRadioItem,
+	MenubarPortal,
+	MenubarSubContent,
+	MenubarSubTrigger,
+	MenubarGroup,
+	MenubarSub,
+	MenubarShortcut,
+} from './lib/menubar';

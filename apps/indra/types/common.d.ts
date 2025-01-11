@@ -13,4 +13,5 @@ declare namespace ICommonTypes {
 		items?: INavigationItem[];
 		icon?: string;
 	}
+	type IFileWithPreview = File & { preview: string };
 }

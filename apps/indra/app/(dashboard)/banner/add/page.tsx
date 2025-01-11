@@ -1,4 +1,4 @@
-import AddEditBanner from '../../../../core/ui/add-edit-banner';
+import { AddEditBanner } from '../../../../core/ui';
 
 export default function Page() {
 	return (

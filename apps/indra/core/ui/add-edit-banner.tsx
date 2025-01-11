@@ -34,7 +34,7 @@ const schema = z.object({
 
 type IFormData = z.infer<typeof schema>;
 
-export default function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
+export function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 	const form = useForm<IFormData>({
 		resolver: zodResolver(schema),
 		defaultValues: {

@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button, ImagePlaceholder } from '@devas/ui';
@@ -20,7 +20,7 @@ export default function ImageItem({
 	id,
 }: IImageItemProps) {
 	const [isHover, setHover] = useState(false);
-	const { mutateAsync: deleteBannerImage } = useDeleteBannerImage(id as string);
+	const { mutateAsync: deleteBannerImage, isPending } = useDeleteBannerImage(id as string);
 
 	const handleDelete = async (image: ICatalougeTypes.IBannerImage) => {
 		const response = await deleteBannerImage({ bannerImageId: image._id });
@@ -62,7 +62,11 @@ export default function ImageItem({
 				className="absolute top-[-6px] right-[-4px] rounded-full z-50"
 				onClick={() => handleDelete(image)}
 			>
-				<X className="!size-16" />
+				{isPending ? (
+					<Loader2 className="animate-spin !size-16" />
+				) : (
+					<X className="!size-16" />
+				)}
 			</Button>
 		</div>
 	);

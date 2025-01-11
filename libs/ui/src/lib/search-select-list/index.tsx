@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronDownIcon, X } from 'lucide-react';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ButtonHTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
 
 import { cn } from '../../utils';
 import { SearchSelectContext, useSearchSelectTrigger } from '../select/context';
@@ -45,17 +45,16 @@ export const SearchSelectTrigger = ({ children, ...props }: { children: ReactNod
 	const { setShow, show } = useSearchSelectTrigger();
 
 	return (
-		<button
+		<div
 			className={cn(
-				'flex h-[48px] w-full items-center justify-between whitespace-nowrap rounded-8 border border-grey-light bg-transparent px-12 py-8 placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:border-2 disabled:cursor-not-allowed disabled:opacity-50 mt-6 cursor-pointer'
+				'flex h-[48px] w-full items-center justify-between whitespace-nowrap rounded-8 border border-grey-light bg-transparent px-12 py-6 placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:border-2 disabled:cursor-not-allowed disabled:opacity-50 mt-6 cursor-pointer'
 			)}
 			onClick={() => setShow(!show)}
-			type="button"
 			{...props}
 		>
 			{children}
 			<ChevronDownIcon className="!size-16 opacity-50" />
-		</button>
+		</div>
 	);
 };
 
@@ -107,10 +106,21 @@ export const SearchSelectInput = ({ value, onChange }: ISearchSelectInputProps) 
 	);
 };
 
-export const SearchSelectOption = ({ children }: { children: ReactNode }) => {
+export const SearchSelectOption = ({
+	children,
+	className,
+	...props
+}: { children: ReactNode } & ButtonHTMLAttributes<HTMLButtonElement>) => {
 	return (
-		<div className="relative flex w-full select-none items-center rounded-sm py-8 px-16 text-14 outline-none hover:bg-accent hover:text-accent-foreground cursor-pointer">
+		<button
+			type="button"
+			className={cn(
+				'relative flex w-full select-none items-center py-8 px-16 text-14 outline-none hover:bg-accent hover:text-accent-foreground cursor-pointer border-b border-grey-divider',
+				className
+			)}
+			{...props}
+		>
 			{children}
-		</div>
+		</button>
 	);
 };

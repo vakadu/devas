@@ -1,16 +1,16 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { PlusIcon, X } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { useGetBannerById } from '../api/get-banner-by-id';
 import { Button, Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@devas/ui';
 import { BannerImageSheet } from '../../../../../../core/ui';
-import EditImage from './edit-image-details';
-import ImageItem from './image';
+import ImageItem from './image-item';
+import EditImage from './edit-image';
 
-export default function Images() {
+export default function AddEditImages() {
 	const params = useParams();
 	const { data, refetch } = useGetBannerById(params?.id as string);
 	const [updateImage, setUpdateImage] = useState(false);
@@ -67,7 +67,7 @@ export default function Images() {
 				/>
 			</Sheet>
 			<Sheet open={updateDetails} onOpenChange={setUpdateDetails}>
-				<SheetContent className="h-[calc(100vh-100px)]" side="bottom">
+				<SheetContent className="h-[calc(100vh-60px)]" side="bottom">
 					<SheetHeader>
 						<SheetTitle>Edit Image Details</SheetTitle>
 						<SheetDescription></SheetDescription>

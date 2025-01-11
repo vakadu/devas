@@ -160,3 +160,4 @@ export {
 	SearchSelectInput,
 	SearchSelectOption,
 } from './lib/search-select-list';
+export { Badge } from './lib/badge';

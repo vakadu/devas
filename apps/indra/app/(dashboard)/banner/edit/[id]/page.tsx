@@ -1,5 +1,5 @@
 import { AddEditBanner } from '../../../../../core/ui';
-import Images from './ui/images';
+import AddEditImages from './ui/add-edit-images';
 
 export default function Page() {
 	return (
@@ -10,7 +10,7 @@ export default function Page() {
 			</div>
 			<div className="bg-white col-span-2 p-16 rounded-8">
 				<h2 className="text-24 font-medium">Edit Images</h2>
-				<Images />
+				<AddEditImages />
 			</div>
 		</div>
 	);

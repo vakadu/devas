@@ -67,7 +67,7 @@ export default function Images() {
 				/>
 			</Sheet>
 			<Sheet open={updateDetails} onOpenChange={setUpdateDetails}>
-				<SheetContent side="bottom">
+				<SheetContent className="h-[calc(100vh-100px)]" side="bottom">
 					<SheetHeader>
 						<SheetTitle>Edit Image Details</SheetTitle>
 						<SheetDescription></SheetDescription>

@@ -12,7 +12,12 @@ import {
 	FormControl,
 	FormField,
 	FormItem,
+	FormLabel,
 	FormMessage,
+	SearchSelectContent,
+	SearchSelectLabel,
+	SearchSelectList,
+	SearchSelectTrigger,
 	Select,
 	SelectContent,
 	SelectItem,
@@ -22,6 +27,7 @@ import {
 	SheetFooter,
 } from '@devas/ui';
 import { useUpdateBannerImageAttributes } from '../api/update-banner-image-attributes';
+import SearchProducts from './search-products';
 
 type IFormData = {
 	title: string;
@@ -94,6 +100,7 @@ export default function EditImage({ details, id, setUpdateDetails, refetch }: IE
 		() => [
 			{ name: 'title', label: 'Title' },
 			{ name: 'description', label: 'Description' },
+			{ name: 'productIds', label: 'ProductIds', type: 'selectList' },
 			{
 				name: 'xPriority',
 				label: 'xPriority',
@@ -126,70 +133,85 @@ export default function EditImage({ details, id, setUpdateDetails, refetch }: IE
 	);
 
 	return (
-		<div>
+		<div className="h-[calc(100%-80px)]">
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="mt-24">
-					<div className="grid grid-cols-2 gap-x-24 gap-y-24 mx-auto max-w-screen-xl">
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="mt-24 h-full flex flex-col justify-between"
+				>
+					<div className="grid grid-cols-2 gap-x-24 gap-y-24 mx-auto w-full max-w-screen-xl">
 						{fields.map(({ name, label, type, options }) => {
-							if (type === 'select' && options) {
-								return (
-									<FormField
-										key={name}
-										control={form.control}
-										name={name as keyof IFormData}
-										render={({ field: selectField, fieldState }) => (
-											<FormItem>
-												<Select
-													onValueChange={selectField.onChange}
-													value={selectField.value}
-												>
-													<FormControl>
-														<SelectTrigger
-															isError={!!fieldState.error}
-															className="!mt-6 bg-white"
-														>
-															<SelectValue
-																placeholder={`Select ${label}`}
-															/>
-														</SelectTrigger>
-													</FormControl>
-													<SelectContent>
-														{options.map((option) => (
-															<SelectItem
-																key={option.value}
-																value={option.value}
+							switch (type) {
+								case 'select':
+									return (
+										<FormField
+											key={name}
+											control={form.control}
+											name={name as keyof IFormData}
+											render={({ field: selectField, fieldState }) => (
+												<FormItem>
+													<FormLabel>{label}</FormLabel>
+													<Select
+														onValueChange={selectField.onChange}
+														value={selectField.value}
+													>
+														<FormControl>
+															<SelectTrigger
+																isError={!!fieldState.error}
+																className="!mt-6 bg-white"
 															>
-																{option.label}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								);
+																<SelectValue
+																	placeholder={`Select ${label}`}
+																/>
+															</SelectTrigger>
+														</FormControl>
+														<SelectContent>
+															{options &&
+																options.map((option) => (
+																	<SelectItem
+																		key={option.value}
+																		value={option.value}
+																	>
+																		{option.label}
+																	</SelectItem>
+																))}
+														</SelectContent>
+													</Select>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+									);
+								case 'selectList':
+									return (
+										<SearchSelectList key={name}>
+											<SearchSelectLabel>Select Products</SearchSelectLabel>
+											<SearchSelectTrigger>Products</SearchSelectTrigger>
+											<SearchProducts />
+										</SearchSelectList>
+									);
+								default:
+									return (
+										<FormField
+											key={name}
+											control={form.control}
+											name={name as keyof IFormData}
+											render={({ field, fieldState }) => (
+												<FormItem>
+													<FormControl>
+														<FloatingInput
+															label={label}
+															id={name}
+															isError={!!fieldState.error}
+															{...field}
+														/>
+													</FormControl>
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+									);
 							}
-							return (
-								<FormField
-									key={name}
-									control={form.control}
-									name={name as keyof IFormData}
-									render={({ field, fieldState }) => (
-										<FormItem>
-											<FormControl>
-												<FloatingInput
-													label={label}
-													id={name}
-													isError={!!fieldState.error}
-													{...field}
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-							);
 						})}
 					</div>
 					<SheetFooter className="mt-32">

@@ -13,7 +13,6 @@ export default function Listing() {
 		threshold: 0,
 	});
 	const [search, setSearchTerm] = useState('');
-
 	const { data: productData, fetchNextPage, isFetchingNextPage } = useGetProductsList(search, 15);
 
 	useEffect(() => {

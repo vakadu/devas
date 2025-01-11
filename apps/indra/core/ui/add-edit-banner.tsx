@@ -12,6 +12,7 @@ import {
 	FormControl,
 	FormField,
 	FormItem,
+	FormLabel,
 	FormMessage,
 	Select,
 	SelectContent,
@@ -103,7 +104,7 @@ export function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 		{ name: 'description', label: 'Description', type: 'text' },
 		{
 			name: 'type',
-			label: 'Type',
+			label: 'Banner Type',
 			type: 'select',
 			options: [{ value: 'HOME_PAGE', label: 'HOME_PAGE' }],
 		},
@@ -119,6 +120,7 @@ export function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 					render={({ field: selectField, fieldState }) => {
 						return (
 							<FormItem>
+								<FormLabel>{field.label}</FormLabel>
 								<Select
 									onValueChange={selectField.onChange}
 									defaultValue={selectField.value}
@@ -185,6 +187,7 @@ export function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 							render={({ field: selectField, fieldState }) => {
 								return (
 									<FormItem>
+										<FormLabel>Type</FormLabel>
 										<Select
 											onValueChange={selectField.onChange}
 											defaultValue={selectField.value}

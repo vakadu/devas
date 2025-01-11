@@ -1,3 +1,4 @@
+import { SearchSelectTrigger, SearchSelectLabel } from './lib/search-select-list/index';
 export { Button } from './lib/button';
 export { Label } from './lib/label';
 export { FloatingInput } from './lib/input/floating-input';
@@ -151,3 +152,11 @@ export {
 	MenubarSub,
 	MenubarShortcut,
 } from './lib/menubar';
+export {
+	SearchSelectList,
+	SearchSelectTrigger,
+	SearchSelectLabel,
+	SearchSelectContent,
+	SearchSelectInput,
+	SearchSelectOption,
+} from './lib/search-select-list';

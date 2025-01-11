@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { SearchSelectContent, SearchSelectInput, SearchSelectOption } from '@devas/ui';
-import { useGetProductsList } from '../../../../../products/list/api';
+import { useGetProductsList } from '../../../../../../../core/api/catalouge/get-product-list';
 
 export default function SearchProducts({
 	products,

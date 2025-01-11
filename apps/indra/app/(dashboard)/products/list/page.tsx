@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 
 import { Spinner } from '@devas/ui';
 
-const Listing = dynamic(() => import('./ui/listing'), {
+const Listing = dynamic(() => import('./ui'), {
 	loading: () => <Spinner />,
 });
 

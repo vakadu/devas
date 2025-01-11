@@ -15,11 +15,15 @@ const AddCatalougeProduct = dynamic(
 	}
 );
 
-const AddEditAttributes = dynamic(() => import('./ui/attributes/attributes-list'), {
+const AddEditAttributes = dynamic(() => import('./ui/attributes'), {
 	loading: () => <Spinner />,
 });
 
-const ImagesContainer = dynamic(() => import('./ui/upload-images/container'), {
+const ImagesContainer = dynamic(() => import('./ui/upload-images'), {
+	loading: () => <Spinner />,
+});
+
+const Varaints = dynamic(() => import('./ui/variants'), {
 	loading: () => <Spinner />,
 });
 
@@ -77,7 +81,7 @@ export default function Page() {
 				</TabsContent>
 				<TabsContent value="variants">
 					<EditProductProvider>
-						<AddEditAttributes />
+						<Varaints />
 					</EditProductProvider>
 				</TabsContent>
 			</Tabs>

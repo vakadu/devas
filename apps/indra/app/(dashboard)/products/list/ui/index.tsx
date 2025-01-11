@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { Spinner } from '@devas/ui';
-import { useGetProductsList } from '../api';
+import { useGetProductsList } from '../api/get-products';
 import ListingTable from './table';
 import Header from './header';
 

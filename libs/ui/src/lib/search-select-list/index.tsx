@@ -4,7 +4,7 @@ import { ChevronDownIcon, X } from 'lucide-react';
 import { ButtonHTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
 
 import { cn } from '../../utils';
-import { SearchSelectContext, useSearchSelectTrigger } from '../select/context';
+import { SearchSelectContext, useSearchSelectTrigger } from './context';
 import { Button } from '../button';
 
 interface ISearchSelectInputProps {

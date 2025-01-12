@@ -40,29 +40,17 @@ export default function Page() {
 	return (
 		<div className="m-16 p-16 rounded-8">
 			<Tabs className="" value={type} onValueChange={handleChange}>
-				<TabsList className="w-full justify-start mb-12 bg-white p-12">
-					<TabsTrigger
-						className="flex-1 data-[state=active]:bg-black-1 data-[state=active]:text-white py-12"
-						value="product"
-					>
+				<TabsList className="w-full justify-start mb-12 bg-white">
+					<TabsTrigger className="flex-1 py-12" value="product">
 						Update Product
 					</TabsTrigger>
-					<TabsTrigger
-						className="flex-1 data-[state=active]:bg-black-1 data-[state=active]:text-white py-12"
-						value="images"
-					>
+					<TabsTrigger className="flex-1 py-12" value="images">
 						Product Images
 					</TabsTrigger>
-					<TabsTrigger
-						className="flex-1 data-[state=active]:bg-black-1 data-[state=active]:text-white py-12"
-						value="attributes"
-					>
+					<TabsTrigger className="flex-1 py-12" value="attributes">
 						Attributes
 					</TabsTrigger>
-					<TabsTrigger
-						className="flex-1 data-[state=active]:bg-black-1 data-[state=active]:text-white py-12"
-						value="variants"
-					>
+					<TabsTrigger className="flex-1 py-12" value="variants">
 						Variants
 					</TabsTrigger>
 				</TabsList>

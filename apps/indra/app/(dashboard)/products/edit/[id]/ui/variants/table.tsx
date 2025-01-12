@@ -49,8 +49,9 @@ export default function VariantProductTable() {
 							disabled={selectedRows.length <= 0 || isPending}
 							size="sm"
 							loading={isPending}
+							className="bg-orange px-12 hover:bg-orange/80"
 						>
-							Add Variants
+							Save
 						</Button>
 					);
 				},

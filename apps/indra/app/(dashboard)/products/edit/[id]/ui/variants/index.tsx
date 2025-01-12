@@ -1,13 +1,15 @@
 'use client';
 
-import { ListingHeader, ProductListing } from '../../../../../../../core/ui';
+import { ListingHeader, ProductListing, ListingContent } from '../../../../../../../core/ui';
+import VariantProductTable from './table';
 
 export default function Varaints() {
 	return (
-		<div>
-			<ProductListing>
-				<ListingHeader />
-			</ProductListing>
-		</div>
+		<ProductListing>
+			<ListingHeader />
+			<ListingContent>
+				<VariantProductTable />
+			</ListingContent>
+		</ProductListing>
 	);
 }

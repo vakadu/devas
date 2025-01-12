@@ -71,7 +71,10 @@ export default function AttributeForm({ id, refetch }: { id: string; refetch: ()
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="gap-x-24 gap-y-24">
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="gap-x-24 gap-y-24 bg-white rounded-12 p-12"
+			>
 				<div className="text-18 mb-16">Editing attributes for {attributeName}</div>
 				<FormField
 					control={form.control}

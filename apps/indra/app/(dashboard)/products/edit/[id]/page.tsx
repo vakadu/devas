@@ -38,9 +38,9 @@ export default function Page() {
 	};
 
 	return (
-		<div className="m-16 bg-white p-16 rounded-8">
+		<div className="m-16 p-16 rounded-8">
 			<Tabs className="" value={type} onValueChange={handleChange}>
-				<TabsList className="w-full justify-start mb-24">
+				<TabsList className="w-full justify-start mb-12 bg-white p-12">
 					<TabsTrigger
 						className="flex-1 data-[state=active]:bg-black-1 data-[state=active]:text-white py-12"
 						value="product"
@@ -66,23 +66,21 @@ export default function Page() {
 						Variants
 					</TabsTrigger>
 				</TabsList>
-				<TabsContent value="product">
+				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="product">
 					<AddCatalougeProduct type="EDIT" />
 				</TabsContent>
-				<TabsContent value="images">
+				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="images">
 					<UploadImagesProvider>
 						<ImagesContainer />
 					</UploadImagesProvider>
 				</TabsContent>
-				<TabsContent value="attributes">
+				<TabsContent className="mt-0" value="attributes">
 					<EditProductProvider>
 						<AddEditAttributes />
 					</EditProductProvider>
 				</TabsContent>
-				<TabsContent value="variants">
-					<EditProductProvider>
-						<Varaints />
-					</EditProductProvider>
+				<TabsContent className="mt-0" value="variants">
+					<Varaints />
 				</TabsContent>
 			</Tabs>
 		</div>

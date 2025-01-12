@@ -3,38 +3,38 @@ import { useMemo } from 'react';
 import { useParams } from 'next/navigation';
 
 import { cn } from '@devas/utils';
-import { ProductListingTable } from '../../../../../core/ui';
-import Link from 'next/link';
-import { Routes } from '../../../../../core/primitives';
-import { useAnalytics } from '../../../../../core/context';
+import { ProductListingTable } from '../../../../../../../core/ui';
+import { Button, Checkbox } from '@devas/ui';
+import { useProductListingContext } from '../../../../../../../core/ui/product-listing/context';
 
-export default function ProductListTable() {
-	const { trackEvent } = useAnalytics();
+export default function VariantProductTable() {
+	// const { trackEvent } = useAnalytics();
 	const params = useParams();
+	const { rowSelection } = useProductListingContext();
+	const selectedRows = Object.keys(rowSelection);
+	console.log(selectedRows);
 
 	const columns: ColumnDef<ICatalougeTypes.IProduct>[] = useMemo(
 		() => [
 			{
+				id: 'select',
+				header: () => (
+					<Button disabled={selectedRows.length <= 0} size="sm">
+						Add Varaints
+					</Button>
+				),
+				cell: ({ row }) => (
+					<Checkbox
+						checked={row.getIsSelected()}
+						onCheckedChange={(value) => row.toggleSelected(!!value)}
+						aria-label="Select row"
+					/>
+				),
+			},
+			{
 				accessorKey: 'title',
 				header: 'Title',
-				cell: ({ row }) => {
-					const handleEvents = async () => {
-						await trackEvent('EDIT_CATALOUGE_PRODUCT', {
-							path: `${Routes.EditProduct}/${row.original.productId}?type=product`,
-							productId: row.original.productId,
-						});
-					};
-
-					return (
-						<Link
-							className="hover:underline hover:text-primary"
-							href={`${Routes.EditProduct}/${row.original.productId}?type=product`}
-							onClick={handleEvents}
-						>
-							{row.original.title}
-						</Link>
-					);
-				},
+				cell: ({ row }) => <div>{row.getValue('title')}</div>,
 			},
 			{
 				accessorKey: 'category',
@@ -69,8 +69,8 @@ export default function ProductListTable() {
 				},
 			},
 		],
-		[trackEvent]
+		[selectedRows.length]
 	);
 
-	return <ProductListingTable columns={columns} type="product-list" id={params?.id as string} />;
+	return <ProductListingTable columns={columns} type="variant" id={params?.id as string} />;
 }

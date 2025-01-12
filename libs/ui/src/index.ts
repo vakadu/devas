@@ -161,3 +161,4 @@ export {
 	SearchSelectOption,
 } from './lib/search-select-list';
 export { Badge } from './lib/badge';
+export { Checkbox } from './lib/checkbox';

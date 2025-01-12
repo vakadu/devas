@@ -1,16 +1,18 @@
-import dynamic from 'next/dynamic';
+'use client';
 
-import { Spinner } from '@devas/ui';
-
-const Listing = dynamic(() => import('./ui'), {
-	loading: () => <Spinner />,
-});
+import { ListingContent, ListingHeader, ProductListing } from '../../../../core/ui';
+import ProductListTable from './ui/table';
 
 export default function Page() {
 	return (
 		<div className="w-full p-16 h-full">
 			<div className="h-full">
-				<Listing />
+				<ProductListing>
+					<ListingHeader />
+					<ListingContent>
+						<ProductListTable />
+					</ListingContent>
+				</ProductListing>
 			</div>
 		</div>
 	);

@@ -29,8 +29,8 @@ export default function AttributesList() {
 	}
 
 	return (
-		<div className="grid grid-cols-3 gap-54">
-			<Accordion className="col-span-2" type="single" collapsible>
+		<div className="grid grid-cols-3 gap-12">
+			<Accordion className="col-span-2 bg-white p-12 rounded-12" type="single" collapsible>
 				{attributes.map(([name, title, data]) => {
 					return (
 						<Attributes

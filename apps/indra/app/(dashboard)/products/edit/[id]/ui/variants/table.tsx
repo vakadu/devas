@@ -1,35 +1,80 @@
-import { ColumnDef } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 
 import { cn } from '@devas/utils';
 import { ProductListingTable } from '../../../../../../../core/ui';
 import { Button, Checkbox } from '@devas/ui';
 import { useProductListingContext } from '../../../../../../../core/ui/product-listing/context';
+import { useGetProductById, useUpdateProductVariants } from '../../api';
 
 export default function VariantProductTable() {
-	// const { trackEvent } = useAnalytics();
 	const params = useParams();
-	const { rowSelection } = useProductListingContext();
-	const selectedRows = Object.keys(rowSelection);
-	console.log(selectedRows);
+	const { rowSelection, refetch, setRowSelection } = useProductListingContext();
+	const selectedRows = Object.keys(rowSelection) as string[];
+	const { mutateAsync: updateProductVariants, isPending } = useUpdateProductVariants(
+		params?.id as string
+	);
+	const { data } = useGetProductById(params?.id as string);
+	const varaintIds = useMemo(() => {
+		return data?.data?.product?.productVariantIds || [];
+	}, [data?.data?.product?.productVariantIds]);
+
+	useEffect(() => {
+		const initial = varaintIds.reduce((acc, id) => {
+			acc[id] = true;
+			return acc;
+		}, {} as Record<string, boolean>);
+		setRowSelection(initial);
+	}, [setRowSelection, varaintIds]);
 
 	const columns: ColumnDef<ICatalougeTypes.IProduct>[] = useMemo(
 		() => [
 			{
 				id: 'select',
-				header: () => (
-					<Button disabled={selectedRows.length <= 0} size="sm">
-						Add Varaints
-					</Button>
-				),
-				cell: ({ row }) => (
-					<Checkbox
-						checked={row.getIsSelected()}
-						onCheckedChange={(value) => row.toggleSelected(!!value)}
-						aria-label="Select row"
-					/>
-				),
+				header: () => {
+					const updateVariants = async () => {
+						const payload = {
+							productVariantIds: selectedRows,
+						};
+						const response = await updateProductVariants(payload);
+						if (response.status === 'SUCCESS') {
+							refetch();
+						}
+					};
+
+					return (
+						<Button
+							onClick={updateVariants}
+							disabled={selectedRows.length <= 0 || isPending}
+							size="sm"
+							loading={isPending}
+						>
+							Add Variants
+						</Button>
+					);
+				},
+				cell: ({ row }) => {
+					const currentVariant = row.original.productId;
+					const isSelected = !!rowSelection[currentVariant];
+
+					return (
+						<Checkbox
+							checked={isSelected || row.getIsSelected()}
+							onCheckedChange={(value) => {
+								const updatedSelection: RowSelectionState = {
+									...rowSelection,
+									[currentVariant]: Boolean(value),
+								};
+								if (!value) {
+									delete updatedSelection[currentVariant];
+								}
+								setRowSelection(updatedSelection);
+							}}
+							aria-label="Select row"
+						/>
+					);
+				},
 			},
 			{
 				accessorKey: 'title',
@@ -69,7 +114,7 @@ export default function VariantProductTable() {
 				},
 			},
 		],
-		[selectedRows.length]
+		[selectedRows, updateProductVariants]
 	);
 
 	return <ProductListingTable columns={columns} type="variant" id={params?.id as string} />;

@@ -9,7 +9,6 @@ import {
 	getSortedRowModel,
 	useReactTable,
 	ColumnDef,
-	RowSelectionState,
 } from '@tanstack/react-table';
 import { useState } from 'react';
 

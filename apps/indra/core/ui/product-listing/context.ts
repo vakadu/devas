@@ -8,6 +8,7 @@ export type IProductListingContextType = {
 	isFetching: boolean;
 	rowSelection: RowSelectionState;
 	setRowSelection: (state: RowSelectionState) => void;
+	refetch: () => void;
 };
 
 export const ProductListingContext = createContext<IProductListingContextType | undefined>(

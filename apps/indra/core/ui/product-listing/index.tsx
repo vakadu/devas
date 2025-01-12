@@ -13,7 +13,10 @@ export function ProductListing({ children }: { children: ReactNode }) {
 		threshold: 0,
 	});
 	const [search, setSearchTerm] = useState('');
-	const { data, fetchNextPage, isFetchingNextPage, isFetching } = useGetProductsList(search, 15);
+	const { data, fetchNextPage, isFetchingNextPage, isFetching, refetch } = useGetProductsList(
+		search,
+		15
+	);
 	const [rowSelection, setRowSelection] = useState({});
 
 	useEffect(() => {
@@ -34,8 +37,9 @@ export function ProductListing({ children }: { children: ReactNode }) {
 			isFetching,
 			rowSelection,
 			setRowSelection,
+			refetch,
 		}),
-		[search, handleSearchChange, data?.pages, isFetching, rowSelection]
+		[search, handleSearchChange, data?.pages, isFetching, rowSelection, refetch]
 	);
 
 	return (

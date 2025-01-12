@@ -30,6 +30,7 @@ declare namespace ICatalougeTypes {
 		updatedAt: string;
 		hsn: string;
 		packQuantity: number;
+		productVariantIds?: string[];
 	}
 
 	interface IProductImage {

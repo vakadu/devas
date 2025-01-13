@@ -77,4 +77,10 @@ declare namespace ICatalougeTypes {
 		createdAt: string;
 		updatedAt: string;
 	}
+	interface IStore {
+		mobile: string;
+		name: string;
+		userId: string;
+		_id: string;
+	}
 }

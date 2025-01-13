@@ -7,6 +7,7 @@ import {
 	House,
 	ShoppingBasket,
 	TicketSlash,
+	StoreIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -46,6 +47,7 @@ const IconMap = {
 	House,
 	ShoppingBasket,
 	TicketSlash,
+	StoreIcon,
 } as any;
 
 export const AppSidebar = () => {

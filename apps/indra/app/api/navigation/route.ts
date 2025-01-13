@@ -39,18 +39,25 @@ const data: ICommonTypes.INavigationItem[] = [
 		icon: 'TicketSlash',
 		items: [
 			{
-				id: 3,
+				id: 6,
 				type: 'link',
 				path: `${Routes.AddBanner}`,
 				title: 'Add Banner',
 			},
 			{
-				id: 4,
+				id: 7,
 				type: 'link',
 				path: `${Routes.BannerList}`,
 				title: 'Banners List',
 			},
 		],
+	},
+	{
+		id: 8,
+		type: 'link',
+		path: '/store/list',
+		title: 'Store',
+		icon: 'StoreIcon',
 	},
 ];
 

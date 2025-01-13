@@ -1,4 +1,3 @@
-import { SearchSelectTrigger, SearchSelectLabel } from './lib/search-select-list/index';
 export { Button } from './lib/button';
 export { Label } from './lib/label';
 export { FloatingInput } from './lib/input/floating-input';
@@ -160,5 +159,18 @@ export {
 	SearchSelectInput,
 	SearchSelectOption,
 } from './lib/search-select-list';
+export { useSearchSelectTrigger } from './lib/search-select-list/context';
 export { Badge } from './lib/badge';
 export { Checkbox } from './lib/checkbox';
+export {
+	Command,
+	CommandDialog,
+	CommandInput,
+	CommandList,
+	CommandEmpty,
+	CommandGroup,
+	CommandItem,
+	CommandShortcut,
+	CommandSeparator,
+} from './lib/command';
+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor } from './lib/popover';

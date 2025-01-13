@@ -1,19 +1,41 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, RowSelectionState } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
 import { cn } from '@devas/utils';
-import { ProductListingTable } from '../../../../../core/ui';
-import { Routes } from '../../../../../core/primitives';
-import { useAnalytics } from '../../../../../core/context';
+import { ProductListingTable } from '../product-listing-table';
+import { Routes } from '../../primitives';
+import { useAnalytics } from '../../context';
+import { Checkbox } from '@devas/ui';
 
-export default function ProductListTable() {
+export default function ProductListTable({
+	setRowSelection,
+}: {
+	setRowSelection: (state: RowSelectionState) => void;
+}) {
 	const { trackEvent } = useAnalytics();
 	const params = useParams();
 
 	const columns: ColumnDef<ICatalougeTypes.IProduct>[] = useMemo(
 		() => [
+			{
+				id: 'select',
+				header: '',
+				cell: ({ row }) => (
+					<Checkbox
+						checked={row.getIsSelected()}
+						onCheckedChange={(value) => {
+							if (value) {
+								setRowSelection({ [row.original.productId]: true });
+							} else {
+								setRowSelection({});
+							}
+						}}
+						aria-label="Select row"
+					/>
+				),
+			},
 			{
 				accessorKey: 'title',
 				header: 'Title',
@@ -42,16 +64,6 @@ export default function ProductListTable() {
 				cell: ({ row }) => <div>{row.getValue('category')}</div>,
 			},
 			{
-				accessorKey: 'subcategory',
-				header: 'Sub Category',
-				cell: ({ row }) => <div>{row.getValue('subcategory')}</div>,
-			},
-			{
-				accessorKey: 'brand',
-				header: 'Brand',
-				cell: ({ row }) => <div>{row.getValue('brand')}</div>,
-			},
-			{
 				accessorKey: 'active',
 				header: 'Status',
 				cell: ({ row }) => {
@@ -69,7 +81,7 @@ export default function ProductListTable() {
 				},
 			},
 		],
-		[trackEvent]
+		[]
 	);
 
 	return <ProductListingTable columns={columns} type="product-list" id={params?.id as string} />;

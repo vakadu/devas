@@ -14,4 +14,17 @@ declare namespace ICommonTypes {
 		icon?: string;
 	}
 	type IFileWithPreview = File & { preview: string };
+
+	interface IDropdownItem {
+		label: string;
+		value: string;
+		department: string;
+		subcategories?: ISubcategory[];
+	}
+
+	interface ISubcategory {
+		label: string;
+		value: string;
+		department: string;
+	}
 }

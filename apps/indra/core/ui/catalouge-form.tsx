@@ -3,21 +3,35 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
 import {
 	Button,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
 	FloatingInput,
 	Form,
 	FormControl,
 	FormField,
 	FormItem,
+	FormLabel,
 	FormMessage,
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+	Command,
+	Spinner,
 } from '@devas/ui';
 import { useCreateProduct } from '../../app/(dashboard)/products/add/api';
 import { useGetProductById, useUpdateProduct } from '../../app/(dashboard)/products/edit/[id]/api';
 import { Routes } from '../primitives';
+import { useGetDropdownList } from '../api';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { cn } from '@devas/utils';
 
 const schema = z.object({
 	title: z.string().min(3, { message: 'Title is required' }),
@@ -64,6 +78,19 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 		params?.id as string
 	);
 	const router = useRouter();
+	const { data: categoryData, isPending: dropdownLoading } = useGetDropdownList('CATEGORIES');
+	const { data: brandsData } = useGetDropdownList('BRANDS');
+	const [subCategories, setSubCategories] = useState<ICommonTypes.ISubcategory[]>([]);
+	const category = form.watch('category');
+
+	useEffect(() => {
+		if (categoryData?.data?.dropdown && Boolean(category)) {
+			const subCatData = categoryData.data?.dropdown.find((cat) => cat.value === category);
+			if (subCatData?.subcategories) {
+				setSubCategories(subCatData?.subcategories);
+			}
+		}
+	}, [category, categoryData?.data?.dropdown]);
 
 	useEffect(() => {
 		if (type === 'EDIT' && params?.id) {
@@ -133,6 +160,10 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 		}
 	};
 
+	if (dropdownLoading) {
+		return <Spinner />;
+	}
+
 	return (
 		<div className="max-w-[720px]">
 			<Form {...form}>
@@ -142,41 +173,146 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 				>
 					{(
 						[
-							['title', 'Title'],
-							['description', 'Description'],
+							['title', 'Title', 'text'],
+							['description', 'Description', 'text'],
 							['quantity', 'Quantity', 'numeric'],
 							['packQuantity', 'Pack Quantity', 'numeric'],
 							['mrp', 'MRP', 'numeric'],
 							['price', 'Price', 'numeric'],
 							['gstInPercent', 'GST in Percent', 'numeric'],
-							['hsn', 'HSN'],
-							['brand', 'Brand'],
-							['category', 'Category'],
-							['subcategory', 'Subcategory'],
-							['colour', 'Colour'],
-							['size', 'Size'],
+							['hsn', 'HSN', 'text'],
+							['colour', 'Colour', 'text'],
+							['size', 'Size', 'text'],
+							[
+								'category',
+								'Category',
+								'text',
+								'select',
+								{
+									options: categoryData?.data?.dropdown || [],
+								},
+							],
+							[
+								'subcategory',
+								'Subcategory',
+								'text',
+								'select',
+								{
+									options: subCategories,
+								},
+							],
+							[
+								'brand',
+								'Brand',
+								'text',
+								'select',
+								{ options: brandsData?.data?.dropdown },
+							],
 						] as const
-					).map(([name, label, type]) => (
-						<FormField
-							key={name}
-							control={form.control}
-							name={name as keyof IFormData}
-							render={({ field, fieldState }) => (
-								<FormItem className="relative">
-									<FormControl>
-										<FloatingInput
-											label={label}
-											id={name}
-											isError={!!fieldState.error}
-											type={type || 'text'}
-											{...field}
-										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					))}
+					).map(([name, label, type, select, { options } = {}]) => {
+						if (select === 'select') {
+							return (
+								<FormField
+									control={form.control}
+									name={name as keyof IFormData}
+									key={name}
+									render={({ field }) => (
+										<FormItem className="flex flex-col">
+											<FormLabel>{label}</FormLabel>
+											<Popover>
+												<PopoverTrigger asChild>
+													<FormControl>
+														<Button
+															variant="outline"
+															role="combobox"
+															className={cn(
+																'justify-between h-48 border-grey-light',
+																!field.value &&
+																	'text-muted-foreground'
+															)}
+														>
+															<span className="text-14 font-normal">
+																{field.value
+																	? options &&
+																	  options.find(
+																			(option) =>
+																				option.value ===
+																				field.value
+																	  )?.label
+																	: 'Select an Option'}
+															</span>
+															<ChevronsUpDown className="opacity-50 !size-16" />
+														</Button>
+													</FormControl>
+												</PopoverTrigger>
+												<PopoverContent className="w-[320px] p-0">
+													<Command>
+														<CommandInput
+															placeholder="Search ..."
+															className="h-42"
+														/>
+														<CommandList>
+															<CommandEmpty>
+																No options found.
+															</CommandEmpty>
+															<CommandGroup>
+																{options &&
+																	options.map((option) => (
+																		<CommandItem
+																			value={option.label}
+																			key={option.value}
+																			onSelect={() => {
+																				form.setValue(
+																					name,
+																					option.value
+																				);
+																			}}
+																		>
+																			{option.label}
+																			<Check
+																				className={cn(
+																					'ml-auto',
+																					option.value ===
+																						field.value
+																						? 'opacity-100'
+																						: 'opacity-0'
+																				)}
+																			/>
+																		</CommandItem>
+																	))}
+															</CommandGroup>
+														</CommandList>
+													</Command>
+												</PopoverContent>
+											</Popover>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							);
+						}
+						return (
+							<FormField
+								key={name}
+								control={form.control}
+								name={name as keyof IFormData}
+								render={({ field, fieldState }) => (
+									<FormItem className="relative">
+										<FormControl>
+											<FloatingInput
+												label={label}
+												id={name}
+												isError={!!fieldState.error}
+												type={type || 'text'}
+												{...field}
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						);
+					})}
 					<Button
 						disabled={isPending || isLoading}
 						loading={isPending || isLoading}

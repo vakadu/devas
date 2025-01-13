@@ -17,7 +17,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@devas/ui';
-import SearchProducts from './search-products';
+import { SearchSelectProducts } from '../../../../../../../core/ui';
 
 type IFormData = {
 	title: string;
@@ -99,7 +99,7 @@ export const FieldRenderer = ({
 											'Add Products'
 										)}
 									</SearchSelectTrigger>
-									<SearchProducts
+									<SearchSelectProducts
 										products={products}
 										handleProduct={handleProduct}
 									/>

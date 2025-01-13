@@ -256,6 +256,7 @@ module.exports = {
 				base: '0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16)',
 				base2: '0px 2px 4px rgba(40, 41, 61, 0.04), 0px 8px 16px rgba(96, 97, 112, 0.16)',
 				base3: '16px 10px 40px rgba(15, 23, 42, 0.22)',
+				card1: '0 .1875rem .75rem 0 rgba(47,43,61,.14)',
 			},
 			blur: {
 				10: '10px',

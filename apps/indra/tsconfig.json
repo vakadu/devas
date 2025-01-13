@@ -32,7 +32,8 @@
 		"../../apps/indra/.next/types/**/*.ts",
 		"../../dist/apps/indra/.next/types/**/*.ts",
 		"next-env.d.ts",
-		".next/types/**/*.ts"
+		".next/types/**/*.ts",
+		"core/ui/add-edit-store-product/index.tsx"
 	],
 	"exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
 }

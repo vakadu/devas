@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react';
 export type IListingContextType = {
 	value: string;
 	handleSearchChange: (value: string) => void;
-	data: ICatalougeTypes.IProduct[] | ICatalougeTypes.IStore[];
+	data: ICatalougeTypes.IProduct[] | ICatalougeTypes.IStore[] | ICatalougeTypes.IStoreProducts[];
 	isFetching: boolean;
 	rowSelection: RowSelectionState;
 	setRowSelection: (state: RowSelectionState) => void;

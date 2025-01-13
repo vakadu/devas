@@ -16,7 +16,6 @@ export function FormFieldRenderer({
 		label: string;
 		type: string;
 		keyboardType: string;
-		readOnly: boolean;
 	};
 	form: any;
 }) {
@@ -49,13 +48,12 @@ export function FormFieldRenderer({
 			control={form.control}
 			name={field.name}
 			render={({ field: inputField, fieldState }) => (
-				<FormItem className="relative col-span-2">
+				<FormItem className="relative">
 					<FormControl>
 						<FloatingInput
 							label={field.label}
 							id={field.name}
 							isError={!!fieldState.error}
-							readOnly={field.readOnly}
 							{...inputField}
 						/>
 					</FormControl>

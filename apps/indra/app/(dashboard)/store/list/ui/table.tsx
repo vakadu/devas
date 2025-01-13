@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
-import { cn } from '@devas/utils';
 import { StoreListingTable } from '../../../../../core/ui';
 import { Routes } from '../../../../../core/primitives';
 import { useAnalytics } from '../../../../../core/context';
+import { ListOrdered, PlusIcon } from 'lucide-react';
 
 export default function StoreListTable() {
 	const { trackEvent } = useAnalytics();
@@ -46,20 +46,43 @@ export default function StoreListTable() {
 				accessorKey: '',
 				header: 'Actions',
 				cell: ({ row }) => {
-					const handleEvents = async () => {
+					const handleEvents = async (link: string) => {
 						await trackEvent('ADD_STORE_PRODUCT', {
-							path: `${Routes.AddStoreProduct}`,
+							path: link,
 						});
 					};
 
 					return (
-						<Link
-							className="hover:underline hover:text-primary"
-							href={`${Routes.AddStoreProduct}/${row.original.userId}`}
-							onClick={handleEvents}
-						>
-							Add Product
-						</Link>
+						<div className="flex gap-12">
+							<Link
+								className="inline-flex items-center bg-secondary hover:bg-secondary-foreground px-12 py-8 rounded-12 gap-6"
+								href={`${Routes.AddStoreProduct}/${row.original.userId}?type=product`}
+								onClick={() =>
+									handleEvents(
+										`${Routes.AddStoreProduct}/${row.original.userId}?type=product`
+									)
+								}
+							>
+								<PlusIcon className="size-16 text-white" />
+								<span className="text-12  font-semibold text-white">
+									Add Product
+								</span>
+							</Link>
+							<Link
+								className="inline-flex items-center bg-secondary hover:bg-secondary-foreground px-12 py-8 rounded-12 gap-6"
+								href={`${Routes.StoreProductList}/${row.original.userId}`}
+								onClick={() =>
+									handleEvents(
+										`${Routes.StoreProductList}/${row.original.userId}`
+									)
+								}
+							>
+								<ListOrdered className="size-16 text-white" />
+								<span className="text-12  font-semibold text-white">
+									Product List
+								</span>
+							</Link>
+						</div>
 					);
 				},
 			},

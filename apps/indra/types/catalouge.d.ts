@@ -83,4 +83,31 @@ declare namespace ICatalougeTypes {
 		userId: string;
 		_id: string;
 	}
+
+	interface IStoreProducts {
+		_id: string;
+		storeProductId: string;
+		storeId: string;
+		productId: string;
+		status: 'ADDED' | 'APPROVED' | 'HOLD';
+		quantity: number;
+		price: number;
+		discount: number;
+		comment: string | null;
+		active: boolean;
+		product: IStoreProduct;
+	}
+
+	interface IStoreProduct {
+		productId: string;
+		title: string;
+		packQuantity: number;
+		gstInPercent: number;
+		hsn: string;
+		mrp: number;
+		brand: string;
+		category: string;
+		colour: string;
+		size: string;
+	}
 }

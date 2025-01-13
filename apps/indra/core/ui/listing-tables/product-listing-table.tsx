@@ -13,20 +13,23 @@ import {
 import { useState } from 'react';
 
 import { Spinner, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@devas/ui';
-import { useListingContext } from './listing/context';
+import { useListingContext } from '../listing/context';
+import { cn } from '@devas/utils';
 
-export function StoreListingTable({
+export function ProductListingTable({
 	columns,
+	type,
 	id,
 }: {
-	columns: ColumnDef<ICatalougeTypes.IStore>[];
-	id: string;
+	columns: ColumnDef<ICatalougeTypes.IProduct>[];
+	type: string;
+	id?: string;
 }) {
 	const { data, isFetching, rowSelection, setRowSelection } = useListingContext();
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
 	const table = useReactTable({
-		data: data as ICatalougeTypes.IStore[],
+		data: data as ICatalougeTypes.IProduct[],
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
@@ -34,7 +37,7 @@ export function StoreListingTable({
 		getFilteredRowModel: getFilteredRowModel(),
 		onColumnVisibilityChange: setColumnVisibility,
 		onRowSelectionChange: (newRowSelection: any) => setRowSelection(newRowSelection),
-		getRowId: (row) => row._id,
+		getRowId: (row) => row.productId,
 		state: {
 			columnVisibility,
 			rowSelection,
@@ -69,8 +72,17 @@ export function StoreListingTable({
 					</TableRow>
 				) : table?.getRowModel()?.rows.length ? (
 					table.getRowModel().rows.map((row) => {
+						let rowDisable = false;
+						if (type === 'variant') {
+							rowDisable = row.original.productId === id;
+						}
 						return (
-							<TableRow key={row.id}>
+							<TableRow
+								className={cn(
+									rowDisable && 'pointer-events-none bg-grey-2 opacity-20'
+								)}
+								key={row.id}
+							>
 								{row.getVisibleCells().map((cell) => (
 									<TableCell key={cell.id}>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}

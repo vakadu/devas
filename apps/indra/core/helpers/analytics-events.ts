@@ -6,6 +6,7 @@ export const AnalyticsEvents = {
 	EDIT_CATALOUGE_PRODUCT: { name: 'edit_catalouge_product' },
 	EDIT_BANNER: { name: 'edit_banner' },
 	ADD_STORE_PRODUCT: { name: 'add_store_product' },
+	UPDATE_STORE_PRODUCT: { name: 'update_store_product' },
 };
 
 export type IAnalyticsEventName = keyof typeof AnalyticsEvents;

@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
 import { cn } from '@devas/utils';
-import { ProductListingTable } from '../product-listing-table';
+import { ProductListingTable } from '../listing-tables/product-listing-table';
 import { Routes } from '../../primitives';
 import { useAnalytics } from '../../context';
 import { Checkbox } from '@devas/ui';

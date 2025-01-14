@@ -2,17 +2,17 @@
 
 import { useParams } from 'next/navigation';
 import { PlusIcon } from 'lucide-react';
+import { useState } from 'react';
 
 import { useGetBannerById } from '../api/get-banner-by-id';
 import ImageItem from './image-item';
 import { Button, Sheet } from '@devas/ui';
-import { useState } from 'react';
 import { BannerImageSheet } from '../../../../../../core/ui';
 
 export default function AddEditImages() {
 	const params = useParams();
 	const { data, refetch } = useGetBannerById(params?.id as string);
-	const [updateImage, setUpdateImage] = useState(false);
+	const [show, setShow] = useState(false);
 
 	return (
 		<div className="flex gap-24">
@@ -31,18 +31,18 @@ export default function AddEditImages() {
 					variant="outline"
 					size="icon"
 					className="w-[182px] h-[182px] rounded-[12px] shadow-md flex flex-col"
-					onClick={() => setUpdateImage(true)}
+					onClick={() => setShow(true)}
 				>
 					<PlusIcon />
 					<span className="text-14 font-semibold">Add More</span>
 				</Button>
 			</div>
-			<Sheet open={updateImage} onOpenChange={setUpdateImage}>
+			<Sheet open={show} onOpenChange={setShow}>
 				<BannerImageSheet
 					refetch={refetch}
 					id={params?.id as string}
 					type="ADD"
-					setUpdateImage={setUpdateImage}
+					setUpdateImage={setShow}
 				/>
 			</Sheet>
 		</div>

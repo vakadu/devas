@@ -30,7 +30,7 @@ export const DropZone = ({ files, setFiles }: IProps) => {
 	});
 
 	return (
-		<div>
+		<div className="flex-1">
 			<div className="w-full text-center border-dashed border border-grey-divider rounded-12 py-16 flex flex-col justify-center items-center h-[300px] ">
 				{files.length === 0 && (
 					<div

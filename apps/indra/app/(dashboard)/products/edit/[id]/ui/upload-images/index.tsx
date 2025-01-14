@@ -1,6 +1,7 @@
 import { useParams } from 'next/navigation';
-import { TrashIcon } from 'lucide-react';
+import { PlusIcon, TrashIcon } from 'lucide-react';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import { useGetProductById } from '../../api';
 import {
@@ -24,12 +25,17 @@ import ImagesList from './list';
 import PriorityUpdateForm from './priority-form';
 import { useRemoveProductImage } from '../../api/remove-product-image';
 
+const UploadImageForm = dynamic(() => import('./upload-image-form'), {
+	loading: () => <span>Loading...</span>,
+});
+
 export default function ImagesContainer() {
 	const params = useParams();
 	const { data, isPending, refetch } = useGetProductById(params?.id as string);
 	const imagesData = data?.data?.product?.images || [];
 	const { mutateAsync: removeProductImage } = useRemoveProductImage(params?.id as string);
 	const [show, setShow] = useState(false);
+	const [showSheet, setShowSheet] = useState(false);
 
 	const handleDelete = async (id: string) => {
 		const payload = {
@@ -48,6 +54,12 @@ export default function ImagesContainer() {
 
 	return (
 		<div className="bg-white px-16 rounded-8">
+			<UploadImageForm
+				open={showSheet}
+				onChange={setShowSheet}
+				id={params?.id as string}
+				refetch={refetch}
+			/>
 			<Accordion className="" type="single" collapsible>
 				{imagesData.map((image) => (
 					<AccordionItem className="relative" key={image._id} value={image._id}>
@@ -102,6 +114,13 @@ export default function ImagesContainer() {
 					</AccordionItem>
 				))}
 			</Accordion>
+			<Button
+				onClick={() => setShowSheet(true)}
+				size="icon"
+				className="fixed bottom-12 right-12 rounded-full w-54 h-54"
+			>
+				<PlusIcon />
+			</Button>
 		</div>
 	);
 }

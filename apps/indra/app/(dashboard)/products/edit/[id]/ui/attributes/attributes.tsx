@@ -1,20 +1,22 @@
+import { Edit, PlusIcon, Trash2 } from 'lucide-react';
+
 import {
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 	Button,
-	Dialog,
-	DialogClose,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
 } from '@devas/ui';
 import { useEditProduct } from '../../context/edit-product';
-import { Edit, PlusIcon, Trash2 } from 'lucide-react';
-import { useRemoveAttributeImage } from '../../../../../../../core/api';
+import { useRemoveProductAttributes } from '../../api/remove-product-attributes';
 
 export default function Attributes({
 	id,
@@ -31,7 +33,7 @@ export default function Attributes({
 }) {
 	const { setAttributeKey, setAttributeName, toggleForm, setType, setAttribute } =
 		useEditProduct();
-	const { mutateAsync: removeAttribute, isPending } = useRemoveAttributeImage(id);
+	const { mutateAsync: removeAttribute } = useRemoveProductAttributes(id);
 
 	const handleAccordian = () => {
 		setAttributeKey(name);
@@ -45,6 +47,7 @@ export default function Attributes({
 		toggleForm(true);
 		setType('EDIT');
 		setAttribute(attribute);
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 	};
 
 	const handleAddAttribute = () => {
@@ -87,44 +90,37 @@ export default function Attributes({
 								>
 									<Edit className="!size-18" />
 								</Button>
-								<Dialog>
-									<DialogTrigger
+								<AlertDialog>
+									<AlertDialogTrigger
 										className="w-full py-12 flex gap-12 items-center"
 										asChild
 									>
 										<Button size="icon" variant="ghost">
 											<Trash2 className="!size-18 text-red-1" />
 										</Button>
-									</DialogTrigger>
-									<DialogContent className="gap-24">
-										<DialogHeader>
-											<DialogTitle className="text-24">
+									</AlertDialogTrigger>
+									<AlertDialogContent className="gap-24">
+										<AlertDialogHeader>
+											<AlertDialogTitle className="text-24">
 												Remove Attribute?
-											</DialogTitle>
-											<DialogDescription>
-												Are you sure you want the attribute?
-											</DialogDescription>
-										</DialogHeader>
-										<DialogFooter className="!pt-32">
-											<Button
+											</AlertDialogTitle>
+											<AlertDialogDescription>
+												This action cannot be undone. This will permanently
+												delete your account and remove your data.
+											</AlertDialogDescription>
+										</AlertDialogHeader>
+										<AlertDialogFooter className="!pt-32">
+											<AlertDialogCancel>
+												<span className="text-14 font-normal">Cancel</span>
+											</AlertDialogCancel>
+											<AlertDialogAction
 												onClick={() => handleDelete(attribute)}
-												size="lg"
-												className="px-24"
-												variant="destructive"
-												disabled={isPending}
-												loading={isPending}
-												loadingText="Removing..."
 											>
-												Remove
-											</Button>
-											<DialogClose asChild>
-												<Button size="lg" variant="ghost">
-													Cancel
-												</Button>
-											</DialogClose>
-										</DialogFooter>
-									</DialogContent>
-								</Dialog>
+												Continue
+											</AlertDialogAction>
+										</AlertDialogFooter>
+									</AlertDialogContent>
+								</AlertDialog>
 							</div>
 						</div>
 					);

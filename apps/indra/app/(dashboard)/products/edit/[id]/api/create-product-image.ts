@@ -2,12 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { HttpService } from '../../../../../../core/services';
-import { ApiEndpoints } from '../../../../../../core/primitives';
 
-const uploadProductImage = async (payload: FormData, id: string) => {
+const createProductImage = async (payload: FormData, id: string) => {
 	try {
 		const { data } = await HttpService.patch(
-			`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.UploadProductImage}/${id}`,
+			`${process.env.NEXT_PUBLIC_BASE_PATH}/product/addImage/${id}`,
 			payload,
 			{
 				headers: {
@@ -22,9 +21,9 @@ const uploadProductImage = async (payload: FormData, id: string) => {
 	}
 };
 
-export function useUploadProductImage(id: string) {
+export function useCreateProductImage(id: string) {
 	return useMutation({
-		mutationFn: (payload: FormData) => uploadProductImage(payload, id),
+		mutationFn: (payload: FormData) => createProductImage(payload, id),
 		onSuccess: (data) => {
 			if (data?.status === 'SUCCESS') {
 				toast.success('Image uploaded!');
@@ -37,5 +36,3 @@ export function useUploadProductImage(id: string) {
 		},
 	});
 }
-
-export default useUploadProductImage;

@@ -11,9 +11,7 @@ import {
 	SelectValue,
 } from '@devas/ui';
 import { createFormDataForImage } from '../../../../../../../core/helpers';
-import useUploadProductImage from '../../api/upload-image';
-import { useUploadImages } from '../../context/upload-images';
-import PriorityUpdateForm from './form';
+import PriorityUpdateForm from './upload-image-form';
 
 export default function ImagesList({
 	image,
@@ -26,8 +24,7 @@ export default function ImagesList({
 }) {
 	const [value, setValue] = useState(`${image.priority}`);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-	const { mutateAsync: uploadImage, isPending } = useUploadProductImage(id as string);
-	const { attributeKey } = useUploadImages();
+	// const { mutateAsync: uploadImage, isPending } = useUploadProductImage(id as string);
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -37,14 +34,14 @@ export default function ImagesList({
 	};
 
 	const onSubmit = async () => {
-		const formData = createFormDataForImage(selectedFile as File, 'file', {
-			priority: value,
-			attributeKey,
-		});
-		const response = await uploadImage(formData);
-		if (response?.status === 'SUCCESS') {
-			refetch();
-		}
+		// const formData = createFormDataForImage(selectedFile as File, 'file', {
+		// 	priority: value,
+		// 	attributeKey,
+		// });
+		// const response = await uploadImage(formData);
+		// if (response?.status === 'SUCCESS') {
+		// 	refetch();
+		// }
 	};
 
 	return (

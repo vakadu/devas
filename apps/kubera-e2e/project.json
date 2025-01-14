@@ -1,0 +1,9 @@
+{
+	"name": "kubera-e2e",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/kubera-e2e/src",
+	"tags": [],
+	"implicitDependencies": ["kubera"],
+	"// targets": "to see all targets run: nx show project kubera-e2e --web",
+	"targets": {}
+}

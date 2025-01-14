@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 
 import { cn } from '@devas/utils';
 import { ProductListingTable } from '../../../../../../../core/ui';
-import { Button, Checkbox } from '@devas/ui';
+import { Button, Checkbox, Tooltip, TooltipContent, TooltipTrigger } from '@devas/ui';
 import { useListingContext } from '../../../../../../../core/ui/listing/context';
 import { useGetProductById, useUpdateProductVariants } from '../../api';
 
@@ -80,7 +80,18 @@ export default function VariantProductTable() {
 			{
 				accessorKey: 'title',
 				header: 'Title',
-				cell: ({ row }) => <div>{row.getValue('title')}</div>,
+				cell: ({ row }) => (
+					<Tooltip>
+						<TooltipTrigger>
+							<div className="w-[340px] text-left line-clamp-2">
+								{row.original.title}
+							</div>
+						</TooltipTrigger>
+						<TooltipContent className="bg-white border border-grey-light rounded-8">
+							<p className="text-black-1 text-14">{row.original.title}</p>
+						</TooltipContent>
+					</Tooltip>
+				),
 			},
 			{
 				accessorKey: 'category',

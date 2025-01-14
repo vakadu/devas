@@ -22,6 +22,7 @@ export default function AttributesList() {
 		['additionalInformation', 'Additional Information', productData.additionalInformation],
 		['technicalDetails', 'Technical Details', productData.technicalDetails],
 		['whatIsInTheBox', 'What Is In The Box', productData.whatIsInTheBox],
+		['dimensions', 'Dimensions', productData.dimensions],
 	];
 
 	if (isPending) {

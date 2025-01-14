@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useGetProductsByIds } from '../../../../../../../core/api';
+import { useGetProductsByIds } from '../../../../../../../../core/api';
 
 type IFormData = {
 	title: string;

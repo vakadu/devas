@@ -8,6 +8,7 @@ export enum Routes {
 	AddBanner = '/banner/add',
 	EditBanner = '/banner/edit',
 	BannerList = '/banner/list',
+	EditBannerImages = '/banner/edit/images',
 	AddStoreProduct = '/store/products/add',
 	EditStoreProduct = '/store/products/edit',
 	StoresList = '/store/list',

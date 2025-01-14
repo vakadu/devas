@@ -7,6 +7,7 @@ import { cn } from '@devas/utils';
 import { ProductListingTable } from '../../../../../core/ui';
 import { Routes } from '../../../../../core/primitives';
 import { useAnalytics } from '../../../../../core/context';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@devas/ui';
 
 export default function ProductListTable() {
 	const { trackEvent } = useAnalytics();
@@ -26,13 +27,20 @@ export default function ProductListTable() {
 					};
 
 					return (
-						<Link
-							className="hover:underline hover:text-primary"
-							href={`${Routes.EditProduct}/${row.original.productId}?type=product`}
-							onClick={handleEvents}
-						>
-							{row.original.title}
-						</Link>
+						<Tooltip>
+							<TooltipTrigger>
+								<Link
+									className="hover:underline hover:text-primary w-[340px] line-clamp-2 text-16 text-left"
+									href={`${Routes.EditProduct}/${row.original.productId}?type=product`}
+									onClick={handleEvents}
+								>
+									{row.original.title}
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent className="bg-white border border-grey-light rounded-8">
+								<p className="text-black-1 text-14">{row.original.title}</p>
+							</TooltipContent>
+						</Tooltip>
 					);
 				},
 			},

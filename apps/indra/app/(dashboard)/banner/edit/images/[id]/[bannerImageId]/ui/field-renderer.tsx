@@ -1,23 +1,16 @@
-import { X } from 'lucide-react';
-
 import {
-	Button,
 	FloatingInput,
 	FormControl,
 	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
-	SearchSelectLabel,
-	SearchSelectList,
-	SearchSelectTrigger,
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from '@devas/ui';
-import { SearchSelectProducts } from '../../../../../../../core/ui';
 
 type IFormData = {
 	title: string;
@@ -27,19 +20,7 @@ type IFormData = {
 	active: string;
 };
 
-export const FieldRenderer = ({
-	fields,
-	form,
-	products,
-	handleProduct,
-	handleDelete,
-}: {
-	fields: any[];
-	form: any;
-	products: ICatalougeTypes.IProduct[];
-	handleProduct: (product: ICatalougeTypes.IProduct) => void;
-	handleDelete: (id: string) => void;
-}) => {
+export const FieldRenderer = ({ fields, form }: { fields: any[]; form: any }) => {
 	return (
 		<div className="grid grid-cols-2 gap-x-24 gap-y-24 mx-auto w-full max-w-screen-xl">
 			{fields.map(({ name, label, type, options }) => {
@@ -83,51 +64,51 @@ export const FieldRenderer = ({
 								)}
 							/>
 						);
-					case 'selectList':
-						return (
-							<div key={name}>
-								<SearchSelectList>
-									<SearchSelectLabel>Select Products</SearchSelectLabel>
-									<SearchSelectTrigger>
-										{products.length > 0 ? (
-											<span className="text-ellipsis overflow-hidden">
-												{products
-													.map((product) => product.title)
-													.join(', ')}
-											</span>
-										) : (
-											'Add Products'
-										)}
-									</SearchSelectTrigger>
-									<SearchSelectProducts
-										products={products}
-										handleProduct={handleProduct}
-									/>
-								</SearchSelectList>
-								{products.length > 0 && (
-									<div className="flex flex-wrap gap-12 mt-12">
-										{products.map((product) => (
-											<div
-												key={product._id}
-												className="flex justify-between items-center max-w-[120px] border border-grey-3 px-12 py-6 rounded-full gap-12"
-											>
-												<span className="text-12 flex-1">
-													{product.title}
-												</span>
-												<Button
-													className="w-16 h-16"
-													variant="ghost"
-													size="icon"
-													onClick={() => handleDelete(product._id)}
-												>
-													<X className="!size-16" />
-												</Button>
-											</div>
-										))}
-									</div>
-								)}
-							</div>
-						);
+					// case 'selectList':
+					// 	return (
+					// 		<div key={name}>
+					// 			<SearchSelectList>
+					// 				<SearchSelectLabel>Select Products</SearchSelectLabel>
+					// 				<SearchSelectTrigger>
+					// 					{products.length > 0 ? (
+					// 						<span className="text-ellipsis overflow-hidden">
+					// 							{products
+					// 								.map((product) => product.title)
+					// 								.join(', ')}
+					// 						</span>
+					// 					) : (
+					// 						'Add Products'
+					// 					)}
+					// 				</SearchSelectTrigger>
+					// 				<SearchSelectProducts
+					// 					products={products}
+					// 					handleProduct={handleProduct}
+					// 				/>
+					// 			</SearchSelectList>
+					// 			{products.length > 0 && (
+					// 				<div className="flex flex-wrap gap-12 mt-12">
+					// 					{products.map((product) => (
+					// 						<div
+					// 							key={product._id}
+					// 							className="flex justify-between items-center max-w-[120px] border border-grey-3 px-12 py-6 rounded-full gap-12"
+					// 						>
+					// 							<span className="text-12 flex-1">
+					// 								{product.title}
+					// 							</span>
+					// 							<Button
+					// 								className="w-16 h-16"
+					// 								variant="ghost"
+					// 								size="icon"
+					// 								onClick={() => handleDelete(product._id)}
+					// 							>
+					// 								<X className="!size-16" />
+					// 							</Button>
+					// 						</div>
+					// 					))}
+					// 				</div>
+					// 			)}
+					// 		</div>
+					// 	);
 					default:
 						return (
 							<FormField

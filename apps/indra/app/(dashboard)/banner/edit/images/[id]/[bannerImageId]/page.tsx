@@ -1,0 +1,51 @@
+'use client';
+
+import dynamic from 'next/dynamic';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+import { Spinner, Tabs, TabsContent, TabsList, TabsTrigger } from '@devas/ui';
+import { ListingContent, ListingHeader, ProductListing } from '../../../../../../../core/ui';
+import ProductListTable from './ui/table';
+
+const EditImageDetails = dynamic(() => import('./ui/form'), {
+	loading: () => <Spinner />,
+});
+
+export default function Index() {
+	const router = useRouter();
+	const pathname = usePathname();
+	const params = useSearchParams();
+	const type = params.get('type') as string;
+
+	const handleChange = (val: string) => {
+		const searchParams = new URLSearchParams(params.toString());
+		searchParams.set('type', val);
+		router.replace(`${pathname}?${searchParams.toString()}`);
+	};
+
+	return (
+		<div className="m-16 rounded-8">
+			<Tabs defaultValue="details" value={type} onValueChange={handleChange} className="">
+				<TabsList className="w-full justify-start mb-12 bg-white">
+					<TabsTrigger className="flex-1 py-12" value="products">
+						Add Products
+					</TabsTrigger>
+					<TabsTrigger className="flex-1 py-12" value="details">
+						Edit Details
+					</TabsTrigger>
+				</TabsList>
+				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="products">
+					<ProductListing>
+						<ListingHeader />
+						<ListingContent>
+							<ProductListTable handleChange={handleChange} />
+						</ListingContent>
+					</ProductListing>
+				</TabsContent>
+				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="details">
+					<EditImageDetails handleChange={handleChange} />
+				</TabsContent>
+			</Tabs>
+		</div>
+	);
+}

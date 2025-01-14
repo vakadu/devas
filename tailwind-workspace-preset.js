@@ -269,5 +269,9 @@ module.exports = {
 	variants: {
 		extend: {},
 	},
-	plugins: [require('tailwindcss-animate'), require('tailwindcss-textshadow')],
+	plugins: [
+		require('tailwindcss-animate'),
+		require('tailwindcss-textshadow'),
+		require('@tailwindcss/line-clamp'),
+	],
 };

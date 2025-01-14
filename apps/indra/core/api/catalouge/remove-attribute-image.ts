@@ -2,21 +2,16 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { HttpService } from '../../services';
-import { ApiEndpoints } from '../../primitives';
 
 interface IPayload {
-	attributeKey: string;
-	id: string;
+	productImageId: string;
 }
 
 const updateImageAttribute = async (id: string, payload: IPayload) => {
 	try {
 		const { data } = await HttpService.patch<
 			ICommonTypes.IApiResponse<{ product: ICatalougeTypes.IProduct }>
-		>(
-			`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.RemoveAttributeImage}/${id}`,
-			payload
-		);
+		>(`${process.env.NEXT_PUBLIC_BASE_PATH}/product/removeImage/${id}`, payload);
 		return data;
 	} catch (err) {
 		throw new Error('Network Error. Please try again.');

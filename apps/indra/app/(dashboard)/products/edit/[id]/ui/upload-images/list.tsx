@@ -29,6 +29,7 @@ export default function ImagesList({
 	const { mutateAsync: uploadImage, isPending } = useUploadProductImage(id as string);
 	const { attributeKey } = useUploadImages();
 	const { mutateAsync: removeAttribute, isPending: isLoading } = useRemoveAttributeImage(id);
+	console.log(image);
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -39,8 +40,7 @@ export default function ImagesList({
 
 	const handleDelete = async () => {
 		const payload = {
-			attributeKey: attributeKey as string,
-			id: image._id,
+			productImageId: image._id,
 		};
 		const response = await removeAttribute(payload);
 		if (response.status === 'SUCCESS') {
@@ -60,31 +60,37 @@ export default function ImagesList({
 	};
 
 	return (
-		<div className="flex flex-col gap-6" key={image._id}>
-			<div className="relative">
-				<ImagePlaceholder
-					src={
-						selectedFile
-							? URL.createObjectURL(selectedFile)
-							: `${process.env.NEXT_PUBLIC_IMAGE_PATH}/${image.url}`
-					}
-					containerClasses="border border-orange w-[142px] h-[142px] rounded-[18px] shadow-md flex justify-center items-center flex-col gap-6 cursor-pointer"
-					imageClasses="rounded-[18px] object-cover p-6"
-				/>
-				<input
-					type="file"
-					onChange={handleFileChange}
-					accept="image/*"
-					className="opacity-0 z-2 cursor-pointer absolute top-0 w-[142px] h-[142px]"
-				/>
-				<div
+		<div className="flex flex-col gap-6 bg-white" key={image._id}>
+			<div className="relative flex gap-12">
+				{image.smallUrl && image.smallUrl !== '' && (
+					<ImagePlaceholder
+						src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/${image.smallUrl}`}
+						containerClasses="w-[242px] h-[242px] flex justify-center items-center flex-col gap-6 cursor-pointer"
+						imageClasses="object-cover rounded-8"
+					/>
+				)}
+				{image.mediumUrl && image.mediumUrl !== '' && (
+					<ImagePlaceholder
+						src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/${image.mediumUrl}`}
+						containerClasses="w-[242px] h-[242px] flex justify-center items-center flex-col gap-6 cursor-pointer"
+						imageClasses="object-cover rounded-8"
+					/>
+				)}
+				{image.largeUrl && image.largeUrl !== '' && (
+					<ImagePlaceholder
+						src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/${image.largeUrl}`}
+						containerClasses="w-[242px] h-[242px] flex justify-center items-center flex-col gap-6 cursor-pointer"
+						imageClasses="object-cover rounded-8"
+					/>
+				)}
+				<Button
 					onClick={handleDelete}
-					className="z-10 w-24 h-24 absolute top-0 right-0 bg-red-1 rounded-full flex justify-center items-center cursor-pointer"
+					className="z-10 w-24 h-24 absolute -top-12 -right-12 bg-red-1 rounded-full flex justify-center items-center cursor-pointer"
 				>
-					<X className="size-18 text-white" />
-				</div>
+					<X className="!size-18 text-white" />
+				</Button>
 			</div>
-			<div className="flex gap-6">
+			{/* <div className="flex gap-6 px-8 pb-8">
 				<Select value={value || ''} onValueChange={setValue}>
 					<SelectTrigger className="flex-1">
 						<SelectValue placeholder="Choose Priority" />
@@ -108,7 +114,7 @@ export default function ImagesList({
 				>
 					<SendIcon />
 				</Button>
-			</div>
+			</div> */}
 		</div>
 	);
 }

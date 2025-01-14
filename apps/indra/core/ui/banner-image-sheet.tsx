@@ -27,7 +27,7 @@ export function BannerImageSheet({
 	id: string;
 	refetch: () => void;
 	setUpdateImage: (type: boolean) => void;
-	image: ICatalougeTypes.IBannerImage | null;
+	image?: ICatalougeTypes.IBannerImage | null;
 }) {
 	const [files, setFiles] = useState<ICommonTypes.IFileWithPreview[]>([]);
 	const { mutateAsync: createBanner, isPending } = useCreateBannerImage(id);

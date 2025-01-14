@@ -16,9 +16,7 @@ declare namespace ICatalougeTypes {
 		tags: ISpecifications[];
 		updatedBy: string;
 		active: boolean;
-		mediumImages: IProductImage[];
-		smallImages: IProductImage[];
-		largeImages: IProductImage[];
+		images: IProductImage[];
 		productSpecification: ISpecifications[];
 		productDescription: ISpecifications[];
 		aboutThisItem: ISpecifications[];
@@ -31,11 +29,15 @@ declare namespace ICatalougeTypes {
 		hsn: string;
 		packQuantity: number;
 		productVariantIds?: string[];
+		dimensions: ISpecifications[];
 	}
 
 	interface IProductImage {
-		url: string;
+		smallUrl: string;
+		mediumUrl: string;
+		largeUrl: string;
 		priority: number;
+		active: boolean;
 		_id: string;
 		createdAt: string;
 		updatedAt: string;

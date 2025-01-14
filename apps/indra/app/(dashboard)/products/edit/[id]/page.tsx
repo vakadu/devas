@@ -38,7 +38,7 @@ export default function Page() {
 	};
 
 	return (
-		<div className="m-16 p-16 rounded-8">
+		<div className="m-16 rounded-8">
 			<Tabs className="" value={type} onValueChange={handleChange}>
 				<TabsList className="w-full justify-start mb-12 bg-white">
 					<TabsTrigger className="flex-1 py-12" value="product">
@@ -57,7 +57,7 @@ export default function Page() {
 				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="product">
 					<AddCatalougeProduct type="EDIT" />
 				</TabsContent>
-				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="images">
+				<TabsContent className="mt-0" value="images">
 					<UploadImagesProvider>
 						<ImagesContainer />
 					</UploadImagesProvider>

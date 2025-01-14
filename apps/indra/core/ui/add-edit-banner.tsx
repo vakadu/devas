@@ -59,7 +59,7 @@ export function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 				title: data?.data?.banner?.title || '',
 				description: data?.data?.banner?.description || '',
 				type: data?.data?.banner?.type || '',
-				active: data?.data?.banner?.active.toString() || 'true',
+				active: data?.data?.banner?.active?.toString() || 'true',
 			});
 		}
 	}, [

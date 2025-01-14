@@ -12,15 +12,8 @@ type IProductKeys = 'smallImages' | 'mediumImages' | 'largeImages';
 export default function ImagesContainer() {
 	const params = useParams();
 	const { data, isPending, refetch } = useGetProductById(params?.id as string);
-	const productData =
-		data?.data?.product || ({} as Record<IProductKeys, ICatalougeTypes.IProductImage[]>);
+	const imagesData = data?.data?.product?.images || [];
 	const { setAttributeKey, setAttributeName, toggleForm, showForm } = useUploadImages();
-
-	const images: [IProductKeys, string][] = [
-		['smallImages', 'Small Images'],
-		['mediumImages', 'Medium Images'],
-		['largeImages', 'Large Images'],
-	];
 
 	const handleUpload = async () => {
 		toggleForm(true);
@@ -30,36 +23,38 @@ export default function ImagesContainer() {
 		return <Spinner />;
 	}
 
-	const handleAccordian = (name: string, title: string) => {
-		setAttributeKey(name);
-		setAttributeName(title);
-		toggleForm(false);
+	const handleAccordian = (_id: string) => {
+		// setAttributeKey(name);
+		// setAttributeName(title);
+		// toggleForm(false);
 	};
+	console.log(imagesData);
 
 	return (
-		<div className="grid grid-cols-3 gap-54">
-			<Accordion className="col-span-2" type="single" collapsible>
-				{images.map(([name, title]) => (
-					<AccordionItem key={name} value={name}>
-						<AccordionTrigger
-							onClick={() => handleAccordian(name, title)}
-							className="text-muted-foreground"
-						>
-							{title}
+		<div className="bg-white px-16 rounded-8">
+			<Accordion className="" type="single" collapsible>
+				{imagesData.map((image) => (
+					<AccordionItem key={image._id} value={image._id}>
+						<AccordionTrigger className="text-muted-foreground">
+							{image._id}
 						</AccordionTrigger>
-						<AccordionContent>
-							<div className="flex gap-12">
-								{productData?.[name]?.map(
-									(image: ICatalougeTypes.IProductImage) => (
-										<ImagesList
-											key={image._id}
-											image={image}
-											refetch={refetch}
-											id={params?.id as string}
-										/>
-									)
-								)}
-								{productData?.[name].length < 6 && (
+						<AccordionContent className="">
+							<div className="">
+								<ImagesList
+									key={image._id}
+									image={image}
+									refetch={refetch}
+									id={params?.id as string}
+								/>
+								{/* {imagesData?.map((image: ICatalougeTypes.IProductImage) => (
+									<ImagesList
+										key={image._id}
+										image={image}
+										refetch={refetch}
+										id={params?.id as string}
+									/>
+								))} */}
+								{/* {productData?.[name].length < 6 && (
 									<div
 										onClick={handleUpload}
 										className="border border-orange w-[142px] h-[142px] rounded-[18px] shadow-md flex justify-center items-center flex-col gap-6 cursor-pointer"
@@ -67,17 +62,17 @@ export default function ImagesContainer() {
 										<PlusCircle className="text-orange" />
 										<div className="text-orange font-bold text-14">Upload</div>
 									</div>
-								)}
+								)} */}
 							</div>
 						</AccordionContent>
 					</AccordionItem>
 				))}
 			</Accordion>
-			{showForm && (
+			{/* {showForm && (
 				<div className="col-span-1">
 					<UploadImageForm id={params?.id as string} refetch={refetch} />
 				</div>
-			)}
+			)} */}
 		</div>
 	);
 }

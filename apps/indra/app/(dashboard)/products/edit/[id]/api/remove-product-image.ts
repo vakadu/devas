@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { HttpService } from '../../services';
+import { HttpService } from '../../../../../../core/services';
 
 interface IPayload {
 	productImageId: string;
 }
 
-const updateImageAttribute = async (id: string, payload: IPayload) => {
+const removeProductImage = async (id: string, payload: IPayload) => {
 	try {
 		const { data } = await HttpService.patch<
 			ICommonTypes.IApiResponse<{ product: ICatalougeTypes.IProduct }>
@@ -18,9 +18,9 @@ const updateImageAttribute = async (id: string, payload: IPayload) => {
 	}
 };
 
-export function useRemoveAttributeImage(id: string) {
+export function useRemoveProductImage(id: string) {
 	return useMutation({
-		mutationFn: (payload: IPayload) => updateImageAttribute(id, payload),
+		mutationFn: (payload: IPayload) => removeProductImage(id, payload),
 		onSuccess: (data) => {
 			if (data.status === 'SUCCESS') {
 				toast.success('Removed successfully.');
@@ -33,5 +33,3 @@ export function useRemoveAttributeImage(id: string) {
 		},
 	});
 }
-
-export default useRemoveAttributeImage;

@@ -1,78 +1,107 @@
 import { useParams } from 'next/navigation';
-import { PlusCircle } from 'lucide-react';
+import { TrashIcon } from 'lucide-react';
+import { useState } from 'react';
 
 import { useGetProductById } from '../../api';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Spinner } from '@devas/ui';
-import UploadImageForm from './form';
-import { useUploadImages } from '../../context/upload-images';
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+	Button,
+	Spinner,
+} from '@devas/ui';
 import ImagesList from './list';
-
-type IProductKeys = 'smallImages' | 'mediumImages' | 'largeImages';
+import PriorityUpdateForm from './priority-form';
+import { useRemoveProductImage } from '../../api/remove-product-image';
 
 export default function ImagesContainer() {
 	const params = useParams();
 	const { data, isPending, refetch } = useGetProductById(params?.id as string);
 	const imagesData = data?.data?.product?.images || [];
-	const { setAttributeKey, setAttributeName, toggleForm, showForm } = useUploadImages();
+	const { mutateAsync: removeProductImage } = useRemoveProductImage(params?.id as string);
+	const [show, setShow] = useState(false);
 
-	const handleUpload = async () => {
-		toggleForm(true);
+	const handleDelete = async (id: string) => {
+		const payload = {
+			productImageId: id,
+		};
+		const response = await removeProductImage(payload);
+		if (response.status === 'SUCCESS') {
+			refetch();
+			setShow(false);
+		}
 	};
 
 	if (isPending) {
 		return <Spinner />;
 	}
 
-	const handleAccordian = (_id: string) => {
-		// setAttributeKey(name);
-		// setAttributeName(title);
-		// toggleForm(false);
-	};
-	console.log(imagesData);
-
 	return (
 		<div className="bg-white px-16 rounded-8">
 			<Accordion className="" type="single" collapsible>
 				{imagesData.map((image) => (
-					<AccordionItem key={image._id} value={image._id}>
+					<AccordionItem className="relative" key={image._id} value={image._id}>
 						<AccordionTrigger className="text-muted-foreground">
 							{image._id}
 						</AccordionTrigger>
-						<AccordionContent className="">
+						<AccordionContent className="relative">
+							<AlertDialog open={show} onOpenChange={setShow}>
+								<AlertDialogTrigger asChild>
+									<Button
+										className="absolute right-0 z-50"
+										variant="destructive"
+										size="sm"
+									>
+										<TrashIcon className="!size-16" />
+										<span className="text-14">Delete</span>
+									</Button>
+								</AlertDialogTrigger>
+								<AlertDialogContent>
+									<AlertDialogHeader>
+										<AlertDialogTitle>
+											Are you absolutely sure?
+										</AlertDialogTitle>
+										<AlertDialogDescription>
+											This action cannot be undone. This will permanently
+											delete your account and remove your data.
+										</AlertDialogDescription>
+									</AlertDialogHeader>
+									<AlertDialogFooter>
+										<AlertDialogCancel>
+											<span className="text-14 font-normal">Cancel</span>
+										</AlertDialogCancel>
+										<AlertDialogAction onClick={() => handleDelete(image._id)}>
+											Continue
+										</AlertDialogAction>
+									</AlertDialogFooter>
+								</AlertDialogContent>
+							</AlertDialog>
 							<div className="">
 								<ImagesList
-									key={image._id}
 									image={image}
 									refetch={refetch}
 									id={params?.id as string}
 								/>
-								{/* {imagesData?.map((image: ICatalougeTypes.IProductImage) => (
-									<ImagesList
-										key={image._id}
-										image={image}
-										refetch={refetch}
-										id={params?.id as string}
-									/>
-								))} */}
-								{/* {productData?.[name].length < 6 && (
-									<div
-										onClick={handleUpload}
-										className="border border-orange w-[142px] h-[142px] rounded-[18px] shadow-md flex justify-center items-center flex-col gap-6 cursor-pointer"
-									>
-										<PlusCircle className="text-orange" />
-										<div className="text-orange font-bold text-14">Upload</div>
-									</div>
-								)} */}
+								<PriorityUpdateForm
+									image={image}
+									refetch={refetch}
+									id={params?.id as string}
+								/>
 							</div>
 						</AccordionContent>
 					</AccordionItem>
 				))}
 			</Accordion>
-			{/* {showForm && (
-				<div className="col-span-1">
-					<UploadImageForm id={params?.id as string} refetch={refetch} />
-				</div>
-			)} */}
 		</div>
 	);
 }

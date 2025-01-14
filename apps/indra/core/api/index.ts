@@ -1,5 +1,4 @@
 export { useGetNavigation } from './layout/navigation';
-export { useRemoveAttributeImage } from './catalouge/remove-attribute-image';
 export { useGetProductsByIds } from './catalouge/get-products-by-ids';
 export { useGetProductsList } from './catalouge/get-product-list';
 export { useGetStoresList } from './catalouge/get-store-list';

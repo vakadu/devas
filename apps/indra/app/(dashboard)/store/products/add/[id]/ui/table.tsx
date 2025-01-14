@@ -30,7 +30,7 @@ export default function StoreProductsListTable({
 
 					return (
 						<div
-							className="cursor-pointer hover:underline hover:text-primary"
+							className="cursor-pointer hover:underline hover:text-primary w-[340px] line-clamp-2"
 							onClick={handleTab}
 						>
 							{row.original.title}

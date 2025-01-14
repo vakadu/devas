@@ -32,8 +32,9 @@ const getOtpAction = safeActionClient.schema(schema).action(async ({ parsedInput
 
 		const data =
 			(await response.json()) as ICommonTypes.IApiResponse<IAuthTypes.IsUserRegisteredInterface>;
+		console.log(data, '=====');
 
-		if (data?.status === 'SUCCESS' && data?.data?.isUser) {
+		if (data?.status === 'SUCCESS' && data?.data?.isUser && data?.data?.role === 'STORE') {
 			try {
 				const otpResponse = await fetch(
 					`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.Otp}`,
@@ -65,6 +66,13 @@ const getOtpAction = safeActionClient.schema(schema).action(async ({ parsedInput
 					statusCode: 500,
 				} as ICommonTypes.IApiResponse<null>;
 			}
+		} else if (data?.status === 'SUCCESS' && data?.data?.role === 'ADMIN') {
+			return {
+				status: 'ERROR',
+				msg: 'Only stores can login in. Admins have a different Portal.',
+				data: null,
+				statusCode: 401,
+			} as ICommonTypes.IApiResponse<null>;
 		} else {
 			return {
 				status: 'ERROR',

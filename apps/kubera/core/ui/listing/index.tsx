@@ -9,7 +9,7 @@ import { useGetProductsList } from '../../api/catalouge/get-product-list';
 import { ListingContext, useListingContext } from './context';
 import { useGetStoresList } from '../../api/catalouge/get-store-list';
 import { cn } from '@devas/utils';
-import { useGetStoreProductsList } from '../../../app/(dashboard)/store/products/list/[id]/api/get-products';
+import { useGetStoreProductsList } from '../../api';
 
 export function ProductListing({ children }: { children: ReactNode }) {
 	const { ref, inView } = useInView({

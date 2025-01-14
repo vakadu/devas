@@ -42,7 +42,7 @@ export default function ProductListTable({
 				cell: ({ row }) => {
 					const handleEvents = async () => {
 						await trackEvent('EDIT_CATALOUGE_PRODUCT', {
-							path: `${Routes.EditProduct}/${row.original.productId}?type=product`,
+							path: `${Routes.EditStoreProduct}/${row.original.productId}?type=product`,
 							productId: row.original.productId,
 						});
 					};
@@ -50,7 +50,7 @@ export default function ProductListTable({
 					return (
 						<Link
 							className="hover:underline hover:text-primary"
-							href={`${Routes.EditProduct}/${row.original.productId}?type=product`}
+							href={`${Routes.EditStoreProduct}/${row.original.productId}?type=product`}
 							onClick={handleEvents}
 						>
 							{row.original.title}

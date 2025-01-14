@@ -189,8 +189,8 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 								'text',
 								'select',
 								{
-									options: categoryData?.data?.dropdown || [],
-								},
+									options: categoryData?.data?.dropdown ?? [],
+								} as { options: Array<{ value: string; label: string }> },
 							],
 							[
 								'subcategory',
@@ -198,18 +198,21 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 								'text',
 								'select',
 								{
-									options: subCategories,
-								},
+									options: subCategories ?? [],
+								} as { options: Array<{ value: string; label: string }> },
 							],
 							[
 								'brand',
 								'Brand',
 								'text',
 								'select',
-								{ options: brandsData?.data?.dropdown },
+								{ options: brandsData?.data?.dropdown || [] },
+								{
+									options: brandsData?.data?.dropdown ?? [],
+								} as { options: Array<{ value: string; label: string }> },
 							],
 						] as const
-					).map(([name, label, type, select, { options } = {}]) => {
+					).map(([name, label, type, select, { options = [] } = {}]) => {
 						if (select === 'select') {
 							return (
 								<FormField

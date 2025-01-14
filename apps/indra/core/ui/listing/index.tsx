@@ -11,14 +11,21 @@ import { useGetStoresList } from '../../api/catalouge/get-store-list';
 import { cn } from '@devas/utils';
 import { useGetStoreProductsList } from '../../../app/(dashboard)/store/products/list/[id]/api/get-products';
 
-export function ProductListing({ children }: { children: ReactNode }) {
+export function ProductListing({
+	children,
+	showInactive = 1,
+}: {
+	children: ReactNode;
+	showInactive?: 0 | 1;
+}) {
 	const { ref, inView } = useInView({
 		threshold: 0,
 	});
 	const [search, setSearchTerm] = useState('');
 	const { data, fetchNextPage, isFetchingNextPage, isFetching, refetch } = useGetProductsList(
 		search,
-		15
+		15,
+		showInactive
 	);
 	const [rowSelection, setRowSelection] = useState({});
 

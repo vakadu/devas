@@ -33,7 +33,7 @@ const getOtpAction = safeActionClient.schema(schema).action(async ({ parsedInput
 		const data =
 			(await response.json()) as ICommonTypes.IApiResponse<IAuthTypes.IsUserRegisteredInterface>;
 
-		if (data?.status === 'SUCCESS' && data?.data?.isUser) {
+		if (data?.status === 'SUCCESS' && data?.data?.isUser && data?.data?.role === 'ADMIN') {
 			try {
 				const otpResponse = await fetch(
 					`${process.env.NEXT_PUBLIC_BASE_PATH}/${ApiEndpoints.Otp}`,

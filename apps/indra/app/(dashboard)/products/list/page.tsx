@@ -7,7 +7,7 @@ export default function Page() {
 	return (
 		<div className="w-full p-16 h-full">
 			<div className="h-full">
-				<ProductListing>
+				<ProductListing showInactive={0}>
 					<ListingHeader />
 					<ListingContent>
 						<ProductListTable />

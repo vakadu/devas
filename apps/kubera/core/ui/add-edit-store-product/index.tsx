@@ -3,13 +3,14 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams, useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 import { Form, Button } from '@devas/ui';
 import { FormFieldRenderer } from './form-renderer';
-import { useCreateStoreProduct } from '../../../app/(dashboard)/store/products/add/[id]/api/add-product';
 import { Routes } from '../../primitives';
+import { useCreateStoreProduct } from '../../../app/(dashboard)/products/add/api/add-product';
+import { useAppSelector } from '../../store';
 
 const schema = z.object({
 	quantity: z
@@ -30,7 +31,6 @@ const schema = z.object({
 		.refine((val) => Number(val) >= 0, {
 			message: 'Discount must be a positive number',
 		}),
-	comment: z.string().optional(),
 });
 
 type IFormData = z.infer<typeof schema>;
@@ -42,14 +42,13 @@ export function AddStoreProduct() {
 			quantity: '',
 			price: '',
 			discount: '',
-			comment: '',
 		},
 	});
-	const params = useParams();
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const productId = searchParams.get('id');
 	const { mutateAsync: createStoreProduct, isPending } = useCreateStoreProduct();
+	const auth = useAppSelector((state) => state.auth);
 	const fields = useMemo(
 		() => [
 			{
@@ -70,28 +69,21 @@ export function AddStoreProduct() {
 				keyboardType: 'numeric',
 				type: 'text',
 			},
-			{
-				name: 'comment',
-				label: 'Comment',
-				type: 'textfield',
-				keyboardType: 'default',
-			},
 		],
 		[]
 	);
 
 	const onSubmit = async (values: IFormData) => {
 		const payload = {
-			storeId: params?.id as string,
+			storeId: auth.userId as string,
 			productId: productId as string,
 			quantity: Number(values.quantity),
 			price: Number(values.price),
 			discount: Number(values.discount),
-			comment: values.comment,
 		};
 		const reponse = await createStoreProduct(payload);
 		if (reponse.status === 'SUCCESS') {
-			router.push(`${Routes.StoreProductList}/${reponse.data.storeProduct.storeId}`);
+			router.push(`${Routes.Home}`);
 		}
 	};
 

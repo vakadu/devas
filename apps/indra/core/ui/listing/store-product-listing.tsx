@@ -2,34 +2,33 @@
 
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { PlusIcon, X } from 'lucide-react';
-import { RowSelectionState } from '@tanstack/react-table';
-import { useRouter } from 'next/navigation';
+import { X } from 'lucide-react';
 
-import { useGetProductsList } from '../../api';
-import { ProductListingContext, useProductListingContext } from './context';
+import { StoreProductsListingContext, useStoreProductsListingContext } from './context';
 import { Button, Input, Spinner } from '@devas/ui';
 import { cn } from '@devas/utils';
-import { Routes } from '../../primitives';
+import { useGetStoreProductsList } from '../../api';
 
-interface IProductListingProps {
+interface IStoreProductsListingProps {
 	children: ReactNode;
 	showInactive: 0 | 1;
 	apiKey: string;
+	storeId: string;
 }
 
-export function ProductListing({ children, showInactive, apiKey }: IProductListingProps) {
+export function StoreProductsListing({
+	children,
+	showInactive,
+	apiKey,
+	storeId,
+}: IStoreProductsListingProps) {
 	const { ref, inView } = useInView({
 		threshold: 0,
 	});
-	const [search, setSearchTerm] = useState<string>('');
-	const { data, fetchNextPage, isFetchingNextPage, isFetching, refetch } = useGetProductsList(
-		search,
-		15,
-		apiKey,
-		showInactive
-	);
-	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+	const [search, setSearchTerm] = useState('');
+	const { data, fetchNextPage, isFetchingNextPage, isFetching, refetch } =
+		useGetStoreProductsList(search, 15, storeId, apiKey);
+	const [rowSelection, setRowSelection] = useState({});
 
 	useEffect(() => {
 		if (inView) {
@@ -45,7 +44,7 @@ export function ProductListing({ children, showInactive, apiKey }: IProductListi
 		() => ({
 			value: search,
 			handleSearchChange,
-			data: data?.pages.flatMap((page) => page?.data?.data?.products) || [],
+			data: data?.pages.flatMap((page) => page?.data?.data?.storeProducts) || [],
 			isFetching,
 			rowSelection,
 			setRowSelection,
@@ -55,7 +54,7 @@ export function ProductListing({ children, showInactive, apiKey }: IProductListi
 	);
 
 	return (
-		<ProductListingContext.Provider value={value}>
+		<StoreProductsListingContext.Provider value={value}>
 			<div>{children}</div>
 			<div className="text-center flex flex-col gap-6" ref={ref}>
 				{isFetchingNextPage && (
@@ -65,17 +64,16 @@ export function ProductListing({ children, showInactive, apiKey }: IProductListi
 					</>
 				)}
 			</div>
-		</ProductListingContext.Provider>
+		</StoreProductsListingContext.Provider>
 	);
 }
 
-interface IProductListingHeaderProps {
+interface IStoreProductsListingHeaderProps {
 	className?: string;
 }
 
-export const ProductListingHeader = ({ className }: IProductListingHeaderProps) => {
-	const { value, handleSearchChange } = useProductListingContext();
-	const router = useRouter();
+export const StoreProductsListingHeader = ({ className }: IStoreProductsListingHeaderProps) => {
+	const { value, handleSearchChange } = useStoreProductsListingContext();
 
 	return (
 		<div
@@ -91,7 +89,7 @@ export const ProductListingHeader = ({ className }: IProductListingHeaderProps) 
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 							handleSearchChange(e.target.value)
 						}
-						placeholder="Search for Products..."
+						placeholder="Search for stores..."
 						type="search"
 						className="pr-[24px]"
 					/>
@@ -107,31 +105,20 @@ export const ProductListingHeader = ({ className }: IProductListingHeaderProps) 
 					)}
 				</div>
 			</div>
-			<div className="flex-1 flex justify-end">
-				<Button
-					onClick={() => router.push(Routes.AddProduct)}
-					size="sm"
-					variant="secondary"
-					className="py-10 px-12"
-				>
-					<PlusIcon className="!size-16" />
-					<span className="font-medium text-14">Add Product</span>
-				</Button>
-			</div>
 		</div>
 	);
 };
 
-interface IProductListingContentProps {
+interface IStoreProductListingContentProps {
 	children: ReactNode;
 	className?: string;
 }
 
-export const ProductListingContent = ({
+export const StoreProductsListingContent = ({
 	children,
 	className,
 	...props
-}: IProductListingContentProps) => {
+}: IStoreProductListingContentProps) => {
 	return (
 		<div className={cn('bg-white rounded-12 overflow-y-scroll', className)} {...props}>
 			{children}

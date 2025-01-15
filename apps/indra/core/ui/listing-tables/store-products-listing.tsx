@@ -13,7 +13,7 @@ import {
 import { useState } from 'react';
 
 import { Spinner, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@devas/ui';
-import { useListingContext } from '../listing/context';
+import { useStoreProductsListingContext } from '../listing/context';
 
 export function StoreProductsListingTable({
 	columns,
@@ -22,7 +22,7 @@ export function StoreProductsListingTable({
 	columns: ColumnDef<ICatalougeTypes.IStoreProducts>[];
 	id: string;
 }) {
-	const { data, isFetching, rowSelection, setRowSelection } = useListingContext();
+	const { data, isFetching, rowSelection, setRowSelection } = useStoreProductsListingContext();
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
 	const table = useReactTable({

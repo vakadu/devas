@@ -4,10 +4,17 @@ import dynamic from 'next/dynamic';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { Spinner, Tabs, TabsContent, TabsList, TabsTrigger } from '@devas/ui';
-import { ListingContent, ListingHeader, ProductListing } from '../../../../../../../core/ui';
-import ProductListTable from './ui/table';
+import {
+	ProductListing,
+	ProductListingContent,
+	ProductListingHeader,
+} from '../../../../../../../core/ui';
 
 const EditImageDetails = dynamic(() => import('./ui/form'), {
+	loading: () => <Spinner />,
+});
+
+const ColumnsListing = dynamic(() => import('./ui/table'), {
 	loading: () => <Spinner />,
 });
 
@@ -34,12 +41,12 @@ export default function Index() {
 						Edit Details
 					</TabsTrigger>
 				</TabsList>
-				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="products">
-					<ProductListing>
-						<ListingHeader />
-						<ListingContent>
-							<ProductListTable handleChange={handleChange} />
-						</ListingContent>
+				<TabsContent className="mt-0" value="products">
+					<ProductListing showInactive={1} apiKey="products/banners">
+						<ProductListingHeader />
+						<ProductListingContent>
+							<ColumnsListing handleChange={handleChange} />
+						</ProductListingContent>
 					</ProductListing>
 				</TabsContent>
 				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="details">

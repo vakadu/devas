@@ -8,17 +8,13 @@ import { Button, Checkbox, Tooltip, TooltipContent, TooltipTrigger } from '@deva
 import { Routes } from '../../../../../../../../core/primitives';
 import { useAnalytics } from '../../../../../../../../core/context';
 import { ProductListingTable } from '../../../../../../../../core/ui';
-import { useListingContext } from '../../../../../../../../core/ui/listing/context';
 import { useGetBannerImageDetails } from '../api/get-image-details';
+import { useProductListingContext } from '../../../../../../../../core/ui/listing/context';
 
-export default function ProductListTable({
-	handleChange,
-}: {
-	handleChange: (type: string) => void;
-}) {
+export default function ColumnsListing({ handleChange }: { handleChange: (type: string) => void }) {
 	const { trackEvent } = useAnalytics();
 	const params = useParams();
-	const { setRowSelection, rowSelection } = useListingContext();
+	const { setRowSelection, rowSelection } = useProductListingContext();
 	const router = useRouter();
 	const pathname = usePathname();
 	const sParams = useSearchParams();

@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { HttpService } from '../../../../../../../core/services';
+import { HttpService } from '../../services';
 
 const getStoreProductList = async ({
 	pageParam = 0,
@@ -18,7 +18,7 @@ const getStoreProductList = async ({
 		url += `&searchTerm=${searchTerm}`;
 	}
 	const { data } = await HttpService.get<
-		ICommonTypes.IApiResponse<{ storeProducts: ICatalougeTypes.IStoreProduct[] }>
+		ICommonTypes.IApiResponse<{ storeProducts: ICatalougeTypes.IStoreProducts[] }>
 	>(url);
 
 	return {
@@ -27,9 +27,14 @@ const getStoreProductList = async ({
 	};
 };
 
-export function useGetStoreProductsList(searchTerm: string, limit: number, storeId: string) {
+export function useGetStoreProductsList(
+	searchTerm: string,
+	limit: number,
+	storeId: string,
+	apiKey: string
+) {
 	return useInfiniteQuery({
-		queryKey: ['store/productList', searchTerm, limit],
+		queryKey: [apiKey, searchTerm, limit],
 		queryFn: ({ pageParam }) => getStoreProductList({ pageParam, searchTerm, limit, storeId }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage) => lastPage.nextPage,

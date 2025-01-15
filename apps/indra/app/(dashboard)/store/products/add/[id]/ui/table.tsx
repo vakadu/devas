@@ -6,7 +6,7 @@ import { useAnalytics } from '../../../../../../../core/context';
 import { Routes } from '../../../../../../../core/primitives';
 import { ProductListingTable } from '../../../../../../../core/ui';
 
-export default function StoreProductsListTable({
+export default function ColumsListing({
 	handleChange,
 }: {
 	handleChange: (val: string, id: string) => void;

@@ -1,8 +1,12 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { ListingContent, ListingHeader, StoreProductsListing } from '../../../../../../core/ui';
-import StoreListTable from './ui/table';
+import {
+	StoreProductsListing,
+	StoreProductsListingContent,
+	StoreProductsListingHeader,
+} from '../../../../../../core/ui';
+import ColumnsListing from './ui/table';
 
 export default function Page() {
 	const params = useParams();
@@ -10,11 +14,15 @@ export default function Page() {
 	return (
 		<div className="w-full p-16 h-full">
 			<div className="h-full">
-				<StoreProductsListing storeId={params?.id as string}>
-					<ListingHeader type="store" />
-					<ListingContent>
-						<StoreListTable />
-					</ListingContent>
+				<StoreProductsListing
+					apiKey="store/products/list"
+					showInactive={1}
+					storeId={params?.id as string}
+				>
+					<StoreProductsListingHeader />
+					<StoreProductsListingContent>
+						<ColumnsListing />
+					</StoreProductsListingContent>
 				</StoreProductsListing>
 			</div>
 		</div>

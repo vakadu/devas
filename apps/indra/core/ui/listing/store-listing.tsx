@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { X } from 'lucide-react';

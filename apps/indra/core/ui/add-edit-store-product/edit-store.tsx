@@ -126,7 +126,7 @@ export function EditStoreProduct() {
 		const reponse = await updateStoreProduct(payload);
 		if (reponse.status === 'SUCCESS') {
 			await queryClient.invalidateQueries({
-				queryKey: ['store/productList'],
+				queryKey: ['stores/list'],
 				type: 'active',
 			});
 			router.push(`${Routes.StoreProductList}/${reponse.data.storeProduct.storeId}`);

@@ -2,14 +2,15 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-
 import { PenIcon } from 'lucide-react';
+
 import { useAnalytics } from '../../../../../../../core/context';
 import { Routes } from '../../../../../../../core/primitives';
 import { StoreProductsListingTable } from '../../../../../../../core/ui/listing-tables/store-products-listing';
 import { cn } from '@devas/utils';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@devas/ui';
 
-export default function StoreProductsListTable() {
+export default function ColumnsListing() {
 	const { trackEvent } = useAnalytics();
 	const params = useParams();
 
@@ -27,13 +28,20 @@ export default function StoreProductsListTable() {
 					};
 
 					return (
-						<Link
-							className="hover:underline hover:text-primary"
-							href={`${Routes.EditProduct}/${row.original.product.productId}?type=product`}
-							onClick={handleEvents}
-						>
-							{row.original.product.title}
-						</Link>
+						<Tooltip>
+							<TooltipTrigger>
+								<Link
+									className="hover:underline hover:text-primary w-[240px] line-clamp-2 text-left"
+									href={`${Routes.EditProduct}/${row.original.product.productId}?type=product`}
+									onClick={handleEvents}
+								>
+									{row.original.product.title}
+								</Link>
+							</TooltipTrigger>
+							<TooltipContent className="bg-white border border-grey-light rounded-8">
+								<p className="text-black-1 text-14">{row.original.product.title}</p>
+							</TooltipContent>
+						</Tooltip>
 					);
 				},
 			},

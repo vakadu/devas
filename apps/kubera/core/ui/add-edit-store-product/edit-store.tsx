@@ -94,7 +94,7 @@ export function EditStoreProduct() {
 		const reponse = await updateStoreProduct(payload);
 		if (reponse.status === 'SUCCESS') {
 			await queryClient.invalidateQueries({
-				queryKey: ['store/productList'],
+				queryKey: ['store/products/list'],
 				type: 'active',
 			});
 			router.push(`${Routes.Home}`);
@@ -113,7 +113,9 @@ export function EditStoreProduct() {
 							<FormFieldRenderer key={field.name} field={field} form={form} />
 						))}
 						{data?.data?.storeProduct?.comment && (
-							<div className="col-span-2">{data?.data?.storeProduct?.comment}</div>
+							<div className="col-span-2">
+								Comment: {data?.data?.storeProduct?.comment}
+							</div>
 						)}
 						<div className="col-span-2">
 							<Button

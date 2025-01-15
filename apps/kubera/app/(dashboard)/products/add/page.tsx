@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
 import { Spinner, Tabs, TabsContent, TabsList, TabsTrigger } from '@devas/ui';
-import { ListingContent, ListingHeader, ProductListing } from '../../../../core/ui';
+import { ProductListing, ProductListingContent, ProductListingHeader } from '../../../../core/ui';
 
 const AddStoreProduct = dynamic(
 	() => import('../../../../core/ui').then((mod) => mod.AddStoreProduct),
@@ -47,11 +47,11 @@ export default function Page() {
 					</TabsTrigger>
 				</TabsList>
 				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="product">
-					<ProductListing>
-						<ListingHeader />
-						<ListingContent>
+					<ProductListing showInactive={1} apiKey="products/list">
+						<ProductListingHeader />
+						<ProductListingContent>
 							<StoreProductsListTable handleChange={handleChange} />
-						</ListingContent>
+						</ProductListingContent>
 					</ProductListing>
 				</TabsContent>
 				<TabsContent className="rounded-12 mt-0" value="details">

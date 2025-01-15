@@ -1,7 +1,11 @@
 'use client';
 
 import { useAppSelector } from '../../../core/store';
-import { ListingContent, ListingHeader, StoreProductsListing } from '../../../core/ui';
+import {
+	StoreProductsListing,
+	StoreProductsListingContent,
+	StoreProductsListingHeader,
+} from '../../../core/ui';
 import StoreProductsListTable from './ui/table';
 
 export default function Page() {
@@ -10,11 +14,15 @@ export default function Page() {
 	return (
 		<div className="w-full p-16 h-full">
 			<div className="h-full">
-				<StoreProductsListing storeId={auth.userId as string}>
-					<ListingHeader type="store" />
-					<ListingContent>
+				<StoreProductsListing
+					showInactive={1}
+					apiKey="store/products/list"
+					storeId={auth.userId as string}
+				>
+					<StoreProductsListingHeader />
+					<StoreProductsListingContent>
 						<StoreProductsListTable />
-					</ListingContent>
+					</StoreProductsListingContent>
 				</StoreProductsListing>
 			</div>
 		</div>

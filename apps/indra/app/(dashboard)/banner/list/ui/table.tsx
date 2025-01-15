@@ -1,12 +1,4 @@
-import {
-	ColumnDef,
-	flexRender,
-	getCoreRowModel,
-	getFilteredRowModel,
-	getPaginationRowModel,
-	getSortedRowModel,
-	useReactTable,
-} from '@tanstack/react-table';
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
 import { Spinner, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@devas/ui';
@@ -74,9 +66,6 @@ export default function ListingTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
 		state: {
 			columnVisibility: {
 				_id: false,

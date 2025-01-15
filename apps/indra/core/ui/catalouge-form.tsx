@@ -25,6 +25,7 @@ import {
 	PopoverTrigger,
 	Command,
 	Spinner,
+	FloatingTextArea,
 } from '@devas/ui';
 import { useCreateProduct } from '../../app/(dashboard)/products/add/api';
 import { useGetProductById, useUpdateProduct } from '../../app/(dashboard)/products/edit/[id]/api';
@@ -173,8 +174,8 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 				>
 					{(
 						[
-							['title', 'Title', 'text'],
-							['description', 'Description', 'text'],
+							['title', 'Title', 'text', 'textarea'],
+							['description', 'Description', 'text', 'textarea'],
 							['quantity', 'Quantity', 'numeric'],
 							['packQuantity', 'Pack Quantity', 'numeric'],
 							['mrp', 'MRP', 'numeric'],
@@ -288,6 +289,27 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 													</Command>
 												</PopoverContent>
 											</Popover>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							);
+						} else if (select === 'textarea') {
+							return (
+								<FormField
+									key={name}
+									control={form.control}
+									name={name as keyof IFormData}
+									render={({ field: inputField, fieldState }) => (
+										<FormItem className="relative col-span-1">
+											<FormControl>
+												<FloatingTextArea
+													label={label}
+													id={name}
+													isError={!!fieldState.error}
+													{...inputField}
+												/>
+											</FormControl>
 											<FormMessage />
 										</FormItem>
 									)}

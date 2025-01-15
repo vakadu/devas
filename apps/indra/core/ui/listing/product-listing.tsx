@@ -1,16 +1,13 @@
 'use client';
 
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { PlusIcon, X } from 'lucide-react';
-import { RowSelectionState } from '@tanstack/react-table';
-import { useRouter } from 'next/navigation';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { X } from 'lucide-react';
+import { PaginationState, RowSelectionState } from '@tanstack/react-table';
 
-import { useGetProductsList } from '../../api';
 import { ProductListingContext, useProductListingContext } from './context';
-import { Button, Input, Spinner } from '@devas/ui';
+import { Button, Input } from '@devas/ui';
 import { cn } from '@devas/utils';
-import { Routes } from '../../primitives';
+import { useGetProductsList } from '../../api/catalouge/get-products-list';
 
 interface IProductListingProps {
 	children: ReactNode;
@@ -19,23 +16,19 @@ interface IProductListingProps {
 }
 
 export function ProductListing({ children, showInactive, apiKey }: IProductListingProps) {
-	const { ref, inView } = useInView({
-		threshold: 0,
-	});
 	const [search, setSearchTerm] = useState<string>('');
-	const { data, fetchNextPage, isFetchingNextPage, isFetching, refetch } = useGetProductsList(
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 15,
+	});
+	const { data, isFetching, refetch } = useGetProductsList(
 		search,
-		15,
 		apiKey,
-		showInactive
+		showInactive,
+		pagination.pageIndex,
+		pagination.pageSize
 	);
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-
-	useEffect(() => {
-		if (inView) {
-			fetchNextPage();
-		}
-	}, [fetchNextPage, inView]);
 
 	const handleSearchChange = useCallback((value: string) => {
 		setSearchTerm(value);
@@ -45,26 +38,28 @@ export function ProductListing({ children, showInactive, apiKey }: IProductListi
 		() => ({
 			value: search,
 			handleSearchChange,
-			data: data?.pages.flatMap((page) => page?.data?.data?.products) || [],
+			data: data?.data?.products || [],
 			isFetching,
 			rowSelection,
 			setRowSelection,
 			refetch,
+			pagination,
+			setPagination,
 		}),
-		[search, handleSearchChange, data?.pages, isFetching, rowSelection, refetch]
+		[
+			data?.data?.products,
+			handleSearchChange,
+			isFetching,
+			pagination,
+			refetch,
+			rowSelection,
+			search,
+		]
 	);
 
 	return (
 		<ProductListingContext.Provider value={value}>
 			<div>{children}</div>
-			<div className="text-center flex flex-col gap-6" ref={ref}>
-				{isFetchingNextPage && (
-					<>
-						<Spinner />
-						<span className="text-12 font-medium">Fetching more products...</span>
-					</>
-				)}
-			</div>
 		</ProductListingContext.Provider>
 	);
 }
@@ -75,7 +70,6 @@ interface IProductListingHeaderProps {
 
 export const ProductListingHeader = ({ className }: IProductListingHeaderProps) => {
 	const { value, handleSearchChange } = useProductListingContext();
-	const router = useRouter();
 
 	return (
 		<div
@@ -107,17 +101,6 @@ export const ProductListingHeader = ({ className }: IProductListingHeaderProps) 
 					)}
 				</div>
 			</div>
-			<div className="flex-1 flex justify-end">
-				<Button
-					onClick={() => router.push(Routes.AddProduct)}
-					size="sm"
-					variant="secondary"
-					className="py-10 px-12"
-				>
-					<PlusIcon className="!size-16" />
-					<span className="font-medium text-14">Add Product</span>
-				</Button>
-			</div>
 		</div>
 	);
 };
@@ -133,7 +116,7 @@ export const ProductListingContent = ({
 	...props
 }: IProductListingContentProps) => {
 	return (
-		<div className={cn('bg-white rounded-12 overflow-y-scroll', className)} {...props}>
+		<div className={cn('overflow-y-scroll', className)} {...props}>
 			{children}
 		</div>
 	);

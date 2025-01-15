@@ -13,6 +13,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
 	Button,
 	Collapsible,
 	CollapsibleContent,
@@ -81,34 +90,33 @@ export const AppSidebar = () => {
 					<SidebarMenuItem>
 						<SidebarMenuButton className="p-0" asChild>
 							<div>
-								<Dialog>
-									<DialogTrigger className="w-full py-12 flex gap-12 items-center">
+								<AlertDialog>
+									<AlertDialogTrigger className="w-full py-12 flex gap-12 items-center">
 										<LogOutIcon width={16} height={16} />
 										<span className="text-14 font-medium">Logout</span>
-									</DialogTrigger>
-									<DialogContent className="gap-24">
-										<DialogHeader>
-											<DialogTitle className="text-24">Logout</DialogTitle>
-											<DialogDescription>
+									</AlertDialogTrigger>
+									<AlertDialogContent className="gap-24">
+										<AlertDialogHeader>
+											<AlertDialogTitle className="text-24">
+												Logout
+											</AlertDialogTitle>
+											<AlertDialogDescription>
 												Are you sure you want to logout?
-											</DialogDescription>
-										</DialogHeader>
-										<DialogFooter className="!pt-32">
-											<Button
+											</AlertDialogDescription>
+										</AlertDialogHeader>
+										<AlertDialogFooter className="!pt-32">
+											<AlertDialogAction
 												onClick={handleLogout}
-												size="lg"
 												className="px-24"
 											>
 												Logout
-											</Button>
-											<DialogClose asChild>
-												<Button size="lg" variant="ghost">
-													Cancel
-												</Button>
-											</DialogClose>
-										</DialogFooter>
-									</DialogContent>
-								</Dialog>
+											</AlertDialogAction>
+											<AlertDialogCancel>
+												<span className="text-14 font-medium">Cancel</span>
+											</AlertDialogCancel>
+										</AlertDialogFooter>
+									</AlertDialogContent>
+								</AlertDialog>
 							</div>
 						</SidebarMenuButton>
 					</SidebarMenuItem>

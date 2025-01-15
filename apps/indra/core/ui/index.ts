@@ -8,7 +8,6 @@ export { BannerImageSheet } from './banner-image-sheet';
 export { ProductListingTable } from './listing-tables/product-listing-table';
 export { AddStoreProduct } from './add-edit-store-product';
 export { EditStoreProduct } from './add-edit-store-product/edit-store';
-export { SearchSelectProducts } from './search-select-products';
 export { StoreListingTable } from './listing-tables/store-listing-table';
 export {
 	ProductListing,

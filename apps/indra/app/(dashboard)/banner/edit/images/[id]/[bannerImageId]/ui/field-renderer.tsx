@@ -64,51 +64,6 @@ export const FieldRenderer = ({ fields, form }: { fields: any[]; form: any }) =>
 								)}
 							/>
 						);
-					// case 'selectList':
-					// 	return (
-					// 		<div key={name}>
-					// 			<SearchSelectList>
-					// 				<SearchSelectLabel>Select Products</SearchSelectLabel>
-					// 				<SearchSelectTrigger>
-					// 					{products.length > 0 ? (
-					// 						<span className="text-ellipsis overflow-hidden">
-					// 							{products
-					// 								.map((product) => product.title)
-					// 								.join(', ')}
-					// 						</span>
-					// 					) : (
-					// 						'Add Products'
-					// 					)}
-					// 				</SearchSelectTrigger>
-					// 				<SearchSelectProducts
-					// 					products={products}
-					// 					handleProduct={handleProduct}
-					// 				/>
-					// 			</SearchSelectList>
-					// 			{products.length > 0 && (
-					// 				<div className="flex flex-wrap gap-12 mt-12">
-					// 					{products.map((product) => (
-					// 						<div
-					// 							key={product._id}
-					// 							className="flex justify-between items-center max-w-[120px] border border-grey-3 px-12 py-6 rounded-full gap-12"
-					// 						>
-					// 							<span className="text-12 flex-1">
-					// 								{product.title}
-					// 							</span>
-					// 							<Button
-					// 								className="w-16 h-16"
-					// 								variant="ghost"
-					// 								size="icon"
-					// 								onClick={() => handleDelete(product._id)}
-					// 							>
-					// 								<X className="!size-16" />
-					// 							</Button>
-					// 						</div>
-					// 					))}
-					// 				</div>
-					// 			)}
-					// 		</div>
-					// 	);
 					default:
 						return (
 							<FormField

@@ -3,16 +3,10 @@ import { toast } from 'sonner';
 
 import { HttpService } from '../../../../../../core/services';
 
-interface IPayload {
-	productImageId: string;
-	active: boolean;
-	priority: number;
-}
-
-const updateImageAttributes = async (id: string, payload: IPayload) => {
+const updateProductImage = async (id: string, payload: FormData) => {
 	try {
 		const { data } = await HttpService.patch<ICommonTypes.IApiResponse<{ product: object }>>(
-			`${process.env.NEXT_PUBLIC_BASE_PATH}/product/updateImageAttribute/${id}`,
+			`${process.env.NEXT_PUBLIC_BASE_PATH}/product/changeImage/${id}`,
 			payload
 		);
 		return data;
@@ -21,9 +15,9 @@ const updateImageAttributes = async (id: string, payload: IPayload) => {
 	}
 };
 
-export function useUpdateImageAttributes(id: string) {
+export function useUpdateProductImage(id: string) {
 	return useMutation({
-		mutationFn: (payload: IPayload) => updateImageAttributes(id, payload),
+		mutationFn: (payload: FormData) => updateProductImage(id, payload),
 		onSuccess: (data) => {
 			if (data.status === 'SUCCESS') {
 				toast.success('image attributes updated successfully.');

@@ -63,6 +63,7 @@ export default function Attributes({
 		const response = await removeAttribute(payload);
 		if (response.status === 'SUCCESS') {
 			refetch();
+			toggleForm(false);
 		}
 	};
 

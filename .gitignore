@@ -47,3 +47,4 @@ out
 vite.config.*.timestamp*
 
 .env
+.todo

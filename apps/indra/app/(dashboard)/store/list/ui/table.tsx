@@ -8,7 +8,7 @@ import { Routes } from '../../../../../core/primitives';
 import { useAnalytics } from '../../../../../core/context';
 import { ListOrdered, PlusIcon } from 'lucide-react';
 
-export default function StoreListTable() {
+export default function ColumnsListing() {
 	const { trackEvent } = useAnalytics();
 	const params = useParams();
 

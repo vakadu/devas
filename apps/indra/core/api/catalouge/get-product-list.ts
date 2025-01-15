@@ -11,11 +11,15 @@ const getProductList = async ({
 	pageParam: number;
 	searchTerm: string;
 	limit: number;
-	active?: 0 | 1;
+	active: 0 | 1;
 }) => {
-	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/product/list?page=${pageParam}&limit=${limit}&active=${active}`;
+	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/product/list?page=${pageParam}&limit=${limit}`;
+
 	if (searchTerm && searchTerm.length > 2) {
 		url += `&searchTerm=${searchTerm}`;
+	}
+	if (active === 1) {
+		url += `&active=1`;
 	}
 	const { data } = await HttpService.get<
 		ICommonTypes.IApiResponse<{ products: ICatalougeTypes.IProduct[] }>
@@ -27,9 +31,14 @@ const getProductList = async ({
 	};
 };
 
-export function useGetProductsList(searchTerm: string, limit: number, active?: 0 | 1) {
+export function useGetProductsList(
+	searchTerm: string,
+	limit: number,
+	apiKey: string,
+	active: 0 | 1
+) {
 	return useInfiniteQuery({
-		queryKey: ['product/list', searchTerm, limit],
+		queryKey: [apiKey, searchTerm, limit],
 		queryFn: ({ pageParam }) => getProductList({ pageParam, searchTerm, limit, active }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage) => lastPage.nextPage,

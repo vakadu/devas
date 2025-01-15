@@ -5,12 +5,12 @@ import { useParams } from 'next/navigation';
 import { cn } from '@devas/utils';
 import { ProductListingTable } from '../../../../../../../core/ui';
 import { Button, Checkbox, Tooltip, TooltipContent, TooltipTrigger } from '@devas/ui';
-import { useListingContext } from '../../../../../../../core/ui/listing/context';
 import { useGetProductById, useUpdateProductVariants } from '../../api';
+import { useProductListingContext } from '../../../../../../../core/ui/listing/context';
 
-export default function VariantProductTable() {
+export default function ColumsListing() {
 	const params = useParams();
-	const { rowSelection, refetch, setRowSelection } = useListingContext();
+	const { rowSelection, refetch, setRowSelection } = useProductListingContext();
 	const selectedRows = Object.keys(rowSelection) as string[];
 	const { mutateAsync: updateProductVariants, isPending } = useUpdateProductVariants(
 		params?.id as string

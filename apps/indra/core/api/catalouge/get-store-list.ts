@@ -25,9 +25,14 @@ const getStoresList = async ({
 	};
 };
 
-export function useGetStoresList(searchTerm: string, limit: number) {
+export function useGetStoresList(
+	searchTerm: string,
+	limit: number,
+	apiKey: string,
+	showInactive: 0 | 1
+) {
 	return useInfiniteQuery({
-		queryKey: ['user/storeList', searchTerm, limit],
+		queryKey: [apiKey, searchTerm, limit],
 		queryFn: ({ pageParam }) => getStoresList({ pageParam, searchTerm, limit }),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage) => lastPage.nextPage,

@@ -1,15 +1,19 @@
 'use client';
 
-import { ListingHeader, ProductListing, ListingContent } from '../../../../../../../core/ui';
-import VariantProductTable from './table';
+import {
+	ProductListing,
+	ProductListingHeader,
+	ProductListingContent,
+} from '../../../../../../../core/ui';
+import ColumnsListing from './columns-listing';
 
 export default function Varaints() {
 	return (
-		<ProductListing>
-			<ListingHeader />
-			<ListingContent>
-				<VariantProductTable />
-			</ListingContent>
+		<ProductListing showInactive={1} apiKey="products/varaints">
+			<ProductListingHeader />
+			<ProductListingContent>
+				<ColumnsListing />
+			</ProductListingContent>
 		</ProductListing>
 	);
 }

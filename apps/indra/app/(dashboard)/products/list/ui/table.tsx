@@ -9,7 +9,7 @@ import { Routes } from '../../../../../core/primitives';
 import { useAnalytics } from '../../../../../core/context';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@devas/ui';
 
-export default function ProductListTable() {
+export default function ColumnsListing() {
 	const { trackEvent } = useAnalytics();
 	const params = useParams();
 

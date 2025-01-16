@@ -28,10 +28,10 @@ export default function Page() {
 						Edit Images
 					</TabsTrigger>
 				</TabsList>
-				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="details">
+				<TabsContent className="mt-0 grid grid-cols-3" value="details">
 					<AddEditBanner type="EDIT" />
 				</TabsContent>
-				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="images">
+				<TabsContent className="mt-0" value="images">
 					<AddEditImages />
 				</TabsContent>
 			</Tabs>

@@ -15,7 +15,7 @@ function Header({ value, onChange }: { value: string; onChange: (term: string) =
 					<Input
 						value={value}
 						onChange={(e) => onChange(e.target.value)}
-						placeholder="Search for Products..."
+						placeholder="Search for banners..."
 						type="search"
 						className="pr-[24px]"
 					/>

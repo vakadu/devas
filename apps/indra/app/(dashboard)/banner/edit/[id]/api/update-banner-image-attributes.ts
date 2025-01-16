@@ -7,9 +7,12 @@ interface IPayload {
 	title: string;
 	description: string;
 	active: boolean;
+	xPriority: number;
+	yPriority: number;
+	bannerImageId: string;
 }
 
-const updateBannerImageAttributes = async (id: string, payload: any) => {
+const updateBannerImageAttributes = async (id: string, payload: IPayload) => {
 	try {
 		const { data } = await HttpService.patch<ICommonTypes.IApiResponse<{ product: object }>>(
 			`${process.env.NEXT_PUBLIC_BASE_PATH}/banner/updateImageAttribute/${id}`,

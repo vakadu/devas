@@ -49,7 +49,7 @@ export default function Index() {
 						</ProductListingContent>
 					</ProductListing>
 				</TabsContent>
-				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="details">
+				<TabsContent className="mt-0" value="details">
 					<EditImageDetails handleChange={handleChange} />
 				</TabsContent>
 			</Tabs>

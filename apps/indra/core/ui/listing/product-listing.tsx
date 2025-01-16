@@ -30,9 +30,16 @@ export function ProductListing({ children, showInactive, apiKey }: IProductListi
 	);
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
-	const handleSearchChange = useCallback((value: string) => {
-		setSearchTerm(value);
-	}, []);
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			setSearchTerm(value);
+			setPagination({
+				...pagination,
+				pageIndex: 0,
+			});
+		},
+		[pagination]
+	);
 
 	const value = useMemo(
 		() => ({
@@ -69,7 +76,15 @@ interface IProductListingHeaderProps {
 }
 
 export const ProductListingHeader = ({ className }: IProductListingHeaderProps) => {
-	const { value, handleSearchChange } = useProductListingContext();
+	const { value, handleSearchChange, pagination, setPagination } = useProductListingContext();
+
+	const handleClear = () => {
+		handleSearchChange('');
+		setPagination({
+			...pagination,
+			pageIndex: 0,
+		});
+	};
 
 	return (
 		<div
@@ -94,7 +109,7 @@ export const ProductListingHeader = ({ className }: IProductListingHeaderProps) 
 							size="icon"
 							variant="ghost"
 							className="absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer"
-							onClick={() => handleSearchChange('')}
+							onClick={handleClear}
 						>
 							<X className="!size-16 text-red-1" />
 						</Button>

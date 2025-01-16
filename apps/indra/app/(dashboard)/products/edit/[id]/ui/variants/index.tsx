@@ -12,6 +12,7 @@ export default function Varaints() {
 		<ProductListing showInactive={1} apiKey="products/varaints">
 			<ProductListingHeader />
 			<ProductListingContent>
+				{/* <SelectedVariants /> */}
 				<ColumnsListing />
 			</ProductListingContent>
 		</ProductListing>

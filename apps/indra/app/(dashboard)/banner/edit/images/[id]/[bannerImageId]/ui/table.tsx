@@ -32,7 +32,7 @@ export default function ColumnsListing({ handleChange }: { handleChange: (type: 
 			return acc;
 		}, {} as RowSelectionState);
 		setRowSelection(updateSelection);
-	}, [productIds, setRowSelection]);
+	}, []);
 
 	const handleUpdateUrl = useCallback(
 		(ids: string[]) => {
@@ -42,6 +42,8 @@ export default function ColumnsListing({ handleChange }: { handleChange: (type: 
 			} else {
 				searchParams.set('products', ids.join(','));
 			}
+			console.log(ids);
+
 			router.replace(`${pathname}?${searchParams.toString()}`, { scroll: false });
 		},
 		[pathname, router, sParams]
@@ -51,7 +53,7 @@ export default function ColumnsListing({ handleChange }: { handleChange: (type: 
 		if (data?.data?.image) {
 			handleUpdateUrl(data?.data?.image.productIds);
 		}
-	}, [data?.data?.image, handleUpdateUrl]);
+	}, [data?.data?.image]);
 
 	const columns: ColumnDef<ICatalougeTypes.IProduct>[] = useMemo(
 		() => [

@@ -1,20 +1,24 @@
 import { Loader2, X } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
 
 import { Button, ImagePlaceholder } from '@devas/ui';
 import { useDeleteBannerImage } from '../api/remove-banner-image';
-import { Routes } from '../../../../../../core/primitives';
 
 interface IImageItemProps {
 	image: ICatalougeTypes.IBannerImage;
 	refetch: () => void;
 	id: string;
+	setShowForm: (b: boolean) => void;
+	setImageDetails: (image: ICatalougeTypes.IBannerImage) => void;
 }
 
-export default function ImageItem({ image, refetch, id }: IImageItemProps) {
+export default function ImageItem({
+	image,
+	refetch,
+	id,
+	setShowForm,
+	setImageDetails,
+}: IImageItemProps) {
 	const { mutateAsync: deleteBannerImage, isPending } = useDeleteBannerImage(id as string);
-	const router = useRouter();
-	const params = useParams();
 
 	const handleDelete = async (event: React.MouseEvent) => {
 		event.stopPropagation();
@@ -26,14 +30,16 @@ export default function ImageItem({ image, refetch, id }: IImageItemProps) {
 
 	const handleRoute = async (event: React.MouseEvent) => {
 		event.stopPropagation();
-		router.push(`${Routes.EditBannerImages}/${params?.id}/${image._id}?type=products`);
+		setShowForm(true);
+		setImageDetails(image);
+		// router.push(`${Routes.EditBannerImages}/${params?.id}/${image._id}?type=products`);
 	};
 
 	return (
-		<div className="relative z-10 w-[182px] h-[182px]" onClick={handleRoute}>
+		<div className="relative z-10 w-full h-[182px] col-span-1" onClick={handleRoute}>
 			<ImagePlaceholder
 				src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/${image.url}`}
-				containerClasses="border border-grey-light w-[182px] h-[182px] rounded-[12px] shadow-md flex justify-center items-center flex-col gap-6 cursor-pointer"
+				containerClasses="border border-grey-light w-full h-[182px] rounded-[12px] shadow-md flex justify-center items-center flex-col gap-6 cursor-pointer"
 				imageClasses="rounded-[12px] object-cover"
 			/>
 			<Button

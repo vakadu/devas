@@ -8,6 +8,7 @@ import { useParams, useRouter } from 'next/navigation';
 import {
 	Button,
 	FloatingInput,
+	FloatingTextArea,
 	Form,
 	FormControl,
 	FormField,
@@ -97,11 +98,11 @@ export function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 	const fields: {
 		name: keyof IFormData;
 		label: string;
-		type: 'text' | 'select';
+		type: 'text' | 'select' | 'textarea';
 		options?: { value: string; label: string }[];
 	}[] = [
 		{ name: 'title', label: 'Title', type: 'text' },
-		{ name: 'description', label: 'Description', type: 'text' },
+		{ name: 'description', label: 'Description', type: 'textarea' },
 		{
 			name: 'type',
 			label: 'Banner Type',
@@ -148,8 +149,28 @@ export function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 					}}
 				/>
 			);
+		} else if (field.type === 'textarea') {
+			return (
+				<FormField
+					key={field.name}
+					control={form.control}
+					name={field.name}
+					render={({ field: inputField, fieldState }) => (
+						<FormItem className="relative col-span-1">
+							<FormControl>
+								<FloatingTextArea
+									label={field.label}
+									id={field.name}
+									isError={!!fieldState.error}
+									{...inputField}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+			);
 		}
-
 		return (
 			<FormField
 				key={field.name}
@@ -173,7 +194,7 @@ export function AddEditBanner({ type }: { type: 'ADD' | 'EDIT' }) {
 	};
 
 	return (
-		<div className="max-w-[720px]">
+		<div className="col-span-2 shadow-card1 p-16 bg-white rounded-8">
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}

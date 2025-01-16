@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { PlusIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useGetBannerById } from '../api/get-banner-by-id';
 import ImageItem from './image-item';
@@ -21,9 +21,10 @@ export default function AddEditImages() {
 		setShow(true);
 		setShowForm(false);
 	};
+	const memoizedImage = useMemo(() => imageDetails, [imageDetails]);
 
 	return (
-		<div className="grid grid-cols-5 gap-24">
+		<div className="grid grid-cols-5 gap-24 items-start">
 			<div className="grid grid-cols-3 gap-24 col-span-3 shadow-card1 bg-white p-16 rounded-8">
 				{data?.data?.banner?.images?.map((image) => {
 					return (
@@ -34,6 +35,7 @@ export default function AddEditImages() {
 							id={params?.id as string}
 							setShowForm={setShowForm}
 							setImageDetails={setImageDetails}
+							activeId={imageDetails?._id}
 						/>
 					);
 				})}
@@ -58,9 +60,9 @@ export default function AddEditImages() {
 				</Sheet>
 			</div>
 			{showForm && (
-				<div className="flex gap-24 col-span-2 shadow-card1 bg-white p-16 rounded-8">
+				<div className="flex gap-24 col-span-2 shadow-card1 bg-white rounded-8">
 					<EditImageDetails
-						image={imageDetails as ICatalougeTypes.IBannerImage}
+						image={memoizedImage as ICatalougeTypes.IBannerImage}
 						refetch={refetch}
 						setShowForm={setShowForm}
 					/>

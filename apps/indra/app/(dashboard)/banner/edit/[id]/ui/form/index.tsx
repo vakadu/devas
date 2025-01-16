@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useMemo, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { z } from 'zod';
@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Form } from '@devas/ui';
 import { FieldRenderer } from './field-renderer';
 import { useUpdateBannerImageAttributes } from '../../api/update-banner-image-attributes';
+import { PlusIcon } from 'lucide-react';
 
 type IFormData = {
 	title: string;
@@ -49,33 +50,6 @@ export default function EditImageDetails({
 		params?.id as string
 	);
 
-	useEffect(() => {
-		if (image) {
-			form.reset({
-				title: image.title || '',
-				description: image.description || '',
-				xPriority: image.xPriority?.toString() || '',
-				yPriority: image.yPriority?.toString() || '',
-				active: image.active?.toString() || 'true',
-			});
-		}
-	}, [form, image]);
-
-	const onSubmit = async (values: IFormData) => {
-		const payload = {
-			...values,
-			xPriority: Number(values.xPriority),
-			yPriority: Number(values.yPriority),
-			active: values.active === 'true',
-			bannerImageId: image?._id as string,
-		};
-		const response = await updateBannerImageAttributes(payload);
-		if (response.status === 'SUCCESS') {
-			refetch();
-			setShowForm(false);
-		}
-	};
-
 	const fields = useMemo(
 		() => [
 			{ name: 'title', label: 'Title' },
@@ -111,17 +85,65 @@ export default function EditImageDetails({
 		[]
 	);
 
+	useEffect(() => {
+		if (image) {
+			form.reset({
+				title: image.title || '',
+				description: image.description || '',
+				xPriority: image.xPriority?.toString() || '',
+				yPriority: image.yPriority?.toString() || '',
+				active: image.active?.toString() || 'true',
+			});
+		}
+	}, [form, image]);
+
+	const handleProducts = () => {
+		// setShowDialog(true);
+	};
+
+	const onSubmit = async (values: IFormData) => {
+		const payload = {
+			...values,
+			xPriority: Number(values.xPriority),
+			yPriority: Number(values.yPriority),
+			active: values.active === 'true',
+			bannerImageId: image?._id as string,
+		};
+		const response = await updateBannerImageAttributes(payload);
+		if (response.status === 'SUCCESS') {
+			refetch();
+			setShowForm(false);
+		}
+	};
+
 	return (
-		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className="flex flex-col justify-between w-full"
-			>
-				<FieldRenderer fields={fields} form={form} />
-				<Button loading={isPending} disabled={isPending} className="max-w-[240px] mt-24">
-					Submit
-				</Button>
-			</form>
-		</Form>
+		<div className="w-full">
+			<div className="flex justify-between items-center border-b border-grey-light p-16 mb-24">
+				<h2 className="font-medium">Update Banner Details</h2>
+				<div
+					onClick={handleProducts}
+					className="border-2 border-grey-light w-24 h-24 rounded-full flex justify-center items-center cursor-pointer"
+				>
+					<div className="w-16 h-16 bg-primary rounded-full  flex justify-center items-center">
+						<PlusIcon className="size-14 text-white font-bold" />
+					</div>
+				</div>
+			</div>
+			<Form {...form}>
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="flex flex-col justify-between w-full p-16"
+				>
+					<FieldRenderer fields={fields} form={form} />
+					<Button
+						loading={isPending}
+						disabled={isPending}
+						className="max-w-[240px] mt-24"
+					>
+						Submit
+					</Button>
+				</form>
+			</Form>
+		</div>
 	);
 }

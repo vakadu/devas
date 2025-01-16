@@ -9,6 +9,7 @@ interface IImageItemProps {
 	id: string;
 	setShowForm: (b: boolean) => void;
 	setImageDetails: (image: ICatalougeTypes.IBannerImage) => void;
+	activeId: string | undefined;
 }
 
 export default function ImageItem({
@@ -17,6 +18,7 @@ export default function ImageItem({
 	id,
 	setShowForm,
 	setImageDetails,
+	activeId,
 }: IImageItemProps) {
 	const { mutateAsync: deleteBannerImage, isPending } = useDeleteBannerImage(id as string);
 
@@ -32,20 +34,24 @@ export default function ImageItem({
 		event.stopPropagation();
 		setShowForm(true);
 		setImageDetails(image);
-		// router.push(`${Routes.EditBannerImages}/${params?.id}/${image._id}?type=products`);
 	};
 
 	return (
-		<div className="relative z-10 w-full h-[182px] col-span-1" onClick={handleRoute}>
+		<div
+			className={`relative z-10 w-full h-[182px] p-4 col-span-1 border border-grey-light rounded-[12px] ${
+				activeId === image._id ? 'border-primary border-2 shadow-card1' : ''
+			}`}
+			onClick={handleRoute}
+		>
 			<ImagePlaceholder
 				src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/${image.url}`}
-				containerClasses="border border-grey-light w-full h-[182px] rounded-[12px] shadow-md flex justify-center items-center flex-col gap-6 cursor-pointer"
+				containerClasses="w-full h-full rounded-[12px] flex justify-center items-center flex-col gap-6 cursor-pointer"
 				imageClasses="rounded-[12px] object-cover"
 			/>
 			<Button
 				variant="destructive"
 				size="icon"
-				className="absolute top-[-6px] right-[-4px] rounded-full z-50"
+				className="absolute top-[-12px] right-[-10px] rounded-full z-50"
 				onClick={handleDelete}
 			>
 				{isPending ? (

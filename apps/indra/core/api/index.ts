@@ -5,3 +5,4 @@ export { useGetStoresList } from './catalouge/get-store-list';
 export { useGetDropdownList } from './app-utils/dropdown-list';
 export { useGetStoreProductById } from './catalouge/get-store-product-by-id';
 export { useGetStoreProductsList } from './catalouge/get-store-products';
+export { useGetStoresProductsList } from './catalouge/get-stores-products';

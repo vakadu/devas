@@ -1,13 +1,13 @@
 'use client';
 
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { X } from 'lucide-react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { PlusIcon, X } from 'lucide-react';
+import { PaginationState } from '@tanstack/react-table';
 
 import { StoreProductsListingContext, useStoreProductsListingContext } from './context';
-import { Button, Input, Spinner } from '@devas/ui';
+import { Button, Input } from '@devas/ui';
 import { cn } from '@devas/utils';
-import { useGetStoreProductsList } from '../../api';
+import { useGetStoresProductsList } from '../../api';
 
 interface IStoreProductsListingProps {
 	children: ReactNode;
@@ -22,48 +22,57 @@ export function StoreProductsListing({
 	apiKey,
 	storeId,
 }: IStoreProductsListingProps) {
-	const { ref, inView } = useInView({
-		threshold: 0,
-	});
 	const [search, setSearchTerm] = useState('');
-	const { data, fetchNextPage, isFetchingNextPage, isFetching, refetch } =
-		useGetStoreProductsList(search, 15, storeId, apiKey);
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 15,
+	});
+	const { data, isFetching, refetch } = useGetStoresProductsList(
+		search,
+		apiKey,
+		showInactive,
+		pagination.pageIndex,
+		pagination.pageSize
+	);
 	const [rowSelection, setRowSelection] = useState({});
 
-	useEffect(() => {
-		if (inView) {
-			fetchNextPage();
-		}
-	}, [fetchNextPage, inView]);
-
-	const handleSearchChange = useCallback((value: string) => {
-		setSearchTerm(value);
-	}, []);
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			setSearchTerm(value);
+			setPagination({
+				...pagination,
+				pageIndex: 0,
+			});
+		},
+		[pagination]
+	);
 
 	const value = useMemo(
 		() => ({
 			value: search,
 			handleSearchChange,
-			data: data?.pages.flatMap((page) => page?.data?.data?.storeProducts) || [],
+			data: data?.data?.storeProducts || [],
 			isFetching,
 			rowSelection,
 			setRowSelection,
 			refetch,
+			pagination,
+			setPagination,
 		}),
-		[search, handleSearchChange, data?.pages, isFetching, rowSelection, refetch]
+		[
+			data?.data?.storeProducts,
+			handleSearchChange,
+			isFetching,
+			pagination,
+			refetch,
+			rowSelection,
+			search,
+		]
 	);
 
 	return (
 		<StoreProductsListingContext.Provider value={value}>
-			<div>{children}</div>
-			<div className="text-center flex flex-col gap-6" ref={ref}>
-				{isFetchingNextPage && (
-					<>
-						<Spinner />
-						<span className="text-12 font-medium">Fetching more products...</span>
-					</>
-				)}
-			</div>
+			<div className="rounded-8 shadow-card1 bg-white">{children}</div>
 		</StoreProductsListingContext.Provider>
 	);
 }
@@ -78,20 +87,20 @@ export const StoreProductsListingHeader = ({ className }: IStoreProductsListingH
 	return (
 		<div
 			className={cn(
-				'flex justify-between items-center py-12 bg-white mb-12 px-12 rounded-12',
+				'flex justify-between items-center py-12 bg-white px-12 border-b border-grey-light',
 				className
 			)}
 		>
 			<div className="flex-1">
-				<div className="max-w-[320px] flex relative">
+				<div className="w-[320px] flex relative">
 					<Input
 						value={value}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 							handleSearchChange(e.target.value)
 						}
-						placeholder="Search for stores..."
+						placeholder="Search for products..."
 						type="search"
-						className="pr-[24px]"
+						className="pr-[24px] h-32 rounded-8 text-14 py-4"
 					/>
 					{value.length > 0 && (
 						<Button
@@ -104,6 +113,12 @@ export const StoreProductsListingHeader = ({ className }: IStoreProductsListingH
 						</Button>
 					)}
 				</div>
+			</div>
+			<div className="flex-1 flex justify-end">
+				<Button variant="outline" size="lg">
+					<PlusIcon className="!size-16" />
+					<span className="text-14 font-medium">Add a Product</span>
+				</Button>
 			</div>
 		</div>
 	);
@@ -120,7 +135,7 @@ export const StoreProductsListingContent = ({
 	...props
 }: IStoreProductListingContentProps) => {
 	return (
-		<div className={cn('bg-white rounded-12 overflow-y-scroll', className)} {...props}>
+		<div className={cn('bg-white overflow-y-scroll', className)} {...props}>
 			{children}
 		</div>
 	);

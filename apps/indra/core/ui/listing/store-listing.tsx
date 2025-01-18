@@ -1,13 +1,12 @@
 'use client';
 
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { X } from 'lucide-react';
-import { RowSelectionState } from '@tanstack/react-table';
+import { PaginationState, RowSelectionState } from '@tanstack/react-table';
 
 import { useGetStoresList } from '../../api';
 import { StoreListingContext, useStoreListingContext } from './context';
-import { Button, Input, Spinner } from '@devas/ui';
+import { Button, Input } from '@devas/ui';
 import { cn } from '@devas/utils';
 
 interface IStoreListingProps {
@@ -17,52 +16,57 @@ interface IStoreListingProps {
 }
 
 export function StoreListing({ children, showInactive, apiKey }: IStoreListingProps) {
-	const { ref, inView } = useInView({
-		threshold: 0,
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 15,
 	});
 	const [search, setSearchTerm] = useState<string>('');
-	const { data, fetchNextPage, isFetchingNextPage, isFetching, refetch } = useGetStoresList(
+	const { data, isFetching, refetch } = useGetStoresList(
 		search,
-		15,
 		apiKey,
-		showInactive
+		showInactive,
+		pagination.pageIndex,
+		pagination.pageSize
 	);
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
 
-	useEffect(() => {
-		if (inView) {
-			fetchNextPage();
-		}
-	}, [fetchNextPage, inView]);
-
-	const handleSearchChange = useCallback((value: string) => {
-		setSearchTerm(value);
-	}, []);
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			setSearchTerm(value);
+			setPagination({
+				...pagination,
+				pageIndex: 0,
+			});
+		},
+		[pagination]
+	);
 
 	const value = useMemo(
 		() => ({
 			value: search,
 			handleSearchChange,
-			data: data?.pages.flatMap((page) => page?.data?.data?.stores) || [],
+			data: data?.data?.stores || [],
 			isFetching,
 			rowSelection,
 			setRowSelection,
 			refetch,
+			pagination,
+			setPagination,
 		}),
-		[search, handleSearchChange, data?.pages, isFetching, rowSelection, refetch]
+		[
+			data?.data?.stores,
+			handleSearchChange,
+			isFetching,
+			pagination,
+			refetch,
+			rowSelection,
+			search,
+		]
 	);
 
 	return (
 		<StoreListingContext.Provider value={value}>
 			<div>{children}</div>
-			<div className="text-center flex flex-col gap-6" ref={ref}>
-				{isFetchingNextPage && (
-					<>
-						<Spinner />
-						<span className="text-12 font-medium">Fetching more stores...</span>
-					</>
-				)}
-			</div>
 		</StoreListingContext.Provider>
 	);
 }
@@ -77,7 +81,7 @@ export const StoreListingHeader = ({ className }: IStoreListingHeaderProps) => {
 	return (
 		<div
 			className={cn(
-				'flex justify-between items-center py-12 bg-white mb-12 px-12 rounded-12',
+				'flex justify-between items-center py-12 bg-white px-12 border-b border-grey-light',
 				className
 			)}
 		>
@@ -90,7 +94,7 @@ export const StoreListingHeader = ({ className }: IStoreListingHeaderProps) => {
 						}
 						placeholder="Search for stores..."
 						type="search"
-						className="pr-[24px]"
+						className="pr-[24px] h-32 rounded-8 text-14 py-4"
 					/>
 					{value.length > 0 && (
 						<Button

@@ -3,6 +3,7 @@
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AnimatePresence } from 'framer-motion';
 
 import { Toaster, TooltipProvider } from '@devas/ui';
 import { persistor, store } from '../../core/store';
@@ -21,9 +22,13 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 			<PersistGate loading={null} persistor={persistor}>
 				<QueryClientProvider client={queryClient}>
 					<AnalyticsProvider value={analytics}>
-						<TooltipProvider>{isDesktop ? children : <AppMobile />}</TooltipProvider>
-						<Toaster closeButton richColors position="bottom-left" />
-						<LoadingModal />
+						<AnimatePresence>
+							<TooltipProvider>
+								{isDesktop ? children : <AppMobile />}
+							</TooltipProvider>
+							<Toaster closeButton richColors position="bottom-left" />
+							<LoadingModal />
+						</AnimatePresence>
 					</AnalyticsProvider>
 				</QueryClientProvider>
 			</PersistGate>

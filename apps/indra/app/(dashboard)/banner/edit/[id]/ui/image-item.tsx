@@ -30,7 +30,7 @@ export default function ImageItem({
 		}
 	};
 
-	const handleRoute = async (event: React.MouseEvent) => {
+	const handleImageClick = async (event: React.MouseEvent) => {
 		event.stopPropagation();
 		setShowForm(true);
 		setImageDetails(image);
@@ -41,7 +41,7 @@ export default function ImageItem({
 			className={`relative z-10 w-full h-[182px] p-4 col-span-1 border border-grey-light rounded-[12px] ${
 				activeId === image._id ? 'border-primary border-2 shadow-card1' : ''
 			}`}
-			onClick={handleRoute}
+			onClick={handleImageClick}
 		>
 			<ImagePlaceholder
 				src={`${process.env.NEXT_PUBLIC_IMAGE_PATH}/${image.url}`}

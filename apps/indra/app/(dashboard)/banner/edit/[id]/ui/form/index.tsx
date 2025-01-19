@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { z } from 'zod';
@@ -9,6 +9,7 @@ import { Button, Form } from '@devas/ui';
 import { FieldRenderer } from './field-renderer';
 import { useUpdateBannerImageAttributes } from '../../api/update-banner-image-attributes';
 import { PlusIcon } from 'lucide-react';
+import { Routes } from '../../../../../../../core/primitives';
 
 type IFormData = {
 	title: string;
@@ -36,6 +37,7 @@ export default function EditImageDetails({
 	setShowForm: (show: boolean) => void;
 }) {
 	const params = useParams();
+	const router = useRouter();
 	const form = useForm<IFormData>({
 		resolver: zodResolver(schema),
 		defaultValues: {
@@ -97,8 +99,8 @@ export default function EditImageDetails({
 		}
 	}, [form, image]);
 
-	const handleProducts = () => {
-		// setShowDialog(true);
+	const handleAddProducts = () => {
+		router.push(`${Routes.EditBanner}/${params.id}/${image._id}`);
 	};
 
 	const onSubmit = async (values: IFormData) => {
@@ -121,7 +123,7 @@ export default function EditImageDetails({
 			<div className="flex justify-between items-center border-b border-grey-light p-16 mb-24">
 				<h2 className="font-medium">Update Banner Details</h2>
 				<div
-					onClick={handleProducts}
+					onClick={handleAddProducts}
 					className="border-2 border-grey-light w-24 h-24 rounded-full flex justify-center items-center cursor-pointer"
 				>
 					<div className="w-16 h-16 bg-primary rounded-full  flex justify-center items-center">

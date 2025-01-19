@@ -82,13 +82,15 @@ export function ProductListingTable({
 					) : table?.getRowModel()?.rows.length ? (
 						table.getRowModel().rows.map((row) => {
 							let rowDisable = false;
+							const isSelected = rowSelection[row.id];
 							if (type === 'variant') {
 								rowDisable = row.original.productId === id;
 							}
 							return (
 								<TableRow
 									className={cn(
-										rowDisable && 'pointer-events-none bg-grey-2 opacity-20'
+										rowDisable && 'pointer-events-none bg-grey-2 opacity-20',
+										isSelected && 'bg-primary/10'
 									)}
 									key={row.id}
 								>
@@ -112,7 +114,7 @@ export function ProductListingTable({
 					)}
 				</TableBody>
 			</Table>
-			<div className="flex justify-end items-center gap-12 mt-24">
+			<div className="flex justify-end items-center gap-12 mt-24 p-16">
 				<Button
 					disabled={pagination.pageIndex === 0}
 					onClick={() =>

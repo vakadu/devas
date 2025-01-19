@@ -12,3 +12,10 @@ export const capitalize = (value: string) => {
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
+
+export const slideDown = {
+	initial: { y: -50, opacity: 0 },
+	animate: { y: 0, opacity: 1 },
+	exit: { y: -50, opacity: 0 },
+	transition: { type: 'tween', ease: 'easeInOut', duration: 0.3 },
+};

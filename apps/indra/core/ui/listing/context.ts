@@ -11,6 +11,7 @@ export type IProductListingContextType = {
 	refetch: () => void;
 	pagination: PaginationState;
 	setPagination: (state: PaginationState) => void;
+	apiKey: string;
 };
 
 export type IStoreListingContextType = {

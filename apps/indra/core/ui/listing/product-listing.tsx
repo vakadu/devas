@@ -3,19 +3,26 @@
 import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { X } from 'lucide-react';
 import { PaginationState, RowSelectionState } from '@tanstack/react-table';
+import { motion } from 'framer-motion';
 
 import { ProductListingContext, useProductListingContext } from './context';
 import { Button, Input } from '@devas/ui';
-import { cn } from '@devas/utils';
+import { cn, slideDown } from '@devas/utils';
 import { useGetProductsList } from '../../api/catalouge/get-products-list';
 
 interface IProductListingProps {
 	children: ReactNode;
 	showInactive: 0 | 1;
 	apiKey: string;
+	className?: string;
 }
 
-export function ProductListing({ children, showInactive, apiKey }: IProductListingProps) {
+export function ProductListing({
+	children,
+	showInactive,
+	apiKey,
+	className,
+}: IProductListingProps) {
 	const [search, setSearchTerm] = useState<string>('');
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
@@ -52,8 +59,10 @@ export function ProductListing({ children, showInactive, apiKey }: IProductListi
 			refetch,
 			pagination,
 			setPagination,
+			apiKey,
 		}),
 		[
+			apiKey,
 			data?.data?.products,
 			handleSearchChange,
 			isFetching,
@@ -66,17 +75,20 @@ export function ProductListing({ children, showInactive, apiKey }: IProductListi
 
 	return (
 		<ProductListingContext.Provider value={value}>
-			<div>{children}</div>
+			<div className={cn(className)}>{children}</div>
 		</ProductListingContext.Provider>
 	);
 }
 
 interface IProductListingHeaderProps {
 	className?: string;
+	children?: ReactNode;
 }
 
-export const ProductListingHeader = ({ className }: IProductListingHeaderProps) => {
-	const { value, handleSearchChange, pagination, setPagination } = useProductListingContext();
+export const ProductListingHeader = ({ className, children }: IProductListingHeaderProps) => {
+	const { value, handleSearchChange, pagination, setPagination, rowSelection, setRowSelection } =
+		useProductListingContext();
+	const productIds = Object.keys(rowSelection) || [];
 
 	const handleClear = () => {
 		handleSearchChange('');
@@ -86,34 +98,64 @@ export const ProductListingHeader = ({ className }: IProductListingHeaderProps) 
 		});
 	};
 
+	const handleClearSelection = () => {
+		setRowSelection({});
+	};
+
 	return (
-		<div
-			className={cn(
-				'flex justify-between items-center py-12 bg-white mb-12 px-12 rounded-12',
-				className
-			)}
-		>
-			<div className="flex-1">
-				<div className="max-w-[320px] flex relative">
-					<Input
-						value={value}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-							handleSearchChange(e.target.value)
-						}
-						placeholder="Search for Products..."
-						type="search"
-						className="pr-[24px]"
-					/>
-					{value.length > 0 && (
-						<Button
-							size="icon"
-							variant="ghost"
-							className="absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer"
-							onClick={handleClear}
+		<div>
+			<div
+				className={cn(
+					'flex justify-between items-center py-12 bg-white px-12 border-b border-grey-light',
+					className
+				)}
+			>
+				<div className="flex-1">
+					{children}
+					{productIds.length > 0 && (
+						<motion.div
+							initial="initial"
+							animate="animate"
+							exit="exit"
+							variants={slideDown}
+							className=""
 						>
-							<X className="!size-16 text-red-1" />
-						</Button>
+							<span className="text-14 font-medium">
+								Selected {productIds.length} row(s)
+							</span>
+							<Button
+								onClick={handleClearSelection}
+								variant="ghost"
+								size="sm"
+								className="text-14"
+							>
+								Clear Selection
+							</Button>
+						</motion.div>
 					)}
+				</div>
+				<div className="flex-1 flex justify-end">
+					<div className="w-[320px] flex relative">
+						<Input
+							value={value}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+								handleSearchChange(e.target.value)
+							}
+							placeholder="Search for Products..."
+							type="search"
+							className="pr-[24px] h-32 rounded-8 text-14 py-4"
+						/>
+						{value.length > 0 && (
+							<Button
+								size="icon"
+								variant="ghost"
+								className="absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer"
+								onClick={handleClear}
+							>
+								<X className="!size-16 text-red-1" />
+							</Button>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>

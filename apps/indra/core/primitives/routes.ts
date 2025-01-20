@@ -13,4 +13,5 @@ export enum Routes {
 	EditStoreProduct = '/store/products/edit',
 	StoresList = '/store/list',
 	StoreProductList = '/store/products/list',
+	StoreDetails = '/store/details',
 }

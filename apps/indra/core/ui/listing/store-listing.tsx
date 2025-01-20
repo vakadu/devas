@@ -13,9 +13,10 @@ interface IStoreListingProps {
 	children: ReactNode;
 	showInactive: 0 | 1;
 	apiKey: string;
+	className?: string;
 }
 
-export function StoreListing({ children, showInactive, apiKey }: IStoreListingProps) {
+export function StoreListing({ children, showInactive, apiKey, className }: IStoreListingProps) {
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 15,
@@ -66,7 +67,7 @@ export function StoreListing({ children, showInactive, apiKey }: IStoreListingPr
 
 	return (
 		<StoreListingContext.Provider value={value}>
-			<div>{children}</div>
+			<div className={cn(className)}>{children}</div>
 		</StoreListingContext.Provider>
 	);
 }
@@ -81,7 +82,7 @@ export const StoreListingHeader = ({ className }: IStoreListingHeaderProps) => {
 	return (
 		<div
 			className={cn(
-				'flex justify-between items-center py-12 bg-white px-12 border-b border-grey-light',
+				'flex justify-between items-center py-12 px-12 border-b border-grey-light',
 				className
 			)}
 		>
@@ -123,7 +124,7 @@ export const StoreListingContent = ({
 	...props
 }: IStoreListingContentProps) => {
 	return (
-		<div className={cn('bg-white rounded-12 overflow-y-scroll', className)} {...props}>
+		<div className={cn('overflow-y-scroll', className)} {...props}>
 			{children}
 		</div>
 	);

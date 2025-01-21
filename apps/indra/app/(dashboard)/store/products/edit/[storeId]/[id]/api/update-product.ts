@@ -28,7 +28,7 @@ export function useUpdateStoreProduct(id: string) {
 		mutationFn: (payload: IPayload) => updateStoreProduct(id, payload),
 		onSuccess: (data) => {
 			if (data.status === 'SUCCESS') {
-				toast.success('Product created successfully.');
+				toast.success('Product updated successfully.');
 			} else {
 				toast.error('Something went wrong. Please try again');
 			}

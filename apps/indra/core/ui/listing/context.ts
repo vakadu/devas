@@ -36,6 +36,7 @@ export type IStoreProductsListingContextType = {
 	refetch: () => void;
 	pagination: PaginationState;
 	setPagination: (state: PaginationState) => void;
+	storeId: string;
 };
 
 export const ProductListingContext = createContext<IProductListingContextType | undefined>(

@@ -8,12 +8,15 @@ import { StoreProductsListingContext, useStoreProductsListingContext } from './c
 import { Button, Input } from '@devas/ui';
 import { cn } from '@devas/utils';
 import { useGetStoresProductsList } from '../../api';
+import Link from 'next/link';
+import { Routes } from '../../primitives';
 
 interface IStoreProductsListingProps {
 	children: ReactNode;
 	showInactive: 0 | 1;
 	apiKey: string;
 	storeId: string;
+	className?: string;
 }
 
 export function StoreProductsListing({
@@ -21,6 +24,7 @@ export function StoreProductsListing({
 	showInactive,
 	apiKey,
 	storeId,
+	className
 }: IStoreProductsListingProps) {
 	const [search, setSearchTerm] = useState('');
 	const [pagination, setPagination] = useState<PaginationState>({
@@ -58,6 +62,7 @@ export function StoreProductsListing({
 			refetch,
 			pagination,
 			setPagination,
+			storeId
 		}),
 		[
 			data?.data?.storeProducts,
@@ -67,12 +72,13 @@ export function StoreProductsListing({
 			refetch,
 			rowSelection,
 			search,
+			storeId
 		]
 	);
 
 	return (
 		<StoreProductsListingContext.Provider value={value}>
-			<div className="rounded-8 shadow-card1 bg-white">{children}</div>
+			<div className={cn(className)}>{children}</div>
 		</StoreProductsListingContext.Provider>
 	);
 }
@@ -82,12 +88,12 @@ interface IStoreProductsListingHeaderProps {
 }
 
 export const StoreProductsListingHeader = ({ className }: IStoreProductsListingHeaderProps) => {
-	const { value, handleSearchChange } = useStoreProductsListingContext();
+	const { value, handleSearchChange, storeId } = useStoreProductsListingContext();
 
 	return (
 		<div
 			className={cn(
-				'flex justify-between items-center py-12 bg-white px-12 border-b border-grey-light',
+				'flex justify-between items-center py-12 px-12 border-b border-grey-light',
 				className
 			)}
 		>
@@ -116,8 +122,10 @@ export const StoreProductsListingHeader = ({ className }: IStoreProductsListingH
 			</div>
 			<div className="flex-1 flex justify-end">
 				<Button variant="outline" size="lg">
-					<PlusIcon className="!size-16" />
-					<span className="text-14 font-medium">Add a Product</span>
+					<Link className='flex gap-6 items-center justify-center' href={`${Routes.AddStoreProduct}/${storeId}?type=product`}>
+						<PlusIcon className="!size-16" />
+						<span className="text-14 font-medium">Add a Product</span>
+					</Link>
 				</Button>
 			</div>
 		</div>
@@ -135,7 +143,7 @@ export const StoreProductsListingContent = ({
 	...props
 }: IStoreProductListingContentProps) => {
 	return (
-		<div className={cn('bg-white overflow-y-scroll', className)} {...props}>
+		<div className={cn('overflow-y-scroll', className)} {...props}>
 			{children}
 		</div>
 	);

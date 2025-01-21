@@ -4,11 +4,11 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { PenIcon } from 'lucide-react';
 
-import { useAnalytics } from '../../../../../../../core/context';
-import { Routes } from '../../../../../../../core/primitives';
-import { StoreProductsListingTable } from '../../../../../../../core/ui/listing-tables/store-products-listing';
 import { cn } from '@devas/utils';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@devas/ui';
+import { useAnalytics } from '../../../../../../core/context';
+import { Routes } from '../../../../../../core/primitives';
+import { StoreProductsListingTable } from '../../../../../../core/ui/listing-tables/store-products-listing';
 
 export default function ColumnsListing() {
 	const { trackEvent } = useAnalytics();

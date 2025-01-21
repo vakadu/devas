@@ -129,7 +129,7 @@ export function EditStoreProduct() {
 				queryKey: ['stores/list'],
 				type: 'active',
 			});
-			router.push(`${Routes.StoreProductList}/${reponse.data.storeProduct.storeId}`);
+			router.push(`${Routes.StoreDetails}/${reponse.data.storeProduct.storeId}?type=products`);
 		}
 	};
 

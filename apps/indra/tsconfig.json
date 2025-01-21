@@ -22,7 +22,8 @@
 		"./types/auth.d.ts",
 		"./types/catalouge.d.ts",
 		"./types/user.d.ts",
-		"./types/common.d.ts"
+		"./types/common.d.ts",
+		"./types/store.d.ts"
 	],
 	"include": [
 		"**/*.js",

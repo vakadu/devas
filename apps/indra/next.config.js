@@ -14,7 +14,10 @@ const nextConfig = {
 		svgr: false,
 	},
 	images: {
-		domains: ['biggr-assets.s3.ap-south-1.amazonaws.com'],
+		domains: [
+			'biggr-assets.s3.ap-south-1.amazonaws.com',
+			'biggr-test-docs.s3.ap-south-1.amazonaws.com',
+		],
 	},
 };
 

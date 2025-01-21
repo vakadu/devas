@@ -34,7 +34,7 @@ export default function Page() {
 					Products List
 				</TabsTrigger>
 			</TabsList>
-			<TabsContent className="bg-white p-16 rounded-12 mt-0" value="details">
+			<TabsContent className="mt-0" value="details">
 				<StoreDetails id={params?.id as string} />
 			</TabsContent>
 			<TabsContent className="mt-0" value="products">

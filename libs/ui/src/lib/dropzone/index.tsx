@@ -10,14 +10,23 @@ type IFileWithPreview = File & { preview: string };
 interface IProps {
 	files: IFileWithPreview[];
 	setFiles: (files: IFileWithPreview[]) => void;
+	maxFiles?: number;
+	acceptTypes?: { [key: string]: string[] };
+	onSubmit?: () => void;
 }
 
-export const DropZone = ({ files, setFiles }: IProps) => {
+export const DropZone = ({
+	files,
+	setFiles,
+	maxFiles = 1,
+	acceptTypes = {
+		'image/*': [],
+	},
+	onSubmit,
+}: IProps) => {
 	const { getRootProps, getInputProps, isDragAccept } = useDropzone({
-		accept: {
-			'image/*': [],
-		},
-		maxFiles: 1,
+		accept: acceptTypes,
+		maxFiles,
 		onDrop: (acceptedFiles) => {
 			setFiles(
 				acceptedFiles.map((file) =>
@@ -26,6 +35,9 @@ export const DropZone = ({ files, setFiles }: IProps) => {
 					})
 				)
 			);
+			if (onSubmit) {
+				onSubmit();
+			}
 		},
 	});
 

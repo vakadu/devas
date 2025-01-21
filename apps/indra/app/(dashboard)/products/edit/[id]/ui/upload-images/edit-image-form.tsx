@@ -26,7 +26,6 @@ import {
 	FormMessage,
 } from '@devas/ui';
 import { createFormDataForImage } from '../../../../../../../core/helpers';
-import { useCreateProductImage } from '../../api/create-product-image';
 import { useUpdateProductImage } from '../../api';
 
 const schema = z.object({

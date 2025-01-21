@@ -42,7 +42,7 @@ export default function Page() {
 					Business Details
 				</TabsTrigger>
 				<TabsTrigger className="flex-1 py-12" value="documents">
-					Store Documents
+					Documents
 				</TabsTrigger>
 				<TabsTrigger className="flex-1 py-12" value="products">
 					Products List

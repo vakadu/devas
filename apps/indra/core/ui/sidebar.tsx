@@ -130,7 +130,8 @@ const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 		<SidebarMenu className="gap-16 px-8">
 			{navMenu.map((item) => {
 				const Icon = item.icon ? IconMap[item.icon] : null;
-				const active = pathname === item.path;
+				const active =
+					pathname === item.path || pathname.split('/')[1] === item.path.split('/')[1];
 
 				if (item.type === 'menu') {
 					return <MenuItem key={item.id} item={item} />;

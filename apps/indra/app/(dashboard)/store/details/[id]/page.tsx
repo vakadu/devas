@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 
 import { Spinner, Tabs, TabsContent, TabsList, TabsTrigger } from '@devas/ui';
 
-const StoreDetails = dynamic(() => import('./ui/store-details'), {
+const Documents = dynamic(() => import('./ui/store-details'), {
 	loading: () => <Spinner />,
 });
 
@@ -49,13 +49,13 @@ export default function Page() {
 				</TabsTrigger>
 			</TabsList>
 			<TabsContent className="mt-0" value="details">
-				<BasicDetails />
+				<BasicDetails id={params?.id as string} />
 			</TabsContent>
 			<TabsContent className="mt-0" value="business">
-				<BusinessDetails />
+				<BusinessDetails id={params?.id as string} />
 			</TabsContent>
 			<TabsContent className="mt-0" value="documents">
-				<StoreDetails id={params?.id as string} />
+				<Documents id={params?.id as string} />
 			</TabsContent>
 			<TabsContent className="mt-0" value="products">
 				<Listing />

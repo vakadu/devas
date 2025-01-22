@@ -6,7 +6,7 @@ import { HttpService } from '../../../../../../core/services';
 const uploadStoreDocs = async (payload: FormData, id: string) => {
 	try {
 		const { data } = await HttpService.patch<ICommonTypes.IApiResponse<any>>(
-			`${process.env.NEXT_PUBLIC_BASE_PATH}/user/uploadStoreDocument/${id}`,
+			`${process.env.NEXT_PUBLIC_BASE_PATH}/store/uploadDocument/${id}`,
 			payload,
 			{
 				headers: {

@@ -7,7 +7,7 @@ const getStoresList = async ({
 }: QueryFunctionContext<[string, string, number, 0 | 1, number]>) => {
 	const [_key, searchTerm, limit, active, pageParam] = queryKey;
 
-	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/user/storeList?page=${pageParam}&limit=${limit}`;
+	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/store/list?page=${pageParam}&limit=${limit}`;
 	if (searchTerm && searchTerm.length > 2) {
 		url += `&searchTerm=${searchTerm}`;
 	}

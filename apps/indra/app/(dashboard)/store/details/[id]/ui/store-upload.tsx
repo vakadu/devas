@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useDropzone } from 'react-dropzone';
+import Link from 'next/link';
 
 import {
 	AccordionContent,
@@ -11,8 +12,7 @@ import {
 import { useGetStoreDocs } from '../api/get-store-docs';
 import { useUploadStoreDocs } from '../api/upload-store-docs';
 import { createFormDataForDocument, createFormDataForImage } from '../../../../../../core/helpers';
-import { CloudUpload, FileText } from 'lucide-react';
-import Link from 'next/link';
+import { CloudUpload } from 'lucide-react';
 
 export default function StoreUpload({
 	storeType,

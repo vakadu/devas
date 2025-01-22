@@ -10,6 +10,7 @@ import { cn } from '@devas/utils';
 import { useGetStoresProductsList } from '../../api';
 import Link from 'next/link';
 import { Routes } from '../../primitives';
+import { ProductSearch } from '../product-search';
 
 interface IStoreProductsListingProps {
 	children: ReactNode;
@@ -24,7 +25,7 @@ export function StoreProductsListing({
 	showInactive,
 	apiKey,
 	storeId,
-	className
+	className,
 }: IStoreProductsListingProps) {
 	const [search, setSearchTerm] = useState('');
 	const [pagination, setPagination] = useState<PaginationState>({
@@ -62,7 +63,7 @@ export function StoreProductsListing({
 			refetch,
 			pagination,
 			setPagination,
-			storeId
+			storeId,
 		}),
 		[
 			data?.data?.storeProducts,
@@ -72,7 +73,7 @@ export function StoreProductsListing({
 			refetch,
 			rowSelection,
 			search,
-			storeId
+			storeId,
 		]
 	);
 
@@ -121,12 +122,7 @@ export const StoreProductsListingHeader = ({ className }: IStoreProductsListingH
 				</div>
 			</div>
 			<div className="flex-1 flex justify-end">
-				<Button variant="outline" size="lg">
-					<Link className='flex gap-6 items-center justify-center' href={`${Routes.AddStoreProduct}/${storeId}?type=product`}>
-						<PlusIcon className="!size-16" />
-						<span className="text-14 font-medium">Add a Product</span>
-					</Link>
-				</Button>
+				<ProductSearch />
 			</div>
 		</div>
 	);

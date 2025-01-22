@@ -174,3 +174,4 @@ export {
 	CommandSeparator,
 } from './lib/command';
 export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor } from './lib/popover';
+export { AutoSearch } from './lib/auto-search';

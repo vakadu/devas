@@ -6,7 +6,7 @@ import StoreUpload from './store-upload';
 
 export default function StoreDetails({ id }: { id: string }) {
 	const { data, isPending } = useGetStoreDetails(id);
-	const details = data?.data?.user || ({} as IStoreTypes.IStoreDetails);
+	const details = data?.data?.store || ({} as IStoreTypes.IStoreDetails);
 	const [show, setShow] = useState<string>('LOGO');
 
 	if (isPending) {

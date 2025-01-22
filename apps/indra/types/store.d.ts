@@ -16,5 +16,6 @@ declare namespace IStoreTypes {
 		panUrl?: string;
 		gstUrl?: string;
 		otherDocUrl?: string;
+		email?: string;
 	}
 }

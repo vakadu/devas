@@ -20,3 +20,4 @@ export {
 	StoreProductsListing,
 	StoreProductsListingContent,
 } from './listing/store-product-listing';
+export { ProductSearch } from './product-search';

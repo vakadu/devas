@@ -1,3 +1,3 @@
-export default function BusinessDetails() {
+export default function BusinessDetails({ id }: { id: string }) {
 	return <div></div>;
 }

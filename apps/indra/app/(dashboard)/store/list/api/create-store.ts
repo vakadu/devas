@@ -11,7 +11,7 @@ interface IPayload {
 const createStore = async (payload: IPayload) => {
 	try {
 		const { data } = await HttpService.post<ICommonTypes.IApiResponse<any>>(
-			`${process.env.NEXT_PUBLIC_BASE_PATH}/user/addStore`,
+			`${process.env.NEXT_PUBLIC_BASE_PATH}/store/add`,
 			payload
 		);
 		return data;

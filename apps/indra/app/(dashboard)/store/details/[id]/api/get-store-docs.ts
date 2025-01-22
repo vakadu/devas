@@ -17,7 +17,7 @@ export function useGetStoreDocs(
 	otherCheck: boolean
 ) {
 	return useQuery({
-		queryKey: ['user/downloadStoreDocument', storeId, type],
+		queryKey: ['store/downloadDocument', storeId, type],
 		queryFn: getStoreDocs,
 		enabled: !!isValue && otherCheck,
 	});

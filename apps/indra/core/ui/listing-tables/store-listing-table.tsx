@@ -100,7 +100,7 @@ export function StoreListingTable({
 					)}
 				</TableBody>
 			</Table>
-			<div className="flex justify-end items-center gap-12 mt-24 p-16 border-t border-grey-light">
+			<div className="flex justify-end items-center gap-12 p-16 border-t">
 				<Button
 					disabled={pagination.pageIndex === 0}
 					onClick={() =>

@@ -13,17 +13,35 @@ import {
 import { useState } from 'react';
 import { useGetProductsList } from '../api';
 import { cn } from '@devas/utils';
+import { useCreateStoreProduct } from '../api/catalouge/create-store-product';
+import { useStoreProductsListingContext } from './listing/context';
 
-export function ProductSearch() {
+export function ProductSearch({ storeId }: { storeId?: string }) {
 	const [searchValue, onSearchValueChange] = useState('');
 	const [selectedValue, onSelectedValueChange] = useState<ICatalougeTypes.IProduct | null>(null);
 	const [open, setOpen] = useState(false);
-
 	const { data, isPending } = useGetProductsList(searchValue, 'products/search', 1, 0, 10);
 	const productsData = data?.data?.products || ([] as ICatalougeTypes.IProduct[]);
+	const { mutateAsync: createStoreProduct } = useCreateStoreProduct();
+	const { refetch } = useStoreProductsListingContext();
 
-	const onSelect = (product: ICatalougeTypes.IProduct) => {
+	const onSelect = async (product: ICatalougeTypes.IProduct) => {
 		onSelectedValueChange(product);
+		if (storeId) {
+			const payload = {
+				storeId,
+				productId: product?.productId,
+				quantity: product?.quantity ? product?.quantity : 0,
+				price: product?.price ? product?.price : 0,
+				discount: 0,
+				comment: '',
+			};
+			const response = await createStoreProduct(payload);
+			if (response.status === 'SUCCESS') {
+				refetch();
+			}
+		}
+		setOpen(false);
 	};
 
 	return (

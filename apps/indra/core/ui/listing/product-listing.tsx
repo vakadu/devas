@@ -106,7 +106,7 @@ export const ProductListingHeader = ({ className, children }: IProductListingHea
 		<div>
 			<div
 				className={cn(
-					'flex justify-between items-center py-12 bg-white px-12 border-b border-grey-light',
+					'flex justify-between items-center py-12 bg-white px-12 border-b',
 					className
 				)}
 			>

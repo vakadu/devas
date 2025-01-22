@@ -1,15 +1,13 @@
 'use client';
 
 import { ReactNode, useCallback, useMemo, useState } from 'react';
-import { PlusIcon, X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { PaginationState } from '@tanstack/react-table';
 
 import { StoreProductsListingContext, useStoreProductsListingContext } from './context';
 import { Button, Input } from '@devas/ui';
 import { cn } from '@devas/utils';
 import { useGetStoresProductsList } from '../../api';
-import Link from 'next/link';
-import { Routes } from '../../primitives';
 import { ProductSearch } from '../product-search';
 
 interface IStoreProductsListingProps {
@@ -92,22 +90,21 @@ export const StoreProductsListingHeader = ({ className }: IStoreProductsListingH
 	const { value, handleSearchChange, storeId } = useStoreProductsListingContext();
 
 	return (
-		<div
-			className={cn(
-				'flex justify-between items-center py-12 px-12 border-b border-grey-light',
-				className
-			)}
-		>
+		<div className={cn('flex justify-between items-center py-12 px-12 border-b', className)}>
 			<div className="flex-1">
-				<div className="w-[320px] flex relative">
+				<div className="flex items-center border-b px-12 w-[320px] relative">
+					<Search className="mr-12 h-16 w-16 shrink-0 opacity-50" />
 					<Input
+						className={cn(
+							'flex h-32 w-full rounded-md bg-transparent py-12 text-14 font-medium outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 border-none pl-0',
+							className
+						)}
+						type="search"
+						placeholder="Search for store products..."
 						value={value}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 							handleSearchChange(e.target.value)
 						}
-						placeholder="Search for products..."
-						type="search"
-						className="pr-[24px] h-32 rounded-8 text-14 py-4"
 					/>
 					{value.length > 0 && (
 						<Button
@@ -122,7 +119,7 @@ export const StoreProductsListingHeader = ({ className }: IStoreProductsListingH
 				</div>
 			</div>
 			<div className="flex-1 flex justify-end">
-				<ProductSearch />
+				<ProductSearch storeId={storeId} />
 			</div>
 		</div>
 	);

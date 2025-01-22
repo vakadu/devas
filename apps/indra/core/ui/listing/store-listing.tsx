@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useCallback, useMemo, useState } from 'react';
-import { X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { PaginationState, RowSelectionState } from '@tanstack/react-table';
 
 import { useGetStoresList } from '../../api';
@@ -80,22 +80,21 @@ export const StoreListingHeader = ({ className }: IStoreListingHeaderProps) => {
 	const { value, handleSearchChange } = useStoreListingContext();
 
 	return (
-		<div
-			className={cn(
-				'flex justify-between items-center py-12 px-12 border-b border-grey-light',
-				className
-			)}
-		>
+		<div className={cn('flex justify-between items-center py-12 px-12 border-b', className)}>
 			<div className="flex-1">
-				<div className="max-w-[320px] flex relative">
+				<div className="flex items-center border-b px-12 w-[320px] relative">
+					<Search className="mr-12 h-16 w-16 shrink-0 opacity-50" />
 					<Input
+						className={cn(
+							'flex h-32 w-full rounded-md bg-transparent py-12 text-14 font-medium outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 border-none pl-0',
+							className
+						)}
+						type="search"
+						placeholder="Search for stores..."
 						value={value}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 							handleSearchChange(e.target.value)
 						}
-						placeholder="Search for stores..."
-						type="search"
-						className="pr-[24px] h-32 rounded-8 text-14 py-4"
 					/>
 					{value.length > 0 && (
 						<Button

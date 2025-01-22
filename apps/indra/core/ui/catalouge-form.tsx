@@ -26,6 +26,11 @@ import {
 	Command,
 	Spinner,
 	FloatingTextArea,
+	Select,
+	SelectTrigger,
+	SelectContent,
+	SelectItem,
+	SelectValue,
 } from '@devas/ui';
 import { useCreateProduct } from '../../app/(dashboard)/products/add/api';
 import { useGetProductById, useUpdateProduct } from '../../app/(dashboard)/products/edit/[id]/api';
@@ -48,33 +53,35 @@ const schema = z.object({
 	subcategory: z.string().min(1, { message: 'Subcategory is required' }),
 	colour: z.string().optional(),
 	size: z.string().optional(),
+	active: z.string().min(1, { message: 'Active status is required' }).optional(),
 });
 
 type IFormData = z.infer<typeof schema>;
 
 export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
-	const form = useForm<IFormData>({
-		resolver: zodResolver(schema),
-		defaultValues: {
-			title: '',
-			description: '',
-			quantity: '',
-			packQuantity: '',
-			mrp: '',
-			price: '',
-			gstInPercent: '',
-			hsn: '',
-			brand: '',
-			category: '',
-			subcategory: '',
-			colour: '',
-			size: '',
-		},
-	});
-	const { mutateAsync: createProduct, isPending } = useCreateProduct();
 	const params = useParams();
 	const { data, refetch } = useGetProductById(params?.id as string);
 	const productData = data?.data?.product || ({} as ICatalougeTypes.IProduct);
+	const form = useForm<IFormData>({
+		resolver: zodResolver(schema),
+		defaultValues: {
+			title: productData?.title || '',
+			description: productData?.description || '',
+			quantity: productData?.quantity?.toString() || '',
+			packQuantity: productData?.packQuantity?.toString() || '',
+			mrp: productData?.mrp?.toString() || '',
+			price: productData?.price?.toString() || '',
+			gstInPercent: productData?.gstInPercent?.toString() || '',
+			hsn: productData?.hsn || '',
+			brand: productData?.brand || '',
+			category: productData?.category || '',
+			subcategory: productData?.subcategory || '',
+			colour: productData?.colour || '',
+			size: productData?.size || '',
+			active: productData?.active ? 'true' : 'false',
+		},
+	});
+	const { mutateAsync: createProduct, isPending } = useCreateProduct();
 	const { mutateAsync: updateProduct, isPending: isLoading } = useUpdateProduct(
 		params?.id as string
 	);
@@ -109,11 +116,13 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 				subcategory: productData?.subcategory || '',
 				colour: productData?.colour || '',
 				size: productData?.size || '',
+				active: productData?.active?.toString() || 'true',
 			});
 		}
 	}, [
 		form,
 		params?.id,
+		productData?.active,
 		productData?.brand,
 		productData?.category,
 		productData?.colour,
@@ -154,7 +163,11 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 				router.push(`${Routes.EditProduct}/${id}?type=images`);
 			}
 		} else {
-			const response = await updateProduct(payload);
+			const editPayload = {
+				...payload,
+				active: values.active === 'true',
+			};
+			const response = await updateProduct(editPayload);
 			if (response.status === 'SUCCESS') {
 				refetch();
 			}
@@ -338,6 +351,38 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 							/>
 						);
 					})}
+					{type === 'EDIT' && (
+						<FormField
+							control={form.control}
+							name="active"
+							render={({ field: selectField, fieldState }) => {
+								return (
+									<FormItem>
+										<FormLabel>Type</FormLabel>
+										<Select
+											onValueChange={selectField.onChange}
+											defaultValue={selectField.value}
+											value={selectField.value}
+										>
+											<FormControl>
+												<SelectTrigger
+													isError={!!fieldState.error}
+													className="!mt-6 bg-white"
+												>
+													<SelectValue placeholder="Select a type" />
+												</SelectTrigger>
+											</FormControl>
+											<SelectContent>
+												<SelectItem value="true">Active</SelectItem>
+												<SelectItem value="false">InActive</SelectItem>
+											</SelectContent>
+										</Select>
+										<FormMessage />
+									</FormItem>
+								);
+							}}
+						/>
+					)}
 					<Button
 						disabled={isPending || isLoading}
 						loading={isPending || isLoading}

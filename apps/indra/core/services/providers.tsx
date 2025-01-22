@@ -9,27 +9,20 @@ import { Toaster, TooltipProvider } from '@devas/ui';
 import { persistor, store } from '../../core/store';
 import { AppMobile, LoadingModal } from '../ui';
 import { useResize } from '@devas/hooks';
-import { AnalyticsProvider } from '../context';
-import { EventTracker } from '../helpers';
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const { isDesktop } = useResize();
 	const queryClient = new QueryClient();
-	const analytics = new EventTracker();
 
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<QueryClientProvider client={queryClient}>
-					<AnalyticsProvider value={analytics}>
-						<AnimatePresence>
-							<TooltipProvider>
-								{isDesktop ? children : <AppMobile />}
-							</TooltipProvider>
-							<Toaster closeButton richColors position="bottom-left" />
-							<LoadingModal />
-						</AnimatePresence>
-					</AnalyticsProvider>
+					<AnimatePresence>
+						<TooltipProvider>{isDesktop ? children : <AppMobile />}</TooltipProvider>
+						<Toaster closeButton richColors position="bottom-left" />
+						<LoadingModal />
+					</AnimatePresence>
 				</QueryClientProvider>
 			</PersistGate>
 		</Provider>

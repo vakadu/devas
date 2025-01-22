@@ -2,7 +2,6 @@ import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack
 import { useMemo } from 'react';
 
 import { Spinner, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@devas/ui';
-import { useAnalytics } from '../../../../../core/context';
 import Link from 'next/link';
 import { Routes } from '../../../../../core/primitives';
 
@@ -13,8 +12,6 @@ export default function ListingTable({
 	data: ICatalougeTypes.IBanner[];
 	isLoading: boolean;
 }) {
-	const { trackEvent } = useAnalytics();
-
 	const columns: ColumnDef<ICatalougeTypes.IBanner>[] = useMemo(
 		() => [
 			{
@@ -31,16 +28,9 @@ export default function ListingTable({
 				cell: ({ row }) => {
 					const id = row.getValue('_id');
 
-					const handleLink = async () => {
-						await trackEvent('EDIT_BANNER', {
-							id,
-						});
-					};
-
 					return (
 						<Link
 							className="hover:underline hover:text-primary"
-							onClick={handleLink}
 							href={`${Routes.EditBanner}/${id}`}
 						>
 							{row.getValue('title')}
@@ -59,7 +49,7 @@ export default function ListingTable({
 				cell: ({ row }) => <div>{row.getValue('type')}</div>,
 			},
 		],
-		[trackEvent]
+		[]
 	);
 
 	const table = useReactTable({

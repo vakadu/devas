@@ -6,12 +6,10 @@ import { PenIcon } from 'lucide-react';
 
 import { cn } from '@devas/utils';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@devas/ui';
-import { useAnalytics } from '../../../../../../core/context';
 import { Routes } from '../../../../../../core/primitives';
 import { StoreProductsListingTable } from '../../../../../../core/ui/listing-tables/store-products-listing';
 
 export default function ColumnsListing() {
-	const { trackEvent } = useAnalytics();
 	const params = useParams();
 
 	const columns: ColumnDef<ICatalougeTypes.IStoreProducts>[] = useMemo(
@@ -20,20 +18,12 @@ export default function ColumnsListing() {
 				accessorKey: 'title',
 				header: 'Title',
 				cell: ({ row }) => {
-					const handleEvents = async () => {
-						await trackEvent('EDIT_CATALOUGE_PRODUCT', {
-							path: `${Routes.EditProduct}/${row.original.product.productId}?type=product`,
-							productId: row.original.product.productId,
-						});
-					};
-
 					return (
 						<Tooltip>
 							<TooltipTrigger>
 								<Link
 									className="hover:underline hover:text-primary w-[240px] line-clamp-2 text-left"
 									href={`${Routes.EditProduct}/${row.original.product.productId}?type=product`}
-									onClick={handleEvents}
 								>
 									{row.original.product.title}
 								</Link>
@@ -117,22 +107,11 @@ export default function ColumnsListing() {
 				accessorKey: '',
 				header: 'Actions',
 				cell: ({ row }) => {
-					const handleEvents = async (link: string) => {
-						await trackEvent('UPDATE_STORE_PRODUCT', {
-							path: link,
-						});
-					};
-
 					return (
 						<div className="flex gap-12">
 							<Link
 								className="inline-flex items-center bg-secondary hover:bg-secondary-foreground px-12 py-8 rounded-12 gap-6"
 								href={`${Routes.EditStoreProduct}/${row.original.storeId}/${row.original.product.productId}?storeProductId=${row.original.storeProductId}`}
-								onClick={() =>
-									handleEvents(
-										`${Routes.EditStoreProduct}/${row.original.storeId}/${row.original.product.productId}?storeProductId=${row.original.storeProductId}`
-									)
-								}
 							>
 								<PenIcon className="size-16 text-white" />
 								<span className="text-12  font-semibold text-white">
@@ -144,7 +123,7 @@ export default function ColumnsListing() {
 				},
 			},
 		],
-		[trackEvent]
+		[]
 	);
 
 	return <StoreProductsListingTable columns={columns} id={params?.id as string} />;

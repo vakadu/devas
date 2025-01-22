@@ -1,6 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
+
 import {
 	StoreProductsListing,
 	StoreProductsListingContent,
@@ -18,7 +19,7 @@ export default function Listing() {
 					apiKey="store/products/list"
 					showInactive={1}
 					storeId={params?.id as string}
-					className='shadow-card1 rounded-8 bg-white'
+					className="shadow-card1 rounded-8 bg-white"
 				>
 					<StoreProductsListingHeader />
 					<StoreProductsListingContent>

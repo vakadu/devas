@@ -17,5 +17,10 @@ declare namespace IStoreTypes {
 		gstUrl?: string;
 		otherDocUrl?: string;
 		email?: string;
+		businessContact?: number;
+		ownerName?: string;
+		entityName?: string;
+		panNo?: string;
+		gstNo?: string;
 	}
 }

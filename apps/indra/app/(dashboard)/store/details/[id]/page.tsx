@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 
 import { Spinner, Tabs, TabsContent, TabsList, TabsTrigger } from '@devas/ui';
 
-const Documents = dynamic(() => import('./ui/store-details'), {
+const Documents = dynamic(() => import('./ui/documents'), {
 	loading: () => <Spinner />,
 });
 

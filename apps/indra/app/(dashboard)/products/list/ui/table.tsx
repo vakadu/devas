@@ -6,11 +6,9 @@ import Link from 'next/link';
 import { cn } from '@devas/utils';
 import { ProductListingTable } from '../../../../../core/ui';
 import { Routes } from '../../../../../core/primitives';
-import { useAnalytics } from '../../../../../core/context';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@devas/ui';
 
 export default function ColumnsListing() {
-	const { trackEvent } = useAnalytics();
 	const params = useParams();
 
 	const columns: ColumnDef<ICatalougeTypes.IProduct>[] = useMemo(
@@ -19,20 +17,12 @@ export default function ColumnsListing() {
 				accessorKey: 'title',
 				header: 'Title',
 				cell: ({ row }) => {
-					const handleEvents = async () => {
-						await trackEvent('EDIT_CATALOUGE_PRODUCT', {
-							path: `${Routes.EditProduct}/${row.original.productId}?type=product`,
-							productId: row.original.productId,
-						});
-					};
-
 					return (
 						<Tooltip>
 							<TooltipTrigger>
 								<Link
 									className="hover:underline hover:text-primary w-[340px] line-clamp-2 text-16 text-left"
 									href={`${Routes.EditProduct}/${row.original.productId}?type=product`}
-									onClick={handleEvents}
 								>
 									{row.original.title}
 								</Link>
@@ -77,7 +67,7 @@ export default function ColumnsListing() {
 				},
 			},
 		],
-		[trackEvent]
+		[]
 	);
 
 	return <ProductListingTable columns={columns} type="product-list" id={params?.id as string} />;

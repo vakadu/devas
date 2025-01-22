@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { cn } from '@devas/utils';
 import { ProductListingTable } from '../listing-tables/product-listing-table';
 import { Routes } from '../../primitives';
-import { useAnalytics } from '../../context';
 import { Checkbox } from '@devas/ui';
 
 export default function ProductListTable({
@@ -14,7 +13,6 @@ export default function ProductListTable({
 }: {
 	setRowSelection: (state: RowSelectionState) => void;
 }) {
-	const { trackEvent } = useAnalytics();
 	const params = useParams();
 
 	const columns: ColumnDef<ICatalougeTypes.IProduct>[] = useMemo(
@@ -40,18 +38,10 @@ export default function ProductListTable({
 				accessorKey: 'title',
 				header: 'Title',
 				cell: ({ row }) => {
-					const handleEvents = async () => {
-						await trackEvent('EDIT_CATALOUGE_PRODUCT', {
-							path: `${Routes.EditProduct}/${row.original.productId}?type=product`,
-							productId: row.original.productId,
-						});
-					};
-
 					return (
 						<Link
 							className="hover:underline hover:text-primary"
 							href={`${Routes.EditProduct}/${row.original.productId}?type=product`}
-							onClick={handleEvents}
 						>
 							{row.original.title}
 						</Link>

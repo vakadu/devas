@@ -11,6 +11,7 @@ import {
 	FormField,
 	FormItem,
 	FormMessage,
+	Spinner,
 } from '@devas/ui';
 import { phoneValidator } from '@devas/utils';
 import { useUpdateBasicDetails } from '../api/update-basic-detail';
@@ -29,7 +30,7 @@ const schema = z.object({
 type IFormData = z.infer<typeof schema>;
 
 export default function BasicDetails({ id }: { id: string }) {
-	const { data, refetch } = useGetStoreDetails(id);
+	const { data, refetch, isPending } = useGetStoreDetails(id);
 	const details = data?.data?.store || ({} as IStoreTypes.IStoreDetails);
 	const form = useForm<IFormData>({
 		resolver: zodResolver(schema),
@@ -61,6 +62,10 @@ export default function BasicDetails({ id }: { id: string }) {
 			refetch();
 		}
 	};
+
+	if (isPending) {
+		return <Spinner />;
+	}
 
 	return (
 		<Form {...form}>

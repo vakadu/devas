@@ -2,8 +2,6 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { useParams } from 'next/navigation';
 
-import { useAnalytics } from '../../../../../../../core/context';
-import { Routes } from '../../../../../../../core/primitives';
 import { ProductListingTable } from '../../../../../../../core/ui';
 
 export default function ColumsListing({
@@ -11,7 +9,6 @@ export default function ColumsListing({
 }: {
 	handleChange: (val: string, id: string) => void;
 }) {
-	const { trackEvent } = useAnalytics();
 	const params = useParams();
 
 	const columns: ColumnDef<ICatalougeTypes.IProduct>[] = useMemo(
@@ -22,10 +19,6 @@ export default function ColumsListing({
 				cell: ({ row }) => {
 					const handleTab = async () => {
 						handleChange('details', row.original.productId);
-						await trackEvent('ADD_STORE_PRODUCT', {
-							path: `${Routes.AddStoreProduct}/${row.original.productId}?type=details`,
-							productId: row.original.productId,
-						});
 					};
 
 					return (
@@ -47,7 +40,7 @@ export default function ColumsListing({
 				},
 			},
 		],
-		[handleChange, trackEvent]
+		[handleChange]
 	);
 
 	return <ProductListingTable type="store-listing" columns={columns} id={params?.id as string} />;

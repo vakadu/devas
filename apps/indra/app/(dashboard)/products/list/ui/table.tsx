@@ -21,7 +21,7 @@ export default function ColumnsListing() {
 						<Tooltip>
 							<TooltipTrigger>
 								<Link
-									className="hover:underline hover:text-primary w-[340px] line-clamp-2 text-16 text-left"
+									className="hover:underline hover:text-primary w-[340px] line-clamp-2 text-left"
 									href={`${Routes.EditProduct}/${row.original.productId}?type=product`}
 								>
 									{row.original.title}

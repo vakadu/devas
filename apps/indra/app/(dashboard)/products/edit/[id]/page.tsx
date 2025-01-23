@@ -53,7 +53,7 @@ export default function Page() {
 						Variants
 					</TabsTrigger>
 				</TabsList>
-				<TabsContent className="bg-white p-16 rounded-12 mt-0" value="product">
+				<TabsContent className="mt-0" value="product">
 					<AddCatalougeProduct type="EDIT" />
 				</TabsContent>
 				<TabsContent className="mt-0" value="images">

@@ -40,10 +40,10 @@ export const FloatingInput = ({
 	...props
 }: FloatingInputProps) => {
 	return (
-		<div className="group relative lg:text-16 text-14">
+		<div className="group relative text-14">
 			<label
 				htmlFor={id}
-				className={`origin-start absolute top-1/2 block -translate-y-1/2 cursor-text px-12 text-16 text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-12 group-focus-within:font-medium group-focus-within:text-primary has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground ${
+				className={`origin-start absolute top-1/2 block -translate-y-1/2 cursor-text px-12 text-14 text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-12 group-focus-within:font-medium group-focus-within:text-primary has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground ${
 					isError && '!text-destructive'
 				}`}
 			>

@@ -35,16 +35,16 @@ export default function Page() {
 	return (
 		<Tabs className="m-16" value={type} onValueChange={handleChange}>
 			<TabsList className="w-full justify-start mb-12 bg-white">
-				<TabsTrigger className="flex-1 py-12" value="details">
+				<TabsTrigger className="flex-1 py-12 text-14" value="details">
 					Basic Details
 				</TabsTrigger>
-				<TabsTrigger className="flex-1 py-12" value="business">
+				<TabsTrigger className="flex-1 py-12 text-14" value="business">
 					Business Details
 				</TabsTrigger>
-				<TabsTrigger className="flex-1 py-12" value="documents">
+				<TabsTrigger className="flex-1 py-12 text-14" value="documents">
 					Documents
 				</TabsTrigger>
-				<TabsTrigger className="flex-1 py-12" value="products">
+				<TabsTrigger className="flex-1 py-12 text-14" value="products">
 					Products List
 				</TabsTrigger>
 			</TabsList>

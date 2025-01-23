@@ -10,7 +10,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 			<input
 				type={type}
 				className={cn(
-					'flex h-48 w-full rounded-12 border border-grey-light bg-white px-14 py-12 text-16 text-black-2 shadow-1 shadow-black-1 ring-offset-background transition-shadow focus-visible:border-[2px] focus-visible:border-primary focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+					'flex h-48 w-full rounded-12 border border-grey-light bg-white px-14 py-12 text-14 text-black-2 shadow-1 shadow-black-1 ring-offset-background transition-shadow focus-visible:border-[2px] focus-visible:border-primary focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
 					type === 'search' &&
 						'[&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none',
 					type === 'file' &&

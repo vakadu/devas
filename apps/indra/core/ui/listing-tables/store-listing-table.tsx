@@ -69,7 +69,7 @@ export function StoreListingTable({
 					))}
 				</TableHeader>
 				<TableBody>
-					{isFetching ? (
+					{true ? (
 						<TableRow>
 							<TableCell colSpan={columns.length} className="text-center">
 								<Spinner />
@@ -81,7 +81,7 @@ export function StoreListingTable({
 							return (
 								<TableRow key={row.id}>
 									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
+										<TableCell className="text-14" key={cell.id}>
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext()

@@ -1,48 +1,37 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useState } from 'react';
 
-import { Spinner } from '@devas/ui';
 import { useGetBanners } from '../api/get-banners';
 import ListingTable from './table';
 import Header from './header';
+import { PaginationState } from '@tanstack/react-table';
 
 export default function Listing() {
-	const { ref, inView } = useInView({
-		threshold: 0,
-	});
 	const [search, setSearchTerm] = useState('');
-	const { data, fetchNextPage, isFetchingNextPage, isPending } = useGetBanners(
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 15,
+	});
+	const { data, isPending } = useGetBanners(
 		search.length > 2 ? search : '',
-		15
+		pagination.pageSize,
+		pagination.pageIndex
 	);
-
-	useEffect(() => {
-		if (inView) {
-			fetchNextPage();
-		}
-	}, [fetchNextPage, inView]);
 
 	const handleSearchChange = (value: string) => {
 		setSearchTerm(value);
 	};
 
 	return (
-		<div>
+		<div className="bg-white shadow-card1 rounded-8">
 			<Header value={search} onChange={handleSearchChange} />
 			<ListingTable
 				isLoading={isPending}
-				data={data?.pages.flatMap((page) => page?.data?.data?.banners) || []}
+				data={data?.data?.banners || []}
+				pagination={pagination}
+				setPagination={setPagination}
 			/>
-			<div className="text-center flex flex-col gap-6" ref={ref}>
-				{isFetchingNextPage && (
-					<>
-						<Spinner />
-						<span className="text-12 font-medium">Fetching more banners...</span>
-					</>
-				)}
-			</div>
 		</div>
 	);
 }

@@ -179,7 +179,7 @@ export function AddCatalougeProduct({ type }: { type: 'ADD' | 'EDIT' }) {
 	}
 
 	return (
-		<div className="max-w-[720px]">
+		<div className="max-w-[720px] shadow-card1 px-16 py-18 bg-white rounded-8">
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}

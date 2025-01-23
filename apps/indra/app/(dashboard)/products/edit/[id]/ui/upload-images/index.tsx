@@ -67,7 +67,7 @@ export default function ImagesContainer() {
 	}
 
 	return (
-		<div className="bg-white px-16 rounded-8">
+		<div className="bg-white shadow-card1 px-16 rounded-8">
 			<AddImageForm
 				open={showSheet}
 				onChange={setShowSheet}

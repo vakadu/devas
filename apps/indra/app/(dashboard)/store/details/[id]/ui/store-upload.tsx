@@ -109,7 +109,9 @@ export default function StoreUpload({
 						>
 							<input {...getInputProps()} />
 							<CloudUpload className="size-32" />
-							<p>{data?.data?.docUrl ? 'Update the document' : 'Add document'}</p>
+							<p className="text-14">
+								{data?.data?.docUrl ? 'Update the document' : 'Add document'}
+							</p>
 						</div>
 					</div>
 				</div>

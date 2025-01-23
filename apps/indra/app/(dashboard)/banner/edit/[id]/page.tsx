@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { Spinner, Tabs, TabsContent, TabsList, TabsTrigger } from '@devas/ui';
 
@@ -17,9 +18,18 @@ const AddEditBanner = dynamic(
 );
 
 export default function Page() {
+	const router = useRouter();
+	const pathname = usePathname();
+	const params = useSearchParams();
+	const type = params.get('type') as string;
+
+	const handleChange = (val: string) => {
+		router.replace(`${pathname}?type=${val}`);
+	};
+
 	return (
 		<div className="m-16 rounded-8">
-			<Tabs defaultValue="details" className="">
+			<Tabs value={type} onValueChange={handleChange} className="">
 				<TabsList className="w-full justify-start mb-12 bg-white">
 					<TabsTrigger className="flex-1 py-12" value="details">
 						Edit Banner

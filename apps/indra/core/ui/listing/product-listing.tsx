@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useCallback, useMemo, useState } from 'react';
-import { X } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { PaginationState, RowSelectionState } from '@tanstack/react-table';
 import { motion } from 'framer-motion';
 
@@ -105,10 +105,7 @@ export const ProductListingHeader = ({ className, children }: IProductListingHea
 	return (
 		<div>
 			<div
-				className={cn(
-					'flex justify-between items-center py-12 bg-white px-12 border-b',
-					className
-				)}
+				className={cn('flex justify-between items-center py-12 px-12 border-b', className)}
 			>
 				<div className="flex-1">
 					{children}
@@ -118,7 +115,7 @@ export const ProductListingHeader = ({ className, children }: IProductListingHea
 							animate="animate"
 							exit="exit"
 							variants={slideDown}
-							className=""
+							className="flex gap-16 items-center"
 						>
 							<span className="text-14 font-medium">
 								Selected {productIds.length} row(s)
@@ -135,22 +132,26 @@ export const ProductListingHeader = ({ className, children }: IProductListingHea
 					)}
 				</div>
 				<div className="flex-1 flex justify-end">
-					<div className="w-[320px] flex relative">
+					<div className="flex items-center border-b px-12 w-[320px] relative">
+						<Search className="mr-12 h-16 w-16 shrink-0 opacity-50" />
 						<Input
+							className={cn(
+								'flex h-32 w-full rounded-md bg-transparent py-12 text-14 font-medium outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 border-none pl-0',
+								className
+							)}
+							type="search"
+							placeholder="Search for products..."
 							value={value}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 								handleSearchChange(e.target.value)
 							}
-							placeholder="Search for Products..."
-							type="search"
-							className="pr-[24px] h-32 rounded-8 text-14 py-4"
 						/>
 						{value.length > 0 && (
 							<Button
 								size="icon"
 								variant="ghost"
 								className="absolute right-6 top-1/2 -translate-y-1/2 cursor-pointer"
-								onClick={handleClear}
+								onClick={() => handleSearchChange('')}
 							>
 								<X className="!size-16 text-red-1" />
 							</Button>

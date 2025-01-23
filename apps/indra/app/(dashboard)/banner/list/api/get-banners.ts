@@ -1,35 +1,26 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { keepPreviousData, QueryFunctionContext, useQuery } from '@tanstack/react-query';
 
 import { HttpService } from '../../../../../core/services';
 
-const getBanners = async ({
-	pageParam = 0,
-	searchTerm,
-	limit = 5,
-}: {
-	pageParam: number;
-	searchTerm: string;
-	limit: number;
-}) => {
-	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/banner/list?page=${pageParam}&limit=${limit}`;
+const getBanners = async ({ queryKey }: QueryFunctionContext<[string, string, number, number]>) => {
+	const [_key, searchTerm, limit, page] = queryKey;
+	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/${_key}?page=${page}&limit=${limit}`;
+
 	if (searchTerm && searchTerm.length > 2) {
 		url += `&searchTerm=${searchTerm}`;
 	}
+
 	const { data } = await HttpService.get<
 		ICommonTypes.IApiResponse<{ banners: ICatalougeTypes.IBanner[] }>
 	>(url);
 
-	return {
-		data,
-		nextPage: data?.data?.banners?.length < limit ? null : pageParam + 1,
-	};
+	return data;
 };
 
-export function useGetBanners(searchTerm: string, limit: number) {
-	return useInfiniteQuery({
-		queryKey: ['banner/list', searchTerm, limit],
-		queryFn: ({ pageParam }) => getBanners({ pageParam, searchTerm, limit }),
-		initialPageParam: 0,
-		getNextPageParam: (lastPage) => lastPage.nextPage,
+export function useGetBanners(searchTerm: string, limit: number, page: number) {
+	return useQuery({
+		queryKey: ['banner/list', searchTerm, limit, page],
+		queryFn: getBanners,
+		placeholderData: keepPreviousData,
 	});
 }

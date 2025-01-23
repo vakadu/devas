@@ -31,7 +31,7 @@ export function AutoSearch({
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
-			<Command className={cn(className, 'max-w-[320px]')}>
+			<Command className={cn('max-w-[320px]', className)}>
 				<PopoverAnchor asChild>
 					<CommandInput
 						value={searchValue}

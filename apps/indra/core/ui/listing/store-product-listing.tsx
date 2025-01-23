@@ -90,9 +90,14 @@ export const StoreProductsListingHeader = ({ className }: IStoreProductsListingH
 	const { value, handleSearchChange, storeId } = useStoreProductsListingContext();
 
 	return (
-		<div className={cn('flex justify-between items-center py-12 px-12 border-b', className)}>
+		<div
+			className={cn(
+				'flex justify-between gap-32 items-center py-12 px-12 border-b',
+				className
+			)}
+		>
 			<div className="flex-1">
-				<div className="flex items-center border-b px-12 w-[320px] relative">
+				<div className="flex items-center border-b px-12 w-[520px] relative">
 					<Search className="mr-12 h-16 w-16 shrink-0 opacity-50" />
 					<Input
 						className={cn(

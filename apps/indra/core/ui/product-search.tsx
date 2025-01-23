@@ -51,6 +51,7 @@ export function ProductSearch({ storeId }: { storeId?: string }) {
 			onSearchValueChange={onSearchValueChange}
 			open={open}
 			setOpen={setOpen}
+			className="max-w-[520px]"
 		>
 			<CommandList>
 				{isPending && (

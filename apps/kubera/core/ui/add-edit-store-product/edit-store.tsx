@@ -102,7 +102,7 @@ export function EditStoreProduct() {
 	};
 
 	return (
-		<div className="bg-white p-16 rounded-8 max-w-[720px]">
+		<div className="bg-white p-16 rounded-8 max-w-[720px] shadow-card1">
 			<div className="">
 				<Form {...form}>
 					<form

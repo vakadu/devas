@@ -12,8 +12,8 @@ import { AppSidebar, Header } from '../../core/ui';
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	const { loggedIn } = useAppSelector((state) => state.auth);
 	const router = useRouter();
-	const pathname = usePathname();
-	const { trackEvent } = useAnalytics();
+	// const pathname = usePathname();
+	// const { trackEvent } = useAnalytics();
 
 	useEffect(() => {
 		if (!loggedIn) {
@@ -21,9 +21,9 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 		}
 	}, [loggedIn, router]);
 
-	useEffect(() => {
-		trackEvent('PAGE_VIEW', { page: pathname });
-	}, [pathname]);
+	// useEffect(() => {
+	// 	trackEvent('PAGE_VIEW', { page: pathname });
+	// }, [pathname]);
 
 	return (
 		<SidebarProvider>

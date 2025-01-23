@@ -69,7 +69,7 @@ export function StoreListingTable({
 					))}
 				</TableHeader>
 				<TableBody>
-					{true ? (
+					{isFetching ? (
 						<TableRow>
 							<TableCell colSpan={columns.length} className="text-center">
 								<Spinner />

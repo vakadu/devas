@@ -1,4 +1,4 @@
-import { RowSelectionState } from '@tanstack/react-table';
+import { PaginationState, RowSelectionState } from '@tanstack/react-table';
 import { createContext, useContext } from 'react';
 
 export type IProductListingContextType = {
@@ -9,6 +9,9 @@ export type IProductListingContextType = {
 	rowSelection: RowSelectionState;
 	setRowSelection: (state: RowSelectionState) => void;
 	refetch: () => void;
+	pagination: PaginationState;
+	setPagination: (state: PaginationState) => void;
+	apiKey: string;
 };
 
 export type IStoreListingContextType = {
@@ -19,6 +22,8 @@ export type IStoreListingContextType = {
 	rowSelection: RowSelectionState;
 	setRowSelection: (state: RowSelectionState) => void;
 	refetch: () => void;
+	pagination: PaginationState;
+	setPagination: (state: PaginationState) => void;
 };
 
 export type IStoreProductsListingContextType = {
@@ -29,6 +34,9 @@ export type IStoreProductsListingContextType = {
 	rowSelection: RowSelectionState;
 	setRowSelection: (state: RowSelectionState) => void;
 	refetch: () => void;
+	pagination: PaginationState;
+	setPagination: (state: PaginationState) => void;
+	storeId: string;
 };
 
 export const ProductListingContext = createContext<IProductListingContextType | undefined>(

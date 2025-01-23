@@ -1,18 +1,12 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { QueryFunctionContext, useQuery, keepPreviousData } from '@tanstack/react-query';
 
 import { HttpService } from '../../services';
 
-const getProductList = async ({
-	pageParam = 0,
-	searchTerm,
-	limit = 5,
-	active = 1,
-}: {
-	pageParam: number;
-	searchTerm: string;
-	limit: number;
-	active: 0 | 1;
-}) => {
+const getProductsList = async ({
+	queryKey,
+}: QueryFunctionContext<[string, string, number, 0 | 1, number]>) => {
+	const [_key, searchTerm, limit, active, pageParam] = queryKey;
+
 	let url = `${process.env.NEXT_PUBLIC_BASE_PATH}/product/list?page=${pageParam}&limit=${limit}`;
 
 	if (searchTerm && searchTerm.length > 2) {
@@ -21,26 +15,24 @@ const getProductList = async ({
 	if (active === 1) {
 		url += `&active=1`;
 	}
+
 	const { data } = await HttpService.get<
 		ICommonTypes.IApiResponse<{ products: ICatalougeTypes.IProduct[] }>
 	>(url);
 
-	return {
-		data,
-		nextPage: data?.data?.products?.length < limit ? null : pageParam + 1,
-	};
+	return data;
 };
 
 export function useGetProductsList(
 	searchTerm: string,
-	limit: number,
 	apiKey: string,
-	active: 0 | 1
+	active: 0 | 1,
+	page: number,
+	limit: number
 ) {
-	return useInfiniteQuery({
-		queryKey: [apiKey, searchTerm, limit],
-		queryFn: ({ pageParam }) => getProductList({ pageParam, searchTerm, limit, active }),
-		initialPageParam: 0,
-		getNextPageParam: (lastPage) => lastPage.nextPage,
+	return useQuery({
+		queryKey: [apiKey, searchTerm, limit, active, page],
+		queryFn: getProductsList,
+		placeholderData: keepPreviousData,
 	});
 }

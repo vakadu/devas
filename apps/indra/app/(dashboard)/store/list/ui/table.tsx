@@ -30,50 +30,6 @@ export default function ColumnsListing() {
 				header: 'Mobile',
 				cell: ({ row }) => <div>{row.getValue('mobile')}</div>,
 			},
-			// {
-			// 	accessorKey: '',
-			// 	header: 'Actions',
-			// 	cell: ({ row }) => {
-			// 		const handleEvents = async (link: string) => {
-			// 			await trackEvent('ADD_STORE_PRODUCT', {
-			// 				path: link,
-			// 			});
-			// 		};
-
-			// 		return (
-			// 			<div className="flex gap-12">
-			// 				<Link
-			// 					className="inline-flex items-center bg-secondary hover:bg-secondary-foreground px-12 py-8 rounded-12 gap-6"
-			// 					href={`${Routes.AddStoreProduct}/${row.original.userId}?type=product`}
-			// 					onClick={() =>
-			// 						handleEvents(
-			// 							`${Routes.AddStoreProduct}/${row.original.userId}?type=product`
-			// 						)
-			// 					}
-			// 				>
-			// 					<PlusIcon className="size-16 text-white" />
-			// 					<span className="text-12  font-semibold text-white">
-			// 						Add Product
-			// 					</span>
-			// 				</Link>
-			// 				<Link
-			// 					className="inline-flex items-center bg-secondary hover:bg-secondary-foreground px-12 py-8 rounded-12 gap-6"
-			// 					href={`${Routes.StoreProductList}/${row.original.userId}`}
-			// 					onClick={() =>
-			// 						handleEvents(
-			// 							`${Routes.StoreProductList}/${row.original.userId}`
-			// 						)
-			// 					}
-			// 				>
-			// 					<ListOrdered className="size-16 text-white" />
-			// 					<span className="text-12  font-semibold text-white">
-			// 						Product List
-			// 					</span>
-			// 				</Link>
-			// 			</div>
-			// 		);
-			// 	},
-			// },
 		],
 		[]
 	);

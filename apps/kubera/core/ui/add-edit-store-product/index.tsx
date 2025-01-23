@@ -9,8 +9,8 @@ import { useMemo } from 'react';
 import { Form, Button } from '@devas/ui';
 import { FormFieldRenderer } from './form-renderer';
 import { Routes } from '../../primitives';
-import { useCreateStoreProduct } from '../../../app/(dashboard)/products/add/api/add-product';
 import { useAppSelector } from '../../store';
+import { useCreateStoreProduct } from '../../api';
 
 const schema = z.object({
 	quantity: z

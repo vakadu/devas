@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { HttpService } from '../../../../../core/services';
+import { HttpService } from '../../services';
 
 interface IPayload {
 	storeId: string;
@@ -9,6 +9,7 @@ interface IPayload {
 	quantity: number;
 	price: number;
 	discount: number;
+	comment?: string | undefined;
 }
 
 const createStoreProduct = async (payload: IPayload) => {
@@ -27,7 +28,7 @@ export function useCreateStoreProduct() {
 		mutationFn: createStoreProduct,
 		onSuccess: (data) => {
 			if (data.status === 'SUCCESS') {
-				toast.success('Product created successfully.');
+				toast.success('Product added successfully.');
 			} else {
 				toast.error('Something went wrong. Please try again');
 			}

@@ -18,8 +18,9 @@ export default function Page() {
 					showInactive={1}
 					apiKey="store/products/list"
 					storeId={auth.userId as string}
+					className="shadow-card1 rounded-8 bg-white"
 				>
-					<StoreProductsListingHeader />
+					<StoreProductsListingHeader storeId={auth.userId as string} />
 					<StoreProductsListingContent>
 						<StoreProductsListTable />
 					</StoreProductsListingContent>

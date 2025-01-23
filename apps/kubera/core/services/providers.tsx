@@ -14,17 +14,17 @@ import { EventTracker } from '../helpers';
 export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const { isDesktop } = useResize();
 	const queryClient = new QueryClient();
-	const analytics = new EventTracker();
+	// const analytics = new EventTracker();
 
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<QueryClientProvider client={queryClient}>
-					<AnalyticsProvider value={analytics}>
-						<TooltipProvider>{isDesktop ? children : <AppMobile />}</TooltipProvider>
-						<Toaster closeButton richColors position="bottom-left" />
-						<LoadingModal />
-					</AnalyticsProvider>
+					{/* <AnalyticsProvider value={analytics}> */}
+					<TooltipProvider>{isDesktop ? children : <AppMobile />}</TooltipProvider>
+					<Toaster closeButton richColors position="bottom-left" />
+					<LoadingModal />
+					{/* </AnalyticsProvider> */}
 				</QueryClientProvider>
 			</PersistGate>
 		</Provider>

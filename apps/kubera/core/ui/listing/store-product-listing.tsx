@@ -1,19 +1,21 @@
 'use client';
 
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { X } from 'lucide-react';
+import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { Search, X } from 'lucide-react';
+import { PaginationState } from '@tanstack/react-table';
 
 import { StoreProductsListingContext, useStoreProductsListingContext } from './context';
-import { Button, Input, Spinner } from '@devas/ui';
+import { Button, Input } from '@devas/ui';
 import { cn } from '@devas/utils';
-import { useGetStoreProductsList } from '../../api';
+import { useGetStoresProductsList } from '../../api';
+import { ProductSearch } from '../product-search';
 
 interface IStoreProductsListingProps {
 	children: ReactNode;
 	showInactive: 0 | 1;
 	apiKey: string;
 	storeId: string;
+	className?: string;
 }
 
 export function StoreProductsListing({
@@ -21,77 +23,97 @@ export function StoreProductsListing({
 	showInactive,
 	apiKey,
 	storeId,
+	className,
 }: IStoreProductsListingProps) {
-	const { ref, inView } = useInView({
-		threshold: 0,
-	});
 	const [search, setSearchTerm] = useState('');
-	const { data, fetchNextPage, isFetchingNextPage, isFetching, refetch } =
-		useGetStoreProductsList(search, 15, storeId, apiKey);
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 15,
+	});
+	const { data, isFetching, refetch } = useGetStoresProductsList(
+		search,
+		apiKey,
+		showInactive,
+		pagination.pageIndex,
+		pagination.pageSize
+	);
 	const [rowSelection, setRowSelection] = useState({});
 
-	useEffect(() => {
-		if (inView) {
-			fetchNextPage();
-		}
-	}, [fetchNextPage, inView]);
-
-	const handleSearchChange = useCallback((value: string) => {
-		setSearchTerm(value);
-	}, []);
+	const handleSearchChange = useCallback(
+		(value: string) => {
+			setSearchTerm(value);
+			setPagination({
+				...pagination,
+				pageIndex: 0,
+			});
+		},
+		[pagination]
+	);
 
 	const value = useMemo(
 		() => ({
 			value: search,
 			handleSearchChange,
-			data: data?.pages.flatMap((page) => page?.data?.data?.storeProducts) || [],
+			data: data?.data?.storeProducts || [],
 			isFetching,
 			rowSelection,
 			setRowSelection,
 			refetch,
+			pagination,
+			setPagination,
+			storeId,
 		}),
-		[search, handleSearchChange, data?.pages, isFetching, rowSelection, refetch]
+		[
+			data?.data?.storeProducts,
+			handleSearchChange,
+			isFetching,
+			pagination,
+			refetch,
+			rowSelection,
+			search,
+			storeId,
+		]
 	);
 
 	return (
 		<StoreProductsListingContext.Provider value={value}>
-			<div>{children}</div>
-			<div className="text-center flex flex-col gap-6" ref={ref}>
-				{isFetchingNextPage && (
-					<>
-						<Spinner />
-						<span className="text-12 font-medium">Fetching more products...</span>
-					</>
-				)}
-			</div>
+			<div className={cn(className)}>{children}</div>
 		</StoreProductsListingContext.Provider>
 	);
 }
 
 interface IStoreProductsListingHeaderProps {
 	className?: string;
+	storeId: string;
 }
 
-export const StoreProductsListingHeader = ({ className }: IStoreProductsListingHeaderProps) => {
+export const StoreProductsListingHeader = ({
+	className,
+	storeId,
+}: IStoreProductsListingHeaderProps) => {
 	const { value, handleSearchChange } = useStoreProductsListingContext();
 
 	return (
 		<div
 			className={cn(
-				'flex justify-between items-center py-12 bg-white mb-12 px-12 rounded-12',
+				'flex justify-between gap-32 items-center py-12 px-12 border-b',
 				className
 			)}
 		>
 			<div className="flex-1">
-				<div className="max-w-[320px] flex relative">
+				<div className="flex items-center border-b px-12 w-[520px] relative">
+					<Search className="mr-12 h-16 w-16 shrink-0 opacity-50" />
 					<Input
+						className={cn(
+							'flex h-32 w-full rounded-md bg-transparent py-12 text-14 font-medium outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 border-none pl-0',
+							className
+						)}
+						type="search"
+						placeholder="Search for store products..."
 						value={value}
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 							handleSearchChange(e.target.value)
 						}
-						placeholder="Search for stores..."
-						type="search"
-						className="pr-[24px]"
 					/>
 					{value.length > 0 && (
 						<Button
@@ -104,6 +126,9 @@ export const StoreProductsListingHeader = ({ className }: IStoreProductsListingH
 						</Button>
 					)}
 				</div>
+			</div>
+			<div className="flex-1 flex justify-end">
+				<ProductSearch storeId={storeId} />
 			</div>
 		</div>
 	);
@@ -120,7 +145,7 @@ export const StoreProductsListingContent = ({
 	...props
 }: IStoreProductListingContentProps) => {
 	return (
-		<div className={cn('bg-white rounded-12 overflow-y-scroll', className)} {...props}>
+		<div className={cn('overflow-y-scroll', className)} {...props}>
 			{children}
 		</div>
 	);

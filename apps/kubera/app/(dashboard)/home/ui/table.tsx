@@ -10,7 +10,7 @@ import { useAppSelector } from '../../../../core/store';
 import { Routes } from '../../../../core/primitives';
 
 export default function StoreProductsListTable() {
-	const { trackEvent } = useAnalytics();
+	// const { trackEvent } = useAnalytics();
 	const auth = useAppSelector((state) => state.auth);
 
 	const columns: ColumnDef<ICatalougeTypes.IStoreProducts>[] = useMemo(
@@ -96,22 +96,21 @@ export default function StoreProductsListTable() {
 				accessorKey: '',
 				header: 'Actions',
 				cell: ({ row }) => {
-					const handleEvents = async (link: string) => {
-						await trackEvent('UPDATE_STORE_PRODUCT', {
-							path: link,
-						});
-					};
-
+					// const handleEvents = async (link: string) => {
+					// 	await trackEvent('UPDATE_STORE_PRODUCT', {
+					// 		path: link,
+					// 	});
+					// };
 					return (
 						<div className="flex gap-12">
 							<Link
 								className="inline-flex items-center bg-secondary hover:bg-secondary-foreground px-12 py-8 rounded-12 gap-6"
 								href={`${Routes.EditStoreProduct}/${row.original.storeProductId}`}
-								onClick={() =>
-									handleEvents(
-										`${Routes.EditStoreProduct}/${row.original.storeProductId}`
-									)
-								}
+								// onClick={() =>
+								// 	handleEvents(
+								// 		`${Routes.EditStoreProduct}/${row.original.storeProductId}`
+								// 	)
+								// }
 							>
 								<PenIcon className="size-16 text-white" />
 								<span className="text-12  font-semibold text-white">
@@ -123,7 +122,7 @@ export default function StoreProductsListTable() {
 				},
 			},
 		],
-		[trackEvent]
+		[]
 	);
 
 	return <StoreProductsListingTable columns={columns} id={auth.userId as string} />;

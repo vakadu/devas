@@ -121,11 +121,11 @@ export const AppSidebar = () => {
 
 const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 	const pathname = usePathname();
-	const { trackEvent } = useAnalytics();
+	// const { trackEvent } = useAnalytics();
 
-	const handleEvents = async (item: ICommonTypes.INavigationItem) => {
-		await trackEvent('SIDEBAR_CLICK', { path: item.path, title: item?.title });
-	};
+	// const handleEvents = async (item: ICommonTypes.INavigationItem) => {
+	// 	await trackEvent('SIDEBAR_CLICK', { path: item.path, title: item?.title });
+	// };
 
 	return (
 		<SidebarMenu className="gap-16 px-8">
@@ -146,7 +146,7 @@ const Menu = ({ navMenu }: { navMenu: ICommonTypes.INavigationItem[] }) => {
 							key={item.id}
 							asChild
 						>
-							<Link onClick={() => handleEvents(item)} href={item.path}>
+							<Link href={item.path}>
 								<Icon className="!size-18" />
 								<span className="text-14 font-medium">{item.title}</span>
 							</Link>
@@ -163,11 +163,11 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 	const pathname = usePathname();
 	const activeItem = pathname.split('/').filter(Boolean)[0];
 	const activeCollapse = `/${activeItem}` === item.path;
-	const { trackEvent } = useAnalytics();
+	// const { trackEvent } = useAnalytics();
 
-	const handleEvents = async (item: ICommonTypes.INavigationItem) => {
-		await trackEvent('SIDEBAR_CLICK', { path: item.path, title: item?.title });
-	};
+	// const handleEvents = async (item: ICommonTypes.INavigationItem) => {
+	// 	await trackEvent('SIDEBAR_CLICK', { path: item.path, title: item?.title });
+	// };
 
 	return (
 		<Collapsible defaultOpen={activeCollapse} key={item.id} className="group/collapsible">
@@ -193,7 +193,7 @@ const MenuItem = ({ item }: { item: ICommonTypes.INavigationItem }) => {
 										}`}
 										asChild
 									>
-										<Link onClick={() => handleEvents(ite)} href={ite.path}>
+										<Link href={ite.path}>
 											<span className="text-14 font-medium">{ite.title}</span>
 										</Link>
 									</SidebarMenuSubButton>
